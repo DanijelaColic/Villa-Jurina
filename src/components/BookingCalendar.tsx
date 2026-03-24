@@ -308,8 +308,9 @@ function MonthGrid({ year, month, getDayState, onDayClick, onDayHover }: MonthGr
               className={clsx(
                 'relative h-9 flex items-center justify-center text-sm select-none transition-colors',
                 {
-                  // Past
-                  'text-gray-300 cursor-not-allowed': state === 'past',
+                  // Past or blocked-for-checkout
+                  'text-gray-300 cursor-not-allowed':
+                    state === 'past' || state === 'blocked-for-checkout',
                   // Booked
                   'bg-red-50 text-red-300 cursor-not-allowed line-through': state === 'booked',
                   // Check-in
@@ -322,8 +323,6 @@ function MonthGrid({ year, month, getDayState, onDayClick, onDayHover }: MonthGr
                   'bg-primary/15 text-primary': state === 'in-range',
                   // Hover preview range
                   'bg-primary/10 text-primary': state === 'hover-range',
-                  // Blocked for checkout
-                  'text-gray-300 cursor-not-allowed': state === 'blocked-for-checkout',
                   // Too close (1 noć)
                   'text-gray-400 cursor-not-allowed': state === 'too-close',
                   // Available
