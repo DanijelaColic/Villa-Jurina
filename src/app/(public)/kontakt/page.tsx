@@ -1,0 +1,129 @@
+import { MapPin, Phone, Mail } from 'lucide-react';
+
+export const metadata = {
+  title: 'Kontakt | Villa Jurina',
+  description: 'Kontaktirajte Villa Jurina. WhatsApp, email ili posjetite nas u Drašnicama.',
+};
+
+export default function KontaktPage() {
+  return (
+    <div className="pt-20">
+      <section className="py-16 lg:py-20 bg-sand-light text-center">
+        <div className="max-w-2xl mx-auto px-4">
+          <p className="text-secondary font-medium tracking-widest text-xs uppercase mb-3">
+            Dođite nam
+          </p>
+          <h1 className="font-serif text-4xl sm:text-5xl font-semibold text-text mb-4">Kontakt</h1>
+          <p className="text-muted text-base leading-relaxed">
+            Tu smo za sva vaša pitanja — javite se putem WhatsAppa, emaila ili nas posjetite.
+          </p>
+        </div>
+      </section>
+
+      <section className="py-16 lg:py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* Contact info */}
+          <div>
+            <h2 className="font-serif text-2xl font-semibold text-text mb-6">
+              Informacije za kontakt
+            </h2>
+            <ul className="space-y-5">
+              <li className="flex items-start gap-3">
+                <MapPin size={20} className="text-secondary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-text font-medium text-sm">Adresa</p>
+                  <p className="text-muted text-sm">Soline 116, Drašnice</p>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <Phone size={20} className="text-secondary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-text font-medium text-sm">WhatsApp / Telefon</p>
+                  <a
+                    href="https://wa.me/385916391305"
+                    className="text-muted hover:text-secondary text-sm transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    091 6391 305
+                  </a>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <Mail size={20} className="text-secondary shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-text font-medium text-sm">E-mail</p>
+                  <a
+                    href="mailto:villajurina@gmail.com"
+                    className="text-muted hover:text-secondary text-sm transition-colors"
+                  >
+                    villajurina@gmail.com
+                  </a>
+                </div>
+              </li>
+            </ul>
+
+            {/* Pravila kratko */}
+            <div className="mt-10 p-5 bg-sand-light rounded-xl">
+              <h3 className="font-serif text-lg font-semibold text-text mb-3">Korisne info</h3>
+              <ul className="space-y-2 text-sm text-muted">
+                <li>
+                  <strong className="text-text">Check-in:</strong> 14:00 – 23:00
+                </li>
+                <li>
+                  <strong className="text-text">Check-out:</strong> 09:00 – 11:00
+                </li>
+                <li>
+                  <strong className="text-text">Min. boravak:</strong> 2 noći
+                </li>
+                <li>
+                  <strong className="text-text">Depozit:</strong> 30%
+                </li>
+                <li>
+                  <strong className="text-text">Plaža:</strong> 50 m
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Contact form placeholder */}
+          <div>
+            <h2 className="font-serif text-2xl font-semibold text-text mb-6">Pišite nam</h2>
+            <form className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-text mb-1.5">Ime i prezime</label>
+                <input
+                  type="text"
+                  className="w-full border border-sand rounded-xl px-4 py-3 text-sm text-text placeholder-muted focus:outline-none focus:border-primary transition-colors"
+                  placeholder="Vaše ime"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-text mb-1.5">Email</label>
+                <input
+                  type="email"
+                  className="w-full border border-sand rounded-xl px-4 py-3 text-sm text-text placeholder-muted focus:outline-none focus:border-primary transition-colors"
+                  placeholder="vaš@email.com"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-text mb-1.5">Poruka</label>
+                <textarea
+                  rows={5}
+                  className="w-full border border-sand rounded-xl px-4 py-3 text-sm text-text placeholder-muted focus:outline-none focus:border-primary transition-colors resize-none"
+                  placeholder="Vaša poruka..."
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-secondary hover:bg-secondary-light text-white font-medium py-3 rounded-full transition-colors text-sm"
+              >
+                Pošalji poruku
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
