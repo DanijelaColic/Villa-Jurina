@@ -16,6 +16,7 @@ export type Booking = {
   deposit: number;
   status: 'pending' | 'confirmed' | 'cancelled';
   notes: string | null;
+  deposit_paid: boolean;
   created_at: string;
 };
 
