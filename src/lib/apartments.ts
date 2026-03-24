@@ -23,7 +23,7 @@ export const apartments: Apartment[] = [
     name: 'Sky',
     tagline: 'Svjetlost, mir i pogled na pučinu.',
     description:
-      'SKY je svijetao i elegantan apartman koji odiše svježinom i toplinom. Ugodna atmosfera i pažljivo uređenje čine ga savršenim izborom za parove koji žele započeti dan u miru i udobnosti.',
+      'SKY je svijetao i elegantan apartman koji odiše svježinom i toplinom. Dizajniran za dvoje — za one koji traže tišinu, jutarnju kavu uz zvuk mora i večeri bez žurbe. Pažljivo uređenje, prirodni materijali i pogled koji oduzima dah čine ga savršenim izborom za parove koji žele pravi odmor od svakodnevice.',
     capacity: 2,
     capacityNote: '2 osobe',
     size: 24,
@@ -47,7 +47,7 @@ export const apartments: Apartment[] = [
     name: 'Harmonia',
     tagline: 'Prostranstvo i elegancija za cijelu obitelj.',
     description:
-      'HARMONIA je prostran i elegantan obiteljski apartman idealan za opušten i bezbrižan boravak. Pažljivo uređen prostor pruža udobnost, funkcionalnost i osjećaj doma, savršen za obitelji koje žele kvalitetno provesti vrijeme zajedno i stvoriti lijepe uspomene.',
+      'HARMONIA je prostran i elegantan dvoetažni apartman koji nudi sve što jedna obitelj treba za bezbrižan odmor. Dva balkona s pogledom na more, dovoljno prostora da se svaki član obitelji pronađe, i ona topla atmosfera doma koja se ne može naručiti. Savršen za obitelji koje žele kvalitetno provesti vrijeme zajedno — uz more, daleko od buke, blizu svega važnog.',
     capacity: 6,
     capacityNote: '6 osoba (4+2)',
     size: 70,
@@ -74,7 +74,7 @@ export const apartments: Apartment[] = [
     name: 'Arba',
     tagline: 'Topao i miran kutak za obitelj.',
     description:
-      'ARBA je topao i miran obiteljski apartman koji nudi sve potrebno za ugodan boravak. Njegova smirujuća atmosfera i praktičan raspored čine ga savršenim izborom za obitelji koje traže mir, sigurnost i opuštanje.',
+      'ARBA je topao i miran apartman koji dočarava pravu dalmatinsku gostoljubivost. Balkon s pogledom na more, morski povjetarac ujutro i djeca koja se slobodno igraju na dječjem igralištu — sve je na svom mjestu. Praktičan raspored, udobnost i blizina plaže čine ga omiljenim izborom obitelji koje se godinama vraćaju.',
     capacity: 4,
     capacityNote: '4 osobe (2+2)',
     size: 40,
@@ -102,7 +102,7 @@ export const apartments: Apartment[] = [
     name: 'Luna',
     tagline: 'Intiman prostor stvoren za parove.',
     description:
-      'LUNA je intiman i profinjen apartman stvoren za parove. Elegantno uređen prostor pruža mir, privatnost i romantičnu atmosferu, idealnu za opuštajući odmor ili kratki bijeg od svakodnevice.',
+      'LUNA je intiman i profinjen apartman stvoren za one koji traže više od pukog smještaja. Balkon s pogledom na more, večeri uz zvjezdano nebo i jutarnji šum valova — sve to čini LUNU savršenim mjestom za romantični bijeg. Elegantno uređenje, privatnost i neposredna blizina mora stvaraju atmosferu u kojoj se vrijeme usporava na pravi način.',
     capacity: 4,
     capacityNote: '4 osobe (2+2)',
     size: 35,

@@ -21,7 +21,7 @@ export default function Home() {
           src="/images/apartments/arba/Arba1.jpeg"
           alt="Pogled na more s balkona Villa Jurina"
           fill
-          className="object-cover"
+          className="object-cover object-[center_40%]"
           priority
           sizes="100vw"
         />
@@ -69,15 +69,50 @@ export default function Home() {
           <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-text mb-6">
             Kuća dida Jure
           </h2>
-          <p className="text-muted leading-relaxed text-base sm:text-lg">
-            Kuća dida Jure stoji uz samo more, tamo gdje su kamen i val oduvijek razgovarali.
-            Sagradio ju je did Jure vlastitim rukama — polako, strpljivo i s ljubavlju, kao što se
-            nekad gradilo: da traje i da okuplja.
-          </p>
-          <p className="text-muted leading-relaxed text-base sm:text-lg mt-4">
-            Ovdje se jutra bude uz šum mora, a večeri smiruju pod zvijezdama. Ova kuća nije nastala
-            kao investicija, nego kao dom. Danas svoja vrata otvara svima koji traže mir,
-            jednostavnost i osjećaj da su došli na pravo mjesto.
+          <div className="space-y-4 text-muted leading-relaxed text-base sm:text-lg">
+            <p>
+              Kuća dida Jure stoji uz samo more, tamo gdje su kamen i val oduvijek razgovarali.
+              Sagradio ju je did Jure vlastitim rukama — polako, strpljivo i s ljubavlju, kao
+              što se nekad gradilo: da traje, da diše i da ocuplja generacije.
+            </p>
+            <p>
+              Drašnice su uvijek bile mjesto koje nije tražilo pažnju — tiho, skromno i iskreno.
+              Dok su okolna mjesta rasla, Drašnice su čuvale ono najvrednije: autentičnost,
+              sporost i blizinu mora koje ovdje nije kulisa, nego svakodnevica.
+            </p>
+            <p>
+              Ovdje se jutra bude uz šum mora, a večeri smiruju pod zvijezdama i miomiris
+              lavande. Ova kuća nije nastala kao investicija, nego kao dom. Danas svoja vrata
+              otvara svima koji traže mir, jednostavnost i osjećaj da su došli na pravo mjesto.
+            </p>
+          </div>
+        </div>
+
+        {/* Stare fotografije — diskretni horizontalni strip */}
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 mt-14">
+          <div className="grid grid-cols-4 gap-3">
+            {[
+              { src: '/images/povijest/Povijest1.jpeg', alt: 'Villa Jurina nekad' },
+              { src: '/images/povijest/Povijest2.jpeg', alt: 'Drašnice, pogled na more' },
+              { src: '/images/povijest/Povijest3.jpeg', alt: 'Gradnja kuće dida Jure' },
+              { src: '/images/povijest/Povijest4.jpeg', alt: 'Obitelj Jurina' },
+            ].map((img) => (
+              <div
+                key={img.src}
+                className="h-40 sm:h-48 relative overflow-hidden rounded-lg bg-sand"
+              >
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  className="object-cover sepia-[0.25] hover:sepia-0 transition-all duration-500 scale-105 hover:scale-100"
+                  sizes="(max-width: 640px) 50vw, 25vw"
+                />
+              </div>
+            ))}
+          </div>
+          <p className="text-center text-xs text-muted/50 mt-4 tracking-wide italic">
+            Fotografije iz obiteljskog albuma — sjećanja koja su oblikovala ovaj dom.
           </p>
         </div>
       </section>
@@ -191,28 +226,46 @@ export default function Home() {
                 Drašnice, Makarska rivijera
               </h2>
 
-              <ul className="space-y-4 text-muted text-sm">
-                <li className="flex items-center gap-3">
-                  <Waves size={18} className="text-secondary shrink-0" />
+              <p className="text-muted text-sm leading-relaxed mb-6">
+                Drašnice su jedno od onih mjesta koja se pamte. Mala dalmatinska uvala između
+                Makarske i Podgore, zaštićena Biokovom s leđa i otvorena prema pučini ispred.
+                Šljunčana plaža je doslovno iza ugla — 50 metara hoda — a more je ovdje
+                iznimno čisto i prozirno.
+              </p>
+
+              <ul className="space-y-4 text-muted text-sm mb-8">
+                <li className="flex items-start gap-3">
+                  <Waves size={18} className="text-secondary shrink-0 mt-0.5" />
                   <span>
-                    <strong className="text-text">50 m</strong> do šljunčane plaže (1 min hoda)
+                    <strong className="text-text">50 m</strong> do šljunčane plaže — kristalno
+                    čisto more, mirna uvala, bez gužve
                   </span>
                 </li>
-                <li className="flex items-center gap-3">
-                  <MapPin size={18} className="text-secondary shrink-0" />
+                <li className="flex items-start gap-3">
+                  <MapPin size={18} className="text-secondary shrink-0 mt-0.5" />
                   <span>
-                    <strong className="text-text">10 min</strong> vožnje do Makarske
+                    <strong className="text-text">10 min</strong> do Makarske, 5 min do Podgore i
+                    Tučepa — sve na dohvat ruke, ali daleko od vreve
                   </span>
                 </li>
-                <li className="flex items-center gap-3">
-                  <UtensilsCrossed size={18} className="text-secondary shrink-0" />
-                  <span>Restoran u sklopu objekta</span>
+                <li className="flex items-start gap-3">
+                  <UtensilsCrossed size={18} className="text-secondary shrink-0 mt-0.5" />
+                  <span>
+                    Restoran u sklopu objekta — dalmatinska kuhinja s pogledom na more
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <MapPin size={18} className="text-secondary shrink-0 mt-0.5" />
+                  <span>
+                    Trajekt za <strong className="text-text">otok Hvar</strong> dostupan iz
+                    Drašnica — dnevni izlet za nezaboravno iskustvo
+                  </span>
                 </li>
               </ul>
 
-              <div className="mt-8">
+              <div>
                 <p className="text-xs text-muted uppercase tracking-widest font-medium mb-3">
-                  Aktivnosti u okolici
+                  Što raditi u okolici
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {[
@@ -222,6 +275,8 @@ export default function Home() {
                     'Biokovo Skywalk',
                     'Planinarenje',
                     'Biciklizam',
+                    'Gradac',
+                    'Tučepi',
                   ].map((activity) => (
                     <span
                       key={activity}
@@ -234,13 +289,18 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Google Maps placeholder */}
-            <div className="aspect-[4/3] bg-sand rounded-2xl overflow-hidden flex items-center justify-center text-muted/50 text-sm">
-              {/* Google Maps embed dolazi ovdje */}
-              <div className="text-center">
-                <MapPin size={32} className="mx-auto mb-2 text-secondary" />
-                <p>Soline 116, Drašnice</p>
-              </div>
+            {/* Google Maps embed */}
+            <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-sm">
+              <iframe
+                src="https://maps.google.com/maps?q=Soline+116+Drasnice+Croatia&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Villa Jurina lokacija"
+              />
             </div>
           </div>
         </div>
@@ -249,18 +309,33 @@ export default function Home() {
       {/* ── CTA ──────────────────────────────────────────── */}
       <section className="py-20 bg-primary text-white text-center">
         <div className="max-w-2xl mx-auto px-4">
-          <h2 className="font-serif text-3xl sm:text-4xl font-semibold mb-4">
-            Rezervirajte vaš odmor
-          </h2>
-          <p className="text-white/70 mb-8 text-base">
-            Minimalni boravak 2 noći. Check-in od 14:00, check-out do 11:00.
+          <p className="text-secondary font-medium tracking-widest text-xs uppercase mb-4">
+            Drašnice · Makarska rivijera
           </p>
-          <Link
-            href="/rezervacija"
-            className="inline-block bg-secondary hover:bg-secondary-light text-white font-medium px-10 py-4 rounded-full transition-colors text-sm tracking-wide"
-          >
-            Provjeri slobodne termine
-          </Link>
+          <h2 className="font-serif text-3xl sm:text-4xl font-semibold mb-4">
+            Vaše more čeka
+          </h2>
+          <p className="text-white/70 mb-2 text-base leading-relaxed">
+            Četiri apartmana, jedno more, nebrojene uspomene.
+            Rezervirajte danas i osigurajte svoje mjesto u Drašnicama.
+          </p>
+          <p className="text-white/50 text-sm mb-8">
+            Minimalni boravak 2 noći · Check-in od 14:00 · Check-out do 11:00
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/rezervacija"
+              className="inline-block bg-secondary hover:bg-secondary-light text-white font-medium px-10 py-4 rounded-full transition-colors text-sm tracking-wide"
+            >
+              Provjeri slobodne termine
+            </Link>
+            <Link
+              href="/kontakt"
+              className="inline-block border border-white/40 hover:border-white text-white font-medium px-10 py-4 rounded-full transition-colors text-sm tracking-wide"
+            >
+              Kontaktirajte nas
+            </Link>
+          </div>
         </div>
       </section>
     </>
