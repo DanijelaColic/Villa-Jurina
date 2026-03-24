@@ -27,6 +27,11 @@ const APT_NAMES = Object.fromEntries(apartments.map((a) => [a.slug, a.name]));
 
 type SortKey = 'check_in' | 'created_at' | 'total_price';
 
+function SortIcon({ k, sortKey, sortAsc }: { k: SortKey; sortKey: SortKey; sortAsc: boolean }) {
+  if (sortKey !== k) return null;
+  return sortAsc ? <ChevronUp size={14} /> : <ChevronDown size={14} />;
+}
+
 export default function AdminDashboard() {
   const router = useRouter();
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -98,9 +103,6 @@ export default function AdminDashboard() {
     if (sortKey === key) setSortAsc(!sortAsc);
     else { setSortKey(key); setSortAsc(true); }
   };
-
-  const SortIcon = ({ k }: { k: SortKey }) =>
-    sortKey === k ? (sortAsc ? <ChevronUp size={14} /> : <ChevronDown size={14} />) : null;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -207,7 +209,7 @@ export default function AdminDashboard() {
                       onClick={() => toggleSort('check_in')}
                     >
                       <span className="flex items-center gap-1">
-                        Check-in <SortIcon k="check_in" />
+                        Check-in <SortIcon k="check_in" sortKey={sortKey} sortAsc={sortAsc} />
                       </span>
                     </th>
                     <th className="text-left px-4 py-3 text-xs text-gray-500 font-medium uppercase tracking-wide">
@@ -221,7 +223,7 @@ export default function AdminDashboard() {
                       onClick={() => toggleSort('total_price')}
                     >
                       <span className="flex items-center justify-end gap-1">
-                        Ukupno <SortIcon k="total_price" />
+                        Ukupno <SortIcon k="total_price" sortKey={sortKey} sortAsc={sortAsc} />
                       </span>
                     </th>
                     <th className="text-center px-4 py-3 text-xs text-gray-500 font-medium uppercase tracking-wide">

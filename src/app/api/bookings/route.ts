@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerSupabaseClient } from '@/lib/supabase';
-import { apartments, getApartment } from '@/lib/apartments';
+import { getApartment } from '@/lib/apartments';
 import { parseLocalDate, isRangeAvailable, diffDays, formatDisplayDate } from '@/lib/dates';
 import { Resend } from 'resend';
 
@@ -290,6 +290,3 @@ function ownerEmailHtml(d: EmailData & { checkInStr: string; checkOutStr: string
 </body>
 </html>`;
 }
-
-// Uniform export for all apartments (used by admin)
-export { apartments };
