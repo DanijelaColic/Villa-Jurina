@@ -9,6 +9,8 @@ import clsx from 'clsx';
 
 const links = [
   { href: '/apartmani', label: 'Apartmani' },
+  { href: '/galerija', label: 'Galerija' },
+  { href: '/drasnice', label: 'Okolica' },
   { href: '/rezervacija', label: 'Rezervacija' },
   { href: '/kontakt', label: 'Kontakt' },
 ];

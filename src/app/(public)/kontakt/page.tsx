@@ -124,6 +124,39 @@ export default function KontaktPage() {
           </div>
         </div>
       </section>
+
+      {/* ── GOOGLE MAPS ───────────────────────────────────── */}
+      <section className="pb-16 lg:pb-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+          <div className="mb-5">
+            <h2 className="font-serif text-2xl font-semibold text-text mb-1">Kako nas pronaći</h2>
+            <p className="text-sm text-muted">
+              Soline 116, Drašnice — 50 metara od šljunčane plaže, između Makarske i Podgore.
+            </p>
+          </div>
+          <div className="rounded-2xl overflow-hidden border border-sand shadow-sm h-80 sm:h-96">
+            <iframe
+              title="Villa Jurina — lokacija na karti"
+              src="https://maps.google.com/maps?q=Soline+116+Drasnice+Hrvatska&t=m&z=15&output=embed&hl=hr"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+          <a
+            href="https://maps.google.com/maps?q=Soline+116+Drasnice+Hrvatska"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 mt-4 text-sm text-secondary hover:underline font-medium"
+          >
+            <MapPin size={14} />
+            Otvori u Google Mapsu
+          </a>
+        </div>
+      </section>
     </div>
   );
 }

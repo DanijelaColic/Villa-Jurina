@@ -102,7 +102,7 @@ export default function ApartmaniPage() {
                     </p>
                     <div className="flex gap-6">
                       <div>
-                        <p className="text-xs text-muted mb-0.5">Lipanj / Rujan</p>
+                        <p className="text-xs text-muted mb-0.5">Izvan sezone</p>
                         <p className="text-primary font-semibold text-lg">{apt.priceOffSeason}€</p>
                       </div>
                       <div className="w-px bg-sand" />

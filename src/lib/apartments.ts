@@ -10,7 +10,7 @@ export type Apartment = {
   view: boolean;
   balcony: boolean;
   floors: number;
-  priceOffSeason: number; // lipanj + rujan (€/noć)
+  priceOffSeason: number; // cijela godina osim srpnja i kolovoza (€/noć)
   priceHighSeason: number; // srpanj + kolovoz (€/noć)
   fullyBooked: boolean; // true za Sky cijelu sezonu
   amenities: string[];

@@ -1,4 +1,28 @@
 import BookingWidget from '@/components/BookingWidget';
+import FAQ from '@/components/FAQ';
+
+const rezervacijaFAQ = [
+  {
+    q: 'Kako potvrđujem rezervaciju?',
+    a: 'Nakon što pošaljete zahtjev, javit ćemo vam se u roku od nekoliko sati s potvrdom dostupnosti i uputama za plaćanje depozita (30%). Rezervacija je aktivna tek po uplati depozita.',
+  },
+  {
+    q: 'Koji je minimalni boravak?',
+    a: 'Minimalni boravak je 2 noći. Tijekom visoke sezone (srpanj i kolovoz) minimalni boravak može biti 7 noći.',
+  },
+  {
+    q: 'Mogu li otkazati rezervaciju?',
+    a: 'Otkazivanje je moguće uz povrat depozita ako se obavijest dostavi najmanje 30 dana prije dolaska. Za kasnija otkazivanja depozit se ne vraća.',
+  },
+  {
+    q: 'Kako se plaća ostatak iznosa?',
+    a: 'Ostatak iznosa plaća se pri dolasku — gotovinom ili bankovnim transferom. Plaćanje karticom nije dostupno.',
+  },
+  {
+    q: 'Mogu li tražiti apartman za određeni broj osoba?',
+    a: 'Da. Sky prima do 2, Luna i Arba do 4, a Harmonia do 6 osoba. Za veće grupe moguće je rezervirati više apartmana — kontaktirajte nas za ponudu.',
+  },
+];
 
 export const metadata = {
   title: 'Rezervacija | Villa Jurina',
@@ -53,6 +77,13 @@ export default async function RezervacijaPage({ searchParams }: Props) {
           ))}
         </div>
       </section>
+
+      {/* FAQ */}
+      <FAQ
+        items={rezervacijaFAQ}
+        title="Pitanja o rezervaciji"
+        subtitle="Sve što trebate znati o procesu rezervacije i boravku."
+      />
     </div>
   );
 }

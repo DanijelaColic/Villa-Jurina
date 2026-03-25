@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Users, Maximize2, Check } from 'lucide-react';
 import { apartments, getApartment } from '@/lib/apartments';
 import ImageGallery from '@/components/ImageGallery';
+import { ApartmentJsonLd } from '@/components/JsonLd';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -30,12 +31,22 @@ export default async function ApartmanPage({ params }: Props) {
 
   return (
     <div className="pt-20">
+      <ApartmentJsonLd
+        name={apt.name}
+        description={apt.description}
+        slug={apt.slug}
+        image={apt.images[0] ?? ''}
+        capacity={apt.capacity}
+        priceOffSeason={apt.priceOffSeason}
+        priceHighSeason={apt.priceHighSeason}
+      />
+
       {/* Gallery */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         {apt.images.length > 0 ? (
           <ImageGallery images={apt.images} alt={`Apartman ${apt.name}`} />
         ) : (
-          <div className="aspect-[16/6] bg-sand rounded-2xl" />
+          <div className="aspect-16/6 bg-sand rounded-2xl" />
         )}
         {apt.fullyBooked && (
           <div className="mt-3 inline-block bg-text/80 text-white text-sm font-medium px-4 py-1.5 rounded-full">
@@ -142,7 +153,7 @@ export default async function ApartmanPage({ params }: Props) {
                   </p>
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted">Lipanj / Rujan</span>
+                      <span className="text-sm text-muted">Izvan sezone</span>
                       <span className="text-primary font-semibold">{apt.priceOffSeason}€</span>
                     </div>
                     <div className="flex justify-between items-center">

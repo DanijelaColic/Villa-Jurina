@@ -2,6 +2,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, UtensilsCrossed, Car, Wifi, Wind, Tv, Coffee, Waves } from 'lucide-react';
 import { apartments } from '@/lib/apartments';
+import Testimonials from '@/components/Testimonials';
+import FAQ from '@/components/FAQ';
+import { LodgingBusinessJsonLd } from '@/components/JsonLd';
 
 const amenities = [
   { icon: Wifi, label: 'Besplatni WiFi' },
@@ -15,6 +18,8 @@ const amenities = [
 export default function Home() {
   return (
     <>
+      <LodgingBusinessJsonLd />
+
       {/* ── HERO ─────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <Image
@@ -137,7 +142,7 @@ export default function Home() {
                 className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-sand"
               >
                 {/* Apartment cover image */}
-                <div className="aspect-[4/3] relative overflow-hidden bg-sand">
+                <div className="aspect-4/3 relative overflow-hidden bg-sand">
                   {apt.images[0] && (
                     <Image
                       src={apt.images[0]}
@@ -210,6 +215,55 @@ export default function Home() {
                 <span className="text-sm text-text font-medium">{label}</span>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── GALERIJA PREVIEW ─────────────────────────────── */}
+      <section className="py-20 lg:py-28">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <p className="text-secondary font-medium tracking-widest text-xs uppercase mb-3">
+              Fotografije
+            </p>
+            <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-text mb-4">
+              Galerija
+            </h2>
+            <p className="text-muted max-w-xl mx-auto">
+              Pogledajte naše apartmane, pogled na more i okolicu Drašnica.
+            </p>
+          </div>
+
+          {/* 6-thumbnail preview grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 mb-8">
+            {[
+              { src: '/images/apartments/arba/Arba1.jpeg', alt: 'Apartman Arba' },
+              { src: '/images/apartments/harmonia/Harmonia1.jpeg', alt: 'Apartman Harmonia' },
+              { src: '/images/apartments/luna/Luna1.jpeg', alt: 'Apartman Luna' },
+              { src: '/images/apartments/sky/Sky1.jpeg', alt: 'Apartman Sky' },
+              { src: '/images/Okolica/Drašnice 1.jpeg', alt: 'Drašnice — plaža' },
+              { src: '/images/Okolica/biokovo.webp', alt: 'Biokovo' },
+            ].map((img) => (
+              <div key={img.src} className="aspect-4/3 relative overflow-hidden rounded-xl">
+                <Image
+                  src={img.src}
+                  alt={img.alt}
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 640px) 50vw, 33vw"
+                />
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center">
+            <Link
+              href="/galerija"
+              className="inline-flex items-center gap-2 border border-secondary text-secondary hover:bg-secondary hover:text-white font-medium px-7 py-3 rounded-full transition-colors text-sm"
+            >
+              Pogledaj sve fotografije
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+            </Link>
           </div>
         </div>
       </section>
@@ -290,7 +344,7 @@ export default function Home() {
             </div>
 
             {/* Google Maps embed */}
-            <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-sm">
+            <div className="aspect-4/3 rounded-2xl overflow-hidden shadow-sm">
               <iframe
                 src="https://maps.google.com/maps?q=Soline+116+Drasnice+Croatia&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 width="100%"
@@ -305,6 +359,51 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── OKOLICA PROMO ────────────────────────────────── */}
+      <section className="py-20 lg:py-24 bg-sand-light">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <p className="text-secondary font-medium tracking-widest text-xs uppercase mb-3">
+                Istraži okolicu
+              </p>
+              <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-text mb-4">
+                Drašnice — idealno polazište za Dalmaciju
+              </h2>
+              <p className="text-muted leading-relaxed mb-6">
+                Biokovo Skywalk, plaža Zlatni rat na Braču, otok Hvar, rafting na Cetini,
+                Split, Dubrovnik — sve je na dohvat ruke. Saznajte više o tome što vas čeka
+                u okolici.
+              </p>
+              <Link
+                href="/drasnice"
+                className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-medium px-7 py-3 rounded-full transition-colors text-sm"
+              >
+                Što vidjeti u okolici
+                <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              {[
+                { label: 'Biokovo Skywalk', sub: '30 min vožnje' },
+                { label: 'Otok Hvar', sub: 'u vidokrugu' },
+                { label: 'Zlatni rat, Brač', sub: 'trajekt iz Makarske' },
+                { label: 'Split', sub: '1,5 h vožnje' },
+              ].map(({ label, sub }) => (
+                <div key={label} className="bg-white rounded-2xl p-5 border border-sand text-center">
+                  <p className="font-serif font-semibold text-text text-base mb-1">{label}</p>
+                  <p className="text-xs text-secondary font-medium">{sub}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Testimonials />
+
+      <FAQ />
 
       {/* ── CTA ──────────────────────────────────────────── */}
       <section className="py-20 bg-primary text-white text-center">
