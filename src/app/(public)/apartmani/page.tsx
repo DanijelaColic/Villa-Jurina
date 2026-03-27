@@ -4,8 +4,17 @@ import { Users, Maximize2 } from 'lucide-react';
 import { apartments } from '@/lib/apartments';
 
 export const metadata = {
-  title: 'Apartmani | Villa Jurina',
-  description: 'Četiri apartmana s pogledom na more u Drašnicama. Idealni za parove i obitelji.',
+  title: 'Apartmani',
+  description:
+    'Četiri apartmana s pogledom na more u Drašnicama — Sky, Luna, Arba i Harmonia. Idealni za parove i obitelji.',
+  openGraph: {
+    title: 'Apartmani | Villa Jurina',
+    description:
+      'Četiri apartmana s pogledom na more u Drašnicama — Sky, Luna, Arba i Harmonia.',
+    url: 'https://www.villajurina.hr/apartmani',
+    images: [{ url: '/images/apartments/arba/Arba1.jpeg', width: 1200, height: 630 }],
+  },
+  alternates: { canonical: 'https://www.villajurina.hr/apartmani' },
 };
 
 export default function ApartmaniPage() {
@@ -38,8 +47,9 @@ export default function ApartmaniPage() {
               }`}
             >
               {/* Image */}
-              <div
-                className={`aspect-[4/3] rounded-2xl relative overflow-hidden bg-sand ${
+              <Link
+                href={`/apartmani/${apt.slug}`}
+                className={`aspect-4/3 rounded-2xl relative overflow-hidden bg-sand block group ${
                   index % 2 !== 0 ? 'lg:order-2' : ''
                 }`}
               >
@@ -48,7 +58,7 @@ export default function ApartmaniPage() {
                     src={apt.images[0]}
                     alt={`Apartman ${apt.name}`}
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 )}
@@ -57,7 +67,7 @@ export default function ApartmaniPage() {
                     Zauzeto — sezona 2025.
                   </div>
                 )}
-              </div>
+              </Link>
 
               {/* Content */}
               <div className={index % 2 !== 0 ? 'lg:order-1' : ''}>

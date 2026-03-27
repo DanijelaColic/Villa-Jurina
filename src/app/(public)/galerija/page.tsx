@@ -1,9 +1,16 @@
 import GalleryClient from './GalleryClient';
 
 export const metadata = {
-  title: 'Galerija | Villa Jurina — Drašnice',
+  title: 'Galerija',
   description:
-    'Pogledajte fotografije apartmana Arba, Harmonia, Luna i Sky te okolice Drašnica i Makarske rivijere.',
+    'Fotografije apartmana Arba, Harmonia, Luna i Sky te okolice Drašnica i Makarske rivijere.',
+  openGraph: {
+    title: 'Galerija | Villa Jurina',
+    description: 'Fotografije apartmana i okolice Drašnica na Makarskoj rivijeri.',
+    url: 'https://www.villajurina.hr/galerija',
+    images: [{ url: '/images/apartments/harmonia/Harmonia1.jpeg', width: 1200, height: 630 }],
+  },
+  alternates: { canonical: 'https://www.villajurina.hr/galerija' },
 };
 
 export default function GalerijaPage() {

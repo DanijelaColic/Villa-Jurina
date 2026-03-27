@@ -15,7 +15,7 @@ const faqItems: FAQItem[] = [
   },
   {
     q: 'Koji je minimalni boravak?',
-    a: 'Minimalni boravak je 2 noći. Tijekom visoke sezone (srpanj i kolovoz) minimalni boravak može biti 7 noći — provjerite dostupnost za željene datume.',
+    a: 'Minimalni boravak je 2 noći tijekom cijele godine.',
   },
   {
     q: 'Je li parking besplatan?',

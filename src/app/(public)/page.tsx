@@ -4,7 +4,7 @@ import { MapPin, UtensilsCrossed, Car, Wifi, Wind, Tv, Coffee, Waves } from 'luc
 import { apartments } from '@/lib/apartments';
 import Testimonials from '@/components/Testimonials';
 import FAQ from '@/components/FAQ';
-import { LodgingBusinessJsonLd } from '@/components/JsonLd';
+import { LodgingBusinessJsonLd, FAQJsonLd } from '@/components/JsonLd';
 
 const amenities = [
   { icon: Wifi, label: 'Besplatni WiFi' },
@@ -19,11 +19,35 @@ export default function Home() {
   return (
     <>
       <LodgingBusinessJsonLd />
+      <FAQJsonLd
+        items={[
+          {
+            q: 'Kad je check-in i check-out?',
+            a: 'Check-in je od 14:00, check-out do 11:00.',
+          },
+          {
+            q: 'Koliko je daleko plaža?',
+            a: 'Šljunčana plaža u Drašnicama je 50 metara od vile.',
+          },
+          {
+            q: 'Je li parking besplatan?',
+            a: 'Da, besplatni parking za sve goste dostupan je neposredno uz vilu.',
+          },
+          {
+            q: 'Koji je minimalni boravak?',
+            a: 'Minimalni boravak je 2 noći tijekom cijele godine.',
+          },
+          {
+            q: 'Smiju li se dovoditi kućni ljubimci?',
+            a: 'Ljubimci su dobrodošli uz prethodni dogovor.',
+          },
+        ]}
+      />
 
       {/* ── HERO ─────────────────────────────────────────── */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <Image
-          src="/images/apartments/arba/Arba1.jpeg"
+          src="/images/hero/hero3.jpeg"
           alt="Pogled na more s balkona Villa Jurina"
           fill
           className="object-cover object-[center_40%]"
@@ -40,7 +64,7 @@ export default function Home() {
             Villa Jurina
           </h1>
           <p className="text-white/80 text-lg sm:text-xl leading-relaxed mb-10 max-w-xl mx-auto">
-            50 metara od šljunčane plaže. Apartmani s pogledom na more, sagradeni s ljubavlju.
+            50 metara od šljunčane plaže. Apartmani s pogledom na more, sagrađeni s ljubavlju.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -78,7 +102,7 @@ export default function Home() {
             <p>
               Kuća dida Jure stoji uz samo more, tamo gdje su kamen i val oduvijek razgovarali.
               Sagradio ju je did Jure vlastitim rukama — polako, strpljivo i s ljubavlju, kao
-              što se nekad gradilo: da traje, da diše i da ocuplja generacije.
+              što se nekad gradilo: da traje, da diše i da okuplja generacije.
             </p>
             <p>
               Drašnice su uvijek bile mjesto koje nije tražilo pažnju — tiho, skromno i iskreno.
@@ -346,7 +370,7 @@ export default function Home() {
             {/* Google Maps embed */}
             <div className="aspect-4/3 rounded-2xl overflow-hidden shadow-sm">
               <iframe
-                src="https://maps.google.com/maps?q=Soline+116+Drasnice+Croatia&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                src="https://maps.google.com/maps?q=Drasnice+133+Podgora+Croatia&t=&z=15&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

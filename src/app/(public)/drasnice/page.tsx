@@ -13,9 +13,17 @@ import {
 } from 'lucide-react';
 
 export const metadata = {
-  title: 'Što vidjeti u Drašnicama i okolici | Villa Jurina',
+  title: 'Što vidjeti u Drašnicama i okolici',
   description:
-    'Otkrijte Drašnice i Makarsku rivijeru: Biokovo Skywalk, plaža Zlatni rat, otok Hvar, rafting na Cetini, Split i Dubrovnik. Idealno polazište za nezaboravne izlete smješten 50m od mora.',
+    'Otkrijte Drašnice i Makarsku rivijeru: Biokovo Skywalk, plaža Zlatni rat, otok Hvar, rafting na Cetini, Split i Dubrovnik. Idealno polazište za nezaboravne izlete.',
+  openGraph: {
+    title: 'Što vidjeti u Drašnicama i okolici | Villa Jurina',
+    description:
+      'Biokovo Skywalk, Zlatni rat, Hvar, rafting na Cetini — sve dostupno iz Drašnica.',
+    url: 'https://www.villajurina.hr/drasnice',
+    images: [{ url: '/images/Okolica/biokovo.webp', width: 1200, height: 630 }],
+  },
+  alternates: { canonical: 'https://www.villajurina.hr/drasnice' },
 };
 
 const attractions = [
@@ -38,8 +46,8 @@ const attractions = [
         desc: 'Prošetajte kamenim uličicama autentičnog dalmatinskog sela. Stare kamene kuće, miris lavande i osjećaj da je vrijeme stalo — pravo dalmatinsko iskustvo koje ne možete kupiti.',
       },
       {
-        name: 'Crkva sv. Jurja',
-        desc: 'Mala crkva s pogledom na more i zaštitnik mjesta. Savršena za mirnu jutarnju šetnju i fotografiju koja govori tisuću riječi.',
+            name: 'Crkva sv. Jurja',
+              desc: 'Mala crkva uz more, posvećena zaštitniku mjesta, odiše mirom i tišinom. Idealna za jutarnju šetnju, kratku molitvu ili trenutak sabranosti, gdje pogled na more dodatno pojačava osjećaj Božje blizine i zahvalnosti.',
       },
       {
         name: 'Šetnica uz more',

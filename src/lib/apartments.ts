@@ -103,8 +103,8 @@ export const apartments: Apartment[] = [
     tagline: 'Intiman prostor stvoren za parove.',
     description:
       'LUNA je intiman i profinjen apartman stvoren za one koji traže više od pukog smještaja. Balkon s pogledom na more, večeri uz zvjezdano nebo i jutarnji šum valova — sve to čini LUNU savršenim mjestom za romantični bijeg. Elegantno uređenje, privatnost i neposredna blizina mora stvaraju atmosferu u kojoj se vrijeme usporava na pravi način.',
-    capacity: 4,
-    capacityNote: '4 osobe (2+2)',
+    capacity: 3,
+    capacityNote: '3 osobe (2+1)',
     size: 35,
     beds: '1 bračni krevet + pomoćni ležaj',
     view: true,

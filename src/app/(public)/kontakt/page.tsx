@@ -1,8 +1,16 @@
 import { MapPin, Phone, Mail } from 'lucide-react';
+import KontaktForm from './KontaktForm';
 
 export const metadata = {
-  title: 'Kontakt | Villa Jurina',
-  description: 'Kontaktirajte Villa Jurina. WhatsApp, email ili posjetite nas u Drašnicama.',
+  title: 'Kontakt',
+  description:
+    'Kontaktirajte Villa Jurina — WhatsApp, email ili posjetite nas u Drašnicama 133, Podgora.',
+  openGraph: {
+    title: 'Kontakt | Villa Jurina',
+    description: 'Kontaktirajte Villa Jurina — WhatsApp, email ili nas posjetite u Drašnicama.',
+    url: 'https://www.villajurina.hr/kontakt',
+  },
+  alternates: { canonical: 'https://www.villajurina.hr/kontakt' },
 };
 
 export default function KontaktPage() {
@@ -32,7 +40,7 @@ export default function KontaktPage() {
                 <MapPin size={20} className="text-secondary shrink-0 mt-0.5" />
                 <div>
                   <p className="text-text font-medium text-sm">Adresa</p>
-                  <p className="text-muted text-sm">Soline 116, Drašnice</p>
+                  <p className="text-muted text-sm">Drašnice 133, Podgora</p>
                 </div>
               </li>
               <li className="flex items-start gap-3">
@@ -86,41 +94,10 @@ export default function KontaktPage() {
             </div>
           </div>
 
-          {/* Contact form placeholder */}
+          {/* Contact form */}
           <div>
             <h2 className="font-serif text-2xl font-semibold text-text mb-6">Pišite nam</h2>
-            <form className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-text mb-1.5">Ime i prezime</label>
-                <input
-                  type="text"
-                  className="w-full border border-sand rounded-xl px-4 py-3 text-sm text-text placeholder-muted focus:outline-none focus:border-primary transition-colors"
-                  placeholder="Vaše ime"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-text mb-1.5">Email</label>
-                <input
-                  type="email"
-                  className="w-full border border-sand rounded-xl px-4 py-3 text-sm text-text placeholder-muted focus:outline-none focus:border-primary transition-colors"
-                  placeholder="vaš@email.com"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-text mb-1.5">Poruka</label>
-                <textarea
-                  rows={5}
-                  className="w-full border border-sand rounded-xl px-4 py-3 text-sm text-text placeholder-muted focus:outline-none focus:border-primary transition-colors resize-none"
-                  placeholder="Vaša poruka..."
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-secondary hover:bg-secondary-light text-white font-medium py-3 rounded-full transition-colors text-sm"
-              >
-                Pošalji poruku
-              </button>
-            </form>
+            <KontaktForm />
           </div>
         </div>
       </section>
@@ -131,13 +108,13 @@ export default function KontaktPage() {
           <div className="mb-5">
             <h2 className="font-serif text-2xl font-semibold text-text mb-1">Kako nas pronaći</h2>
             <p className="text-sm text-muted">
-              Soline 116, Drašnice — 50 metara od šljunčane plaže, između Makarske i Podgore.
+              Drašnice 133, Podgora — 50 metara od šljunčane plaže, između Makarske i Podgore.
             </p>
           </div>
           <div className="rounded-2xl overflow-hidden border border-sand shadow-sm h-80 sm:h-96">
             <iframe
               title="Villa Jurina — lokacija na karti"
-              src="https://maps.google.com/maps?q=Soline+116+Drasnice+Hrvatska&t=m&z=15&output=embed&hl=hr"
+              src="https://maps.google.com/maps?q=Drasnice+133+Podgora+Hrvatska&t=m&z=15&output=embed&hl=hr"
               width="100%"
               height="100%"
               style={{ border: 0 }}
@@ -147,7 +124,7 @@ export default function KontaktPage() {
             />
           </div>
           <a
-            href="https://maps.google.com/maps?q=Soline+116+Drasnice+Hrvatska"
+            href="https://maps.google.com/maps?q=Drasnice+133+Podgora+Hrvatska"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 mt-4 text-sm text-secondary hover:underline font-medium"

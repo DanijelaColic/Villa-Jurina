@@ -8,7 +8,7 @@ const rezervacijaFAQ = [
   },
   {
     q: 'Koji je minimalni boravak?',
-    a: 'Minimalni boravak je 2 noći. Tijekom visoke sezone (srpanj i kolovoz) minimalni boravak može biti 7 noći.',
+    a: 'Minimalni boravak je 2 noći tijekom cijele godine.',
   },
   {
     q: 'Mogu li otkazati rezervaciju?',
@@ -25,8 +25,15 @@ const rezervacijaFAQ = [
 ];
 
 export const metadata = {
-  title: 'Rezervacija | Villa Jurina',
-  description: 'Rezervirajte apartman online. Provjerite slobodne termine i odaberite datume.',
+  title: 'Rezervacija',
+  description:
+    'Rezervirajte apartman u Villa Jurina online. Provjerite slobodne termine i odaberite datume boravka.',
+  openGraph: {
+    title: 'Rezervacija | Villa Jurina',
+    description: 'Rezervirajte apartman uz more u Drašnicama. Provjerite slobodne termine.',
+    url: 'https://www.villajurina.hr/rezervacija',
+  },
+  alternates: { canonical: 'https://www.villajurina.hr/rezervacija' },
 };
 
 type Props = {

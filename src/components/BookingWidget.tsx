@@ -37,11 +37,35 @@ export default function BookingWidget({ initialSlug }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [hub3Barcode, setHub3Barcode] = useState<string | null>(null);
+  const [epcQR, setEpcQR] = useState<string | null>(null);
+  const [barcodeLoading, setBarcodeLoading] = useState(false);
 
   const selectedApartment = apartments.find((a) => a.slug === selectedSlug);
   const priceData = checkIn && checkOut && selectedApartment
     ? calculatePrice(checkIn, checkOut, selectedApartment)
     : null;
+
+  const fetchBarcodes = useCallback(async (amount: number, guestName: string, bookingId: string) => {
+    setBarcodeLoading(true);
+    try {
+      const reference = `REZ-${bookingId.substring(0, 8).toUpperCase()}`;
+      const res = await fetch('/api/generate-barcode', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount, guestName, reference }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setHub3Barcode(data.hub3 ?? null);
+        setEpcQR(data.epc ?? null);
+      }
+    } catch {
+      // Barcodes are optional — uplata bez QR koda je i dalje moguća
+    } finally {
+      setBarcodeLoading(false);
+    }
+  }, []);
 
   const handleReset = useCallback(() => {
     setCheckIn(null);
@@ -57,15 +81,34 @@ export default function BookingWidget({ initialSlug }: Props) {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     const { name, value, type } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value,
-    }));
+    setForm((prev) => {
+      const updated = {
+        ...prev,
+        [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value,
+      };
+      // Kad se promijeni broj odraslih, resetiraj djecu ako bi ukupno premašilo kapacitet
+      if (name === 'adults' && selectedApartment) {
+        const maxChildren = selectedApartment.capacity - parseInt(value || '1');
+        if (parseInt(prev.children) > maxChildren) {
+          updated.children = String(Math.max(0, maxChildren));
+        }
+      }
+      return updated;
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!checkIn || !checkOut || !priceData) return;
+    if (!checkIn || !checkOut || !priceData || !selectedApartment) return;
+
+    const totalGuests = parseInt(form.adults) + parseInt(form.children);
+    if (totalGuests > selectedApartment.capacity) {
+      setSubmitError(
+        `Apartman ${selectedApartment.name} prima maksimalno ${selectedApartment.capacity} ${selectedApartment.capacity === 1 ? 'osobu' : selectedApartment.capacity < 5 ? 'osobe' : 'osoba'}.`,
+      );
+      return;
+    }
+
     setSubmitting(true);
     setSubmitError(null);
 
@@ -89,6 +132,10 @@ export default function BookingWidget({ initialSlug }: Props) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? 'Greška pri slanju');
       setSuccess(true);
+      // Generiraj barcodes u pozadini — ne blokira prikaz success screena
+      if (priceData && data.bookingId) {
+        fetchBarcodes(priceData.deposit, form.name, data.bookingId);
+      }
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : 'Greška pri slanju rezervacije');
     } finally {
@@ -123,18 +170,76 @@ export default function BookingWidget({ initialSlug }: Props) {
               <strong className="text-text">Check-out:</strong>{' '}
               {checkOut ? formatDisplayDate(checkOut) : ''}
             </p>
-            <p className="text-muted">
+            <p className="text-muted mb-1">
+              <strong className="text-text">Broj noći:</strong>{' '}
+              {priceData.nights}
+            </p>
+            <div className="border-t border-sand mt-3 pt-3 flex justify-between items-center">
+              <strong className="text-text">Ukupno:</strong>
+              <span className="text-primary font-bold text-lg">{priceData.totalPrice}€</span>
+            </div>
+            <p className="text-muted mt-2">
               <strong className="text-text">Depozit za uplatu (30%):</strong>{' '}
-              <span className="text-primary font-semibold">{priceData.deposit}€</span>
+              <span className="text-secondary font-semibold">{priceData.deposit}€</span>
             </p>
             <p className="mt-3 font-mono text-xs bg-white border border-sand px-3 py-2 rounded-lg">
               IBAN: HR6523900013223724831
             </p>
+
+            {/* ── QR barcodes za uplatu depozita ────────────────────── */}
+            {(barcodeLoading || hub3Barcode || epcQR) && (
+              <div className="mt-4 pt-4 border-t border-sand">
+                <p className="text-xs font-semibold text-text mb-3">
+                  Brzo plaćanje QR kodom:
+                </p>
+                {barcodeLoading ? (
+                  <div className="flex items-center justify-center gap-2 py-4 text-xs text-muted">
+                    <Loader2 size={14} className="animate-spin" />
+                    Generiranje QR kodova...
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {hub3Barcode && (
+                      <div className="bg-white border border-sand rounded-lg p-3 text-center">
+                        <p className="text-[11px] font-semibold text-text mb-2">
+                          🇭🇷 Hrvatska banka
+                        </p>
+                        <img
+                          src={hub3Barcode}
+                          alt="HUB3 PDF417 barkod za uplatu"
+                          className="max-w-full h-auto mx-auto"
+                        />
+                        <p className="text-[10px] text-muted mt-2">
+                          m-zaba, m-keks, Erste, OTP, PBZ...
+                        </p>
+                      </div>
+                    )}
+                    {epcQR && (
+                      <div className="bg-white border border-sand rounded-lg p-3 text-center">
+                        <p className="text-[11px] font-semibold text-text mb-2">
+                          🌍 EU / međunarodne banke
+                        </p>
+                        <img
+                          src={epcQR}
+                          alt="EPC SEPA QR kod za uplatu"
+                          className="max-w-full h-auto mx-auto"
+                        />
+                        <p className="text-[10px] text-muted mt-2">
+                          Revolut, N26, Wise, SEPA banke...
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
         <button
           onClick={() => {
             setSuccess(false);
+            setHub3Barcode(null);
+            setEpcQR(null);
             handleReset();
             setForm({ name: '', email: '', phone: '', adults: '2', children: '0', notes: '', agreeRules: false });
           }}
@@ -325,12 +430,24 @@ export default function BookingWidget({ initialSlug }: Props) {
                     onChange={handleFormChange}
                     className="w-full border border-sand rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors bg-white"
                   >
-                    {[0, 1, 2, 3].map((n) => (
+                    {Array.from(
+                      {
+                        length:
+                          Math.max(
+                            0,
+                            selectedApartment.capacity - parseInt(form.adults || '1'),
+                          ) + 1,
+                      },
+                      (_, i) => i,
+                    ).map((n) => (
                       <option key={n} value={n}>
                         {n}
                       </option>
                     ))}
                   </select>
+                  <p className="text-xs text-muted mt-1">
+                    Max. {selectedApartment.capacity} osoba ukupno
+                  </p>
                 </div>
               </div>
 

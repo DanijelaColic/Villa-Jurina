@@ -5,6 +5,54 @@
 
 const BASE_URL = 'https://www.villajurina.hr';
 
+/** FAQPage — Google može prikazati FAQ odgovore direktno u search rezultatima */
+export function FAQJsonLd({ items }: { items: { q: string; a: string }[] }) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map(({ q, a }) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: a,
+      },
+    })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+/** BreadcrumbList — prikazuje putanju u Google rezultatima (npr. Villa Jurina > Apartmani > Sky) */
+export function BreadcrumbJsonLd({
+  items,
+}: {
+  items: { name: string; url: string }[];
+}) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map(({ name, url }, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name,
+      item: url,
+    })),
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
 /** LodgingBusiness — prikazuje se na homepageu */
 export function LodgingBusinessJsonLd() {
   const schema = {
@@ -18,8 +66,8 @@ export function LodgingBusinessJsonLd() {
       'Apartmani s pogledom na more u Drašnicama na Makarskoj rivijeri. 50 metara od šljunčane plaže.',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Soline 116',
-      addressLocality: 'Drašnice',
+      streetAddress: 'Drašnice 133',
+      addressLocality: 'Podgora',
       addressRegion: 'Splitsko-dalmatinska županija',
       postalCode: '21328',
       addressCountry: 'HR',
@@ -89,8 +137,8 @@ export function ApartmentJsonLd({
       url: BASE_URL,
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'Soline 116',
-        addressLocality: 'Drašnice',
+        streetAddress: 'Drašnice 133',
+        addressLocality: 'Podgora',
         addressCountry: 'HR',
       },
     },

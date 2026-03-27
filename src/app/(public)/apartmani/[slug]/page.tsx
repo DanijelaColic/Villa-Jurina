@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Users, Maximize2, Check } from 'lucide-react';
 import { apartments, getApartment } from '@/lib/apartments';
 import ImageGallery from '@/components/ImageGallery';
-import { ApartmentJsonLd } from '@/components/JsonLd';
+import { ApartmentJsonLd, BreadcrumbJsonLd } from '@/components/JsonLd';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -17,9 +17,19 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const apt = getApartment(slug);
   if (!apt) return {};
+  const shortDesc = apt.tagline + ` Apartman za ${apt.capacityNote}, ${apt.size} m², Drašnice.`;
   return {
-    title: `Apartman ${apt.name} | Villa Jurina`,
-    description: apt.description,
+    title: `Apartman ${apt.name}`,
+    description: shortDesc,
+    openGraph: {
+      title: `Apartman ${apt.name} | Villa Jurina`,
+      description: shortDesc,
+      url: `https://www.villajurina.hr/apartmani/${slug}`,
+      images: apt.images[0]
+        ? [{ url: apt.images[0], width: 1200, height: 630, alt: `Apartman ${apt.name}` }]
+        : [],
+    },
+    alternates: { canonical: `https://www.villajurina.hr/apartmani/${slug}` },
   };
 }
 
@@ -31,6 +41,13 @@ export default async function ApartmanPage({ params }: Props) {
 
   return (
     <div className="pt-20">
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Početna', url: 'https://www.villajurina.hr' },
+          { name: 'Apartmani', url: 'https://www.villajurina.hr/apartmani' },
+          { name: `Apartman ${apt.name}`, url: `https://www.villajurina.hr/apartmani/${apt.slug}` },
+        ]}
+      />
       <ApartmentJsonLd
         name={apt.name}
         description={apt.description}

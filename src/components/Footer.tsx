@@ -13,8 +13,8 @@ export default function Footer() {
               <Image
                 src="/images/Logo_Villa_Jurina.png"
                 alt="Villa Jurina"
-                width={48}
-                height={48}
+                width={72}
+                height={72}
                 className="object-contain brightness-0 invert"
               />
               <h3 className="font-serif text-xl font-semibold">Villa Jurina</h3>
@@ -35,6 +35,7 @@ export default function Footer() {
                 { href: '/apartmani', label: 'Apartmani' },
                 { href: '/rezervacija', label: 'Rezervacija' },
                 { href: '/kontakt', label: 'Kontakt' },
+                { href: '/privatnost', label: 'Politika privatnosti' },
               ].map(({ href, label }) => (
                 <li key={href}>
                   <Link
@@ -56,7 +57,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start gap-2 text-white/70 text-sm">
                 <MapPin size={16} className="mt-0.5 shrink-0 text-secondary" />
-                <span>Soline 116, Drašnice</span>
+                <span>Drašnice 133, Podgora</span>
               </li>
               <li>
                 <a
@@ -96,6 +97,17 @@ export default function Footer() {
         <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-2 text-white/40 text-xs">
           <p>© {new Date().getFullYear()} Villa Jurina. Sva prava pridržana.</p>
           <p>Drašnice, Makarska rivijera</p>
+          <p>
+            Izradio{' '}
+            <a
+              href="https://www.enkr.hr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white/60 transition-colors"
+            >
+              enkr.hr
+            </a>
+          </p>
         </div>
       </div>
     </footer>
