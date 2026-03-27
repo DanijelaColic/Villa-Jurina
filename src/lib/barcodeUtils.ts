@@ -1,4 +1,4 @@
-import bwipjs from 'bwip-js';
+import bwipjs from 'bwip-js/node';
 import QRCode from 'qrcode';
 
 const RECIPIENT_NAME = 'Antonija Pušić';
