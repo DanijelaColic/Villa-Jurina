@@ -1,26 +1,18 @@
 import bwipjs from 'bwip-js/node';
 import QRCode from 'qrcode';
-import { RECIPIENT_IBAN, RECIPIENT_NAME } from '@/lib/paymentDetails';
+import { RECIPIENT_NAME, RECIPIENT_IBAN } from '../booking.config';
 
 const CURRENCY = 'EUR';
 
 function normalizeCroatian(str: string): string {
   const map: Record<string, string> = {
-    č: 'c',
-    ć: 'c',
-    đ: 'd',
-    š: 's',
-    ž: 'z',
-    Č: 'C',
-    Ć: 'C',
-    Đ: 'D',
-    Š: 'S',
-    Ž: 'Z',
+    č: 'c', ć: 'c', đ: 'd', š: 's', ž: 'z',
+    Č: 'C', Ć: 'C', Đ: 'D', Š: 'S', Ž: 'Z',
   };
   return str.replace(/[čćđšžČĆĐŠŽ]/g, (c) => map[c] ?? c);
 }
 
-// HUB3 format — PDF417 2D barcode za hrvatske banke (m-zaba, m-keks, Erste, OTP...)
+/** HUB3 PDF417 2D barcode za hrvatske banke (m-zaba, m-keks, Erste, OTP...) */
 export function formatHUB3String(amount: number, guestName: string, reference: string): string {
   const amountCents = Math.round(amount * 100).toString();
   const normalizedPayer = normalizeCroatian(guestName);
@@ -29,47 +21,38 @@ export function formatHUB3String(amount: number, guestName: string, reference: s
     'HRVHUB30',
     CURRENCY,
     amountCents,
-    '', // reserved
-    '',
-    '',
-    RECIPIENT_NAME, // točno ime vlasnika računa (s dijakritikama)
-    '', // adresa (optional)
-    '', // adresa (optional)
+    '', '', '',
+    RECIPIENT_NAME,
+    '', '',
     RECIPIENT_IBAN,
     'HR00',
-    reference, // poziv na broj
-    '', // MUST be empty per HUB3 spec
-    normalizedPayer, // ime platitelja (normalized)
+    reference,
     '',
-    '',
+    normalizedPayer,
+    '', '',
   ].join('\n');
 }
 
-// EPC/SEPA format — standardni QR kod za EU banke (Revolut, N26, Wise, SEPA banke)
+/** EPC/SEPA QR za EU banke (Revolut, N26, Wise, SEPA banke) */
 export function formatEPCString(amount: number, guestName: string, reference: string): string {
   const amountFormatted = `EUR${amount.toFixed(2)}`;
   const remittance = `${normalizeCroatian(guestName)} - ${reference}`.substring(0, 140);
 
   return [
-    'BCD',
-    '002',
-    '1',
-    'SCT',
-    '', // BIC (nije obavezan za SEPA unutar HR/EU)
+    'BCD', '002', '1', 'SCT',
+    '',
     RECIPIENT_NAME,
     RECIPIENT_IBAN,
     amountFormatted,
-    '', // purpose (optional)
-    '', // structured reference
-    remittance, // unstructured remittance
-    '', // info to originator
+    '', '',
+    remittance, '',
   ].join('\n');
 }
 
 const PDF417_OPTS = { bcid: 'pdf417', scale: 5, height: 14, includetext: false } as const;
 const QR_OPTS = { errorCorrectionLevel: 'M' as const, margin: 2, width: 300 };
 
-// ── Buffer verzije — za email attachments ─────────────────────────
+// ── Buffer verzije — za email attachments ────────────────────────
 
 export async function generateHUB3Buffer(
   amount: number,
@@ -88,7 +71,7 @@ export async function generateEPCBuffer(
   return QRCode.toBuffer(formatEPCString(amount, guestName, reference), QR_OPTS);
 }
 
-// ── Data URL verzije — za frontend prikaz ─────────────────────────
+// ── Data URL verzije — za frontend prikaz ────────────────────────
 
 export async function generateHUB3Barcode(
   amount: number,

@@ -1,25 +1,30 @@
+/**
+ * TEMPLATE: kopiraj kao src/app/api/bookings/route.ts
+ * Zamijeni MODULE_ROOT s putanjom do modula, npr. '@/modules/booking-admin'
+ */
 import { NextRequest, NextResponse } from 'next/server';
-import { createServerSupabaseClient } from '@/lib/supabase';
-import { getApartment } from '@/lib/apartments';
-import { parseLocalDate, isRangeAvailable, diffDays } from '@/lib/dates';
-import { sendNewBookingEmails } from '@/lib/email';
+import { createServerSupabaseClient } from 'MODULE_ROOT/lib/supabase';
+import { getApartment } from 'MODULE_ROOT/booking.config';
+import { parseLocalDate, isRangeAvailable, diffDays } from 'MODULE_ROOT/lib/dates';
+import { sendNewBookingEmails } from 'MODULE_ROOT/lib/email';
+import { MIN_NIGHTS, DEPOSIT_PERCENT, HIGH_SEASON_MONTHS } from 'MODULE_ROOT/booking.config';
 
 // GET /api/bookings?apartment=slug
-// Vraća zauzete datume za odabrani apartman
+// Vraća zauzete datume za odabrani apartman (koristi BookingCalendar)
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const slug = searchParams.get('apartment');
 
   if (!slug) {
-    return NextResponse.json({ error: 'Nedostaje parametar apartment' }, { status: 400 });
+    return NextResponse.json({ error: 'Missing apartment parameter' }, { status: 400 });
   }
 
   const apt = getApartment(slug);
   if (!apt) {
-    return NextResponse.json({ error: 'Apartman nije pronađen' }, { status: 404 });
+    return NextResponse.json({ error: 'Apartment not found' }, { status: 404 });
   }
 
-  // Ako je apartman zauzet cijelu sezonu — blokiraj tekuću godinu (Lipanj–Rujan)
+  // Ako je apartman zauzet cijelu sezonu — vrati sintetički blok
   if (apt.fullyBooked) {
     const year = new Date().getFullYear();
     return NextResponse.json([{ check_in: `${year}-06-01`, check_out: `${year}-10-01` }]);
@@ -34,20 +39,14 @@ export async function GET(request: NextRequest) {
       .neq('status', 'cancelled');
 
     if (error) throw error;
-
     return NextResponse.json(data ?? []);
-  } catch (err) {
-    const detail =
-      err && typeof err === 'object' && 'message' in err
-        ? String((err as { message: unknown }).message)
-        : String(err);
-    console.error('GET /api/bookings:', detail, err);
-    return NextResponse.json({ error: 'Greška pri dohvatu rezervacija' }, { status: 500 });
+  } catch {
+    return NextResponse.json({ error: 'Error fetching bookings' }, { status: 500 });
   }
 }
 
 // POST /api/bookings
-// Kreira novu rezervaciju
+// Kreira novu rezervaciju (javna forma)
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -63,19 +62,18 @@ export async function POST(request: NextRequest) {
       notes,
     } = body;
 
-    // Validacija obaveznih polja
     if (!apartment_slug || !check_in || !check_out || !guest_name || !guest_email) {
-      return NextResponse.json({ error: 'Nedostaju obavezna polja' }, { status: 400 });
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
     const apt = getApartment(apartment_slug);
     if (!apt) {
-      return NextResponse.json({ error: 'Apartman nije pronađen' }, { status: 404 });
+      return NextResponse.json({ error: 'Apartment not found' }, { status: 404 });
     }
 
     if (apt.fullyBooked) {
       return NextResponse.json(
-        { error: 'Ovaj apartman nije dostupan za rezervaciju' },
+        { error: 'This apartment is not available for booking' },
         { status: 400 },
       );
     }
@@ -84,9 +82,9 @@ export async function POST(request: NextRequest) {
     const checkOutDate = parseLocalDate(check_out);
     const nights = diffDays(checkOutDate, checkInDate);
 
-    if (nights < 2) {
+    if (nights < MIN_NIGHTS) {
       return NextResponse.json(
-        { error: 'Minimalni boravak su 2 noći' },
+        { error: `Minimum stay is ${MIN_NIGHTS} nights` },
         { status: 400 },
       );
     }
@@ -94,44 +92,40 @@ export async function POST(request: NextRequest) {
     const totalGuests = (adults ?? 1) + (children ?? 0);
     if (totalGuests > apt.capacity) {
       return NextResponse.json(
-        { error: `Apartman ${apt.name} prima maksimalno ${apt.capacity} osoba.` },
+        { error: `${apt.name} accommodates a maximum of ${apt.capacity} guests.` },
         { status: 400 },
       );
     }
 
     const supabase = createServerSupabaseClient();
 
-    // Provjera preklapanja s postojećim rezervacijama
     const { data: existing } = await supabase
       .from('bookings')
       .select('check_in, check_out')
       .eq('apartment_slug', apartment_slug)
       .neq('status', 'cancelled');
 
-    const existingRanges = existing ?? [];
-    if (!isRangeAvailable(checkInDate, checkOutDate, existingRanges)) {
+    if (!isRangeAvailable(checkInDate, checkOutDate, existing ?? [])) {
       return NextResponse.json(
-        { error: 'Odabrani termini su već zauzeti. Molimo odaberite druge datume.' },
+        { error: 'Selected dates are already booked. Please choose different dates.' },
         { status: 409 },
       );
     }
 
-    // Izračun cijene (noć po noć zbog mješovitih sezona)
+    // Izračun cijene po sezoni
     let lowNights = 0;
     let highNights = 0;
     const current = new Date(checkInDate);
     while (current < checkOutDate) {
       const month = current.getMonth() + 1;
-      if (month === 7 || month === 8) highNights++;
+      if (HIGH_SEASON_MONTHS.includes(month)) highNights++;
       else lowNights++;
       current.setDate(current.getDate() + 1);
     }
-    const totalPrice =
-      lowNights * apt.priceOffSeason + highNights * apt.priceHighSeason;
-    const deposit = Math.round(totalPrice * 0.3);
+    const totalPrice = lowNights * apt.priceOffSeason + highNights * apt.priceHighSeason;
+    const deposit = Math.round(totalPrice * DEPOSIT_PERCENT);
     const avgPricePerNight = Math.round(totalPrice / nights);
 
-    // Insert u bazu
     const { data: booking, error: insertError } = await supabase
       .from('bookings')
       .insert({
@@ -155,7 +149,6 @@ export async function POST(request: NextRequest) {
 
     if (insertError) throw insertError;
 
-    // Slanje emailova (gost + vlasnik) — booking.id koristi se za QR kod i poziv na broj
     await sendNewBookingEmails({
       guestName: guest_name,
       guestEmail: guest_email,
@@ -173,7 +166,7 @@ export async function POST(request: NextRequest) {
   } catch (err) {
     console.error('Booking error:', err);
     return NextResponse.json(
-      { error: 'Greška pri kreiranju rezervacije. Pokušajte ponovo ili nas kontaktirajte.' },
+      { error: 'Error creating booking. Please try again or contact us.' },
       { status: 500 },
     );
   }

@@ -26,8 +26,16 @@ export type BookedRange = {
 };
 
 export function createServerSupabaseClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_KEY;
+  // Backward-compatible: prihvati i stari PUBLIC_SUPABASE_URL naziv.
+  const url = (
+    process.env.NEXT_PUBLIC_SUPABASE_URL ??
+    process.env.PUBLIC_SUPABASE_URL
+  )?.trim();
+  // Vercel / Supabase UI često koriste ime SUPABASE_SERVICE_ROLE_KEY
+  const key = (
+    process.env.SUPABASE_SERVICE_KEY ??
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  )?.trim();
 
   if (!url || !key) {
     throw new Error('Nedostaju Supabase environment varijable. Dodaj ih u .env.local');

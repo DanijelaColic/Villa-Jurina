@@ -14,8 +14,8 @@ import {
   isDateBooked,
   getFirstBlockedAfter,
   getMonthGrid,
-} from '@/lib/dates';
-import type { BookedRange } from '@/lib/supabase';
+} from '../lib/dates';
+import type { BookedRange } from '../types';
 
 type DayState =
   | 'past'
@@ -24,8 +24,8 @@ type DayState =
   | 'check-out'
   | 'in-range'
   | 'hover-range'
-  | 'blocked-for-checkout' // nakon prvog zauzetog dana kad biram checkout
-  | 'too-close' // checkIn+1 dan (min 2 noći)
+  | 'blocked-for-checkout'
+  | 'too-close'
   | 'available';
 
 type Props = {
@@ -35,6 +35,10 @@ type Props = {
   onCheckInSelect: (date: Date) => void;
   onCheckOutSelect: (date: Date) => void;
   onReset: () => void;
+  /** API path — default '/api/bookings' */
+  bookingsApiPath?: string;
+  /** Minimalni broj noći — uzima se iz MIN_NIGHTS config, ali može se override-ati */
+  minNights?: number;
 };
 
 export default function BookingCalendar({
@@ -44,50 +48,33 @@ export default function BookingCalendar({
   onCheckInSelect,
   onCheckOutSelect,
   onReset,
+  bookingsApiPath = '/api/bookings',
+  minNights = 2,
 }: Props) {
   const today = startOfToday();
   const [bookedRanges, setBookedRanges] = useState<BookedRange[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [hoverDate, setHoverDate] = useState<Date | null>(null);
-  // Koji mjesec prikazujemo (offset od danas)
   const [monthOffset, setMonthOffset] = useState(0);
 
-  // Dohvati zauzete datume kad se promijeni apartman
   useEffect(() => {
-    if (!apartmentSlug) {
-      setLoading(false);
-      setBookedRanges([]);
-      setError('Nije odabran apartman.');
-      return;
-    }
-
     setLoading(true);
     setError(null);
-    const q = new URLSearchParams({ apartment: apartmentSlug });
-    fetch(`/api/bookings?${q.toString()}`)
-      .then(async (r) => {
-        const data: unknown = await r.json();
-        if (Array.isArray(data)) {
-          setBookedRanges(data);
-          return;
-        }
-        const message =
-          typeof (data as { error?: string })?.error === 'string'
-            ? (data as { error: string }).error
-            : 'Greška pri učitavanju slobodnih termina';
-        setError(message);
+    fetch(`${bookingsApiPath}?apartment=${apartmentSlug}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (Array.isArray(data)) setBookedRanges(data);
+        else setError('Error loading availability');
       })
-      .catch(() => setError('Greška pri učitavanju slobodnih termina'))
+      .catch(() => setError('Error loading available dates'))
       .finally(() => setLoading(false));
-  }, [apartmentSlug]);
+  }, [apartmentSlug, bookingsApiPath]);
 
-  // Resetiraj hover kad se završi selekcija
   useEffect(() => {
     if (checkOut) setHoverDate(null);
   }, [checkOut]);
 
-  // Granica: prvi zauzeti dan nakon odabranog check-in
   const firstBlocked = checkIn && !checkOut
     ? getFirstBlockedAfter(checkIn, bookedRanges)
     : null;
@@ -100,41 +87,32 @@ export default function BookingCalendar({
       if (checkIn && isSameDay(day, checkIn)) return 'check-in';
       if (checkOut && isSameDay(day, checkOut)) return 'check-out';
 
-      // Ako je selekcija završena — prikaži raspon
       if (checkIn && checkOut) {
         if (day > checkIn && day < checkOut) return 'in-range';
       }
 
-      // Biram checkout (checkIn set, checkOut nije)
       if (checkIn && !checkOut) {
-        // Blokiran za checkout — prošao je zauzeti dan
         if (firstBlocked && !isBeforeDay(day, firstBlocked)) {
           return 'blocked-for-checkout';
         }
-        // Premalo noći (samo 1 noć = checkIn+1)
-        if (isSameDay(day, addDays(checkIn, 1))) return 'too-close';
-
-        // Prikaz hover raspona
+        if (isSameDay(day, addDays(checkIn, minNights - 1))) return 'too-close';
         if (hoverDate && day > checkIn && day < hoverDate) return 'hover-range';
       }
 
       return 'available';
     },
-    [today, bookedRanges, checkIn, checkOut, hoverDate, firstBlocked],
+    [today, bookedRanges, checkIn, checkOut, hoverDate, firstBlocked, minNights],
   );
 
   const handleDayClick = useCallback(
     (day: Date) => {
       const state = getDayState(day);
 
-      // Nedodirljivi dani
       if (state === 'past' || state === 'booked') return;
 
-      // Nije aktivna selekcija checkshouta — postavi novi check-in
       if (!checkIn || checkOut) {
         if (state === 'available' || state === 'blocked-for-checkout') {
           if (state === 'blocked-for-checkout') {
-            // Zauzeto za checkout, ali može biti novi check-in
             if (!isDateBooked(day, bookedRanges)) {
               onReset();
               onCheckInSelect(day);
@@ -146,7 +124,6 @@ export default function BookingCalendar({
         return;
       }
 
-      // Biram checkout
       if (checkIn && !checkOut) {
         if (state === 'too-close' || state === 'blocked-for-checkout') return;
 
@@ -156,19 +133,18 @@ export default function BookingCalendar({
         }
 
         if (isBeforeDay(day, checkIn)) {
-          // Kliknuo je datum prije check-in — resetiraj i postavi novi check-in
           onReset();
           onCheckInSelect(day);
           return;
         }
 
         const nights = diffDays(day, checkIn);
-        if (nights < 2) return;
+        if (nights < minNights) return;
 
         onCheckOutSelect(day);
       }
     },
-    [getDayState, checkIn, checkOut, bookedRanges, onCheckInSelect, onCheckOutSelect, onReset],
+    [getDayState, checkIn, checkOut, bookedRanges, onCheckInSelect, onCheckOutSelect, onReset, minNights],
   );
 
   const handleDayHover = useCallback(
@@ -178,7 +154,6 @@ export default function BookingCalendar({
     [checkIn, checkOut],
   );
 
-  // Generiraj dva vidljiva mjeseca
   const months = [monthOffset, monthOffset + 1].map((offset) => {
     const ref = new Date(today.getFullYear(), today.getMonth() + offset, 1);
     return { year: ref.getFullYear(), month: ref.getMonth() };
@@ -187,15 +162,13 @@ export default function BookingCalendar({
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20 text-muted text-sm">
-        <span className="animate-pulse">Učitavanje kalendara...</span>
+        <span className="animate-pulse">Loading calendar...</span>
       </div>
     );
   }
 
   if (error) {
-    return (
-      <div className="py-10 text-center text-red-500 text-sm">{error}</div>
-    );
+    return <div className="py-10 text-center text-red-500 text-sm">{error}</div>;
   }
 
   return (
@@ -204,24 +177,22 @@ export default function BookingCalendar({
       <div className="flex flex-wrap items-center gap-4 mb-6 text-xs text-muted">
         <span className="flex items-center gap-1.5">
           <span className="w-3.5 h-3.5 rounded-sm bg-green-100 border border-green-300 inline-block" />
-          Slobodno
+          Available
         </span>
         <span className="flex items-center gap-1.5">
           <span className="w-3.5 h-3.5 rounded-sm bg-red-100 border border-red-300 inline-block" />
-          Zauzeto
+          Unavailable
         </span>
         <span className="flex items-center gap-1.5">
           <span className="w-3.5 h-3.5 rounded-sm bg-primary inline-block" />
-          Odabrano
+          Selected
         </span>
         {!checkIn && (
-          <span className="ml-auto text-secondary font-medium">
-            Odaberite datum dolaska
-          </span>
+          <span className="ml-auto text-secondary font-medium">Select check-in date</span>
         )}
         {checkIn && !checkOut && (
           <span className="ml-auto text-secondary font-medium">
-            Odaberite datum odlaska (min. 2 noći)
+            Select check-out (min. {minNights} nights)
           </span>
         )}
       </div>
@@ -232,20 +203,20 @@ export default function BookingCalendar({
           onClick={() => setMonthOffset((o) => Math.max(0, o - 1))}
           disabled={monthOffset === 0}
           className="p-2 rounded-full hover:bg-sand disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-          aria-label="Prethodni mjesec"
+          aria-label="Previous month"
         >
           <ChevronLeft size={20} />
         </button>
         <button
           onClick={() => setMonthOffset((o) => o + 2)}
           className="p-2 rounded-full hover:bg-sand transition-colors"
-          aria-label="Sljedeći mjesec"
+          aria-label="Next month"
         >
           <ChevronRight size={20} />
         </button>
       </div>
 
-      {/* Kalendar — 2 mjeseca */}
+      {/* Dva kalendarska mjeseca */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {months.map(({ year, month }) => (
           <MonthGrid
@@ -259,14 +230,13 @@ export default function BookingCalendar({
         ))}
       </div>
 
-      {/* Reset gumb */}
       {(checkIn || checkOut) && (
         <div className="mt-4 text-center">
           <button
             onClick={onReset}
             className="text-sm text-muted hover:text-primary underline underline-offset-2 transition-colors"
           >
-            Poništi odabir
+            Clear selection
           </button>
         </div>
       )}
@@ -274,7 +244,7 @@ export default function BookingCalendar({
   );
 }
 
-// ── MonthGrid ─────────────────────────────────────────────────────
+// ── MonthGrid ──────────────────────────────────────────────────────
 
 type MonthGridProps = {
   year: number;
@@ -289,12 +259,10 @@ function MonthGrid({ year, month, getDayState, onDayClick, onDayHover }: MonthGr
 
   return (
     <div>
-      {/* Naslov mjeseca */}
       <h3 className="text-center font-serif font-semibold text-text mb-4">
         {MONTHS_HR[month]} {year}
       </h3>
 
-      {/* Zaglavlje dana */}
       <div className="grid grid-cols-7 mb-1">
         {DAYS_HR.map((d) => (
           <div key={d} className="text-center text-xs text-muted font-medium py-1">
@@ -303,7 +271,6 @@ function MonthGrid({ year, month, getDayState, onDayClick, onDayHover }: MonthGr
         ))}
       </div>
 
-      {/* Dani */}
       <div className="grid grid-cols-7 gap-y-0.5">
         {grid.map((day, idx) => {
           if (!day) return <div key={`empty-${idx}`} />;
@@ -323,34 +290,25 @@ function MonthGrid({ year, month, getDayState, onDayClick, onDayHover }: MonthGr
               className={clsx(
                 'relative h-9 flex items-center justify-center text-sm select-none transition-colors',
                 {
-                  // Past or blocked-for-checkout
                   'text-gray-300 cursor-not-allowed':
                     state === 'past' || state === 'blocked-for-checkout',
-                  // Booked
                   'bg-red-50 text-red-300 cursor-not-allowed line-through': state === 'booked',
-                  // Check-in
                   'bg-primary text-white font-semibold rounded-l-full cursor-pointer z-10':
                     state === 'check-in',
-                  // Check-out
                   'bg-primary text-white font-semibold rounded-r-full cursor-pointer z-10':
                     state === 'check-out',
-                  // In range (confirmed)
                   'bg-primary/15 text-primary': state === 'in-range',
-                  // Hover preview range
                   'bg-primary/10 text-primary': state === 'hover-range',
-                  // Too close (1 noć)
                   'text-gray-400 cursor-not-allowed': state === 'too-close',
-                  // Available
                   'text-text cursor-pointer hover:bg-primary/10 rounded-full': state === 'available',
-                  // Pointer
                   'cursor-pointer': isInteractive,
                 },
               )}
               title={
                 state === 'booked'
-                  ? 'Zauzeto'
+                  ? 'Unavailable'
                   : state === 'too-close'
-                    ? 'Minimalni boravak je 2 noći'
+                    ? `Minimum stay is ${2} nights`
                     : undefined
               }
             >
