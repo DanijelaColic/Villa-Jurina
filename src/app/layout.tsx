@@ -12,7 +12,7 @@ const playfair = Playfair_Display({
   subsets: ['latin'],
 });
 
-const BASE_URL = 'https://www.villajurina.hr';
+const BASE_URL = 'https://villajurina.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

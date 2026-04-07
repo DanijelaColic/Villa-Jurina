@@ -11,10 +11,10 @@ export const metadata = {
     title: 'Apartmani | Villa Jurina',
     description:
       'Četiri apartmana s pogledom na more u Drašnicama — Sky, Luna, Arba i Harmonia.',
-    url: 'https://www.villajurina.hr/apartmani',
+    url: 'https://villajurina.com/apartmani',
     images: [{ url: '/images/apartments/arba/Arba1.jpeg', width: 1200, height: 630 }],
   },
-  alternates: { canonical: 'https://www.villajurina.hr/apartmani' },
+  alternates: { canonical: 'https://villajurina.com/apartmani' },
 };
 
 export default function ApartmaniPage() {

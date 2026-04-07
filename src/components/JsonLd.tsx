@@ -3,7 +3,7 @@
  * Poboljšavaju prikaz u Google rezultatima (rich snippets).
  */
 
-const BASE_URL = 'https://www.villajurina.hr';
+const BASE_URL = 'https://villajurina.com';
 
 /** FAQPage — Google može prikazati FAQ odgovore direktno u search rezultatima */
 export function FAQJsonLd({ items }: { items: { q: string; a: string }[] }) {

@@ -20,10 +20,10 @@ export const metadata = {
     title: 'Što vidjeti u Drašnicama i okolici | Villa Jurina',
     description:
       'Biokovo Skywalk, Zlatni rat, Hvar, rafting na Cetini — sve dostupno iz Drašnica.',
-    url: 'https://www.villajurina.hr/drasnice',
+    url: 'https://villajurina.com/drasnice',
     images: [{ url: '/images/Okolica/biokovo.webp', width: 1200, height: 630 }],
   },
-  alternates: { canonical: 'https://www.villajurina.hr/drasnice' },
+  alternates: { canonical: 'https://villajurina.com/drasnice' },
 };
 
 const attractions = [

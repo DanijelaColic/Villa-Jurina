@@ -31,9 +31,9 @@ export const metadata = {
   openGraph: {
     title: 'Rezervacija | Villa Jurina',
     description: 'Rezervirajte apartman uz more u Drašnicama. Provjerite slobodne termine.',
-    url: 'https://www.villajurina.hr/rezervacija',
+    url: 'https://villajurina.com/rezervacija',
   },
-  alternates: { canonical: 'https://www.villajurina.hr/rezervacija' },
+  alternates: { canonical: 'https://villajurina.com/rezervacija' },
 };
 
 type Props = {

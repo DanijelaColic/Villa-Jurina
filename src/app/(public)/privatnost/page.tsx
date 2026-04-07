@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description:
     'Politika privatnosti Villa Jurina — kako prikupljamo, koristimo i štitimo vaše osobne podatke sukladno GDPR-u.',
   robots: { index: true },
-  alternates: { canonical: 'https://www.villajurina.hr/privatnost' },
+  alternates: { canonical: 'https://villajurina.com/privatnost' },
 };
 
 const LAST_UPDATED = '27. ožujka 2025.';

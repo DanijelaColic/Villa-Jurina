@@ -7,10 +7,10 @@ export const metadata = {
   openGraph: {
     title: 'Galerija | Villa Jurina',
     description: 'Fotografije apartmana i okolice Drašnica na Makarskoj rivijeri.',
-    url: 'https://www.villajurina.hr/galerija',
+    url: 'https://villajurina.com/galerija',
     images: [{ url: '/images/apartments/harmonia/Harmonia1.jpeg', width: 1200, height: 630 }],
   },
-  alternates: { canonical: 'https://www.villajurina.hr/galerija' },
+  alternates: { canonical: 'https://villajurina.com/galerija' },
 };
 
 export default function GalerijaPage() {

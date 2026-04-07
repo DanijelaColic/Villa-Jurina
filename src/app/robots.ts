@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 
-const BASE_URL = 'https://www.villajurina.hr';
+const BASE_URL = 'https://villajurina.com';
 
 export default function robots(): MetadataRoute.Robots {
   return {

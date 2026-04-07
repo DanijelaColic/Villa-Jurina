@@ -8,9 +8,9 @@ export const metadata = {
   openGraph: {
     title: 'Kontakt | Villa Jurina',
     description: 'Kontaktirajte Villa Jurina — WhatsApp, email ili nas posjetite u Drašnicama.',
-    url: 'https://www.villajurina.hr/kontakt',
+    url: 'https://villajurina.com/kontakt',
   },
-  alternates: { canonical: 'https://www.villajurina.hr/kontakt' },
+  alternates: { canonical: 'https://villajurina.com/kontakt' },
 };
 
 export default function KontaktPage() {

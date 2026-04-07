@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: Props) {
     openGraph: {
       title: `Apartman ${apt.name} | Villa Jurina`,
       description: shortDesc,
-      url: `https://www.villajurina.hr/apartmani/${slug}`,
+      url: `https://villajurina.com/apartmani/${slug}`,
       images: apt.images[0]
         ? [{ url: apt.images[0], width: 1200, height: 630, alt: `Apartman ${apt.name}` }]
         : [],
     },
-    alternates: { canonical: `https://www.villajurina.hr/apartmani/${slug}` },
+    alternates: { canonical: `https://villajurina.com/apartmani/${slug}` },
   };
 }
 
@@ -43,9 +43,9 @@ export default async function ApartmanPage({ params }: Props) {
     <div className="pt-20">
       <BreadcrumbJsonLd
         items={[
-          { name: 'Početna', url: 'https://www.villajurina.hr' },
-          { name: 'Apartmani', url: 'https://www.villajurina.hr/apartmani' },
-          { name: `Apartman ${apt.name}`, url: `https://www.villajurina.hr/apartmani/${apt.slug}` },
+          { name: 'Početna', url: 'https://villajurina.com' },
+          { name: 'Apartmani', url: 'https://villajurina.com/apartmani' },
+          { name: `Apartman ${apt.name}`, url: `https://villajurina.com/apartmani/${apt.slug}` },
         ]}
       />
       <ApartmentJsonLd
