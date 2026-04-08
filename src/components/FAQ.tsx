@@ -23,7 +23,7 @@ const faqItems: FAQItem[] = [
   },
   {
     q: 'Smiju li se dovoditi kućni ljubimci?',
-    a: 'Ljubimci su dobrodošli uz prethodni dogovor. Molimo da nas obavijestite pri rezervaciji kako bismo osigurali odgovarajući smještaj.',
+    a: 'Kako bismo osigurali ugodan boravak za sve goste, kućni ljubimci nisu dozvoljeni u smještaju.',
   },
   {
     q: 'Kako plaćam rezervaciju?',

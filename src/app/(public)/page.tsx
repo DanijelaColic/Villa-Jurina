@@ -39,7 +39,7 @@ export default function Home() {
           },
           {
             q: 'Smiju li se dovoditi kućni ljubimci?',
-            a: 'Ljubimci su dobrodošli uz prethodni dogovor.',
+            a: 'Kako bismo osigurali ugodan boravak za sve goste, kućni ljubimci nisu dozvoljeni u smještaju.',
           },
         ]}
       />
