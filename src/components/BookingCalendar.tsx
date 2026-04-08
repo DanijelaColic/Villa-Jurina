@@ -15,6 +15,7 @@ import {
   getFirstBlockedAfter,
   getMonthGrid,
 } from '@/lib/dates';
+import { getApartment, getPriceForDate } from '@/lib/apartments';
 import type { BookedRange } from '@/lib/supabase';
 
 type DayState =
@@ -252,6 +253,7 @@ export default function BookingCalendar({
             key={`${year}-${month}`}
             year={year}
             month={month}
+            apartmentSlug={apartmentSlug}
             getDayState={getDayState}
             onDayClick={handleDayClick}
             onDayHover={handleDayHover}
@@ -279,13 +281,22 @@ export default function BookingCalendar({
 type MonthGridProps = {
   year: number;
   month: number;
+  apartmentSlug: string;
   getDayState: (day: Date) => DayState;
   onDayClick: (day: Date) => void;
   onDayHover: (day: Date) => void;
 };
 
-function MonthGrid({ year, month, getDayState, onDayClick, onDayHover }: MonthGridProps) {
+function MonthGrid({
+  year,
+  month,
+  apartmentSlug,
+  getDayState,
+  onDayClick,
+  onDayHover,
+}: MonthGridProps) {
   const grid = getMonthGrid(year, month);
+  const apartment = getApartment(apartmentSlug);
 
   return (
     <div>
@@ -309,6 +320,7 @@ function MonthGrid({ year, month, getDayState, onDayClick, onDayHover }: MonthGr
           if (!day) return <div key={`empty-${idx}`} />;
 
           const state = getDayState(day);
+          const dayPrice = apartment ? getPriceForDate(apartment, day) : null;
           const isInteractive =
             state === 'available' ||
             state === 'hover-range' ||
@@ -321,7 +333,7 @@ function MonthGrid({ year, month, getDayState, onDayClick, onDayHover }: MonthGr
               onClick={() => onDayClick(day)}
               onMouseEnter={() => onDayHover(day)}
               className={clsx(
-                'relative h-9 flex items-center justify-center text-sm select-none transition-colors',
+                'relative h-11 flex flex-col items-center justify-center text-sm select-none transition-colors',
                 {
                   // Past or blocked-for-checkout
                   'text-gray-300 cursor-not-allowed':
@@ -354,7 +366,21 @@ function MonthGrid({ year, month, getDayState, onDayClick, onDayHover }: MonthGr
                     : undefined
               }
             >
-              {day.getDate()}
+              <span>{day.getDate()}</span>
+              {dayPrice !== null && (
+                <span
+                  className={clsx('text-[10px] leading-none', {
+                    'text-white/90': state === 'check-in' || state === 'check-out',
+                    'text-primary/80': state === 'in-range' || state === 'hover-range',
+                    'text-red-300': state === 'booked',
+                    'text-gray-300': state === 'past' || state === 'blocked-for-checkout',
+                    'text-gray-400': state === 'too-close',
+                    'text-muted': state === 'available',
+                  })}
+                >
+                  {dayPrice}€
+                </span>
+              )}
             </div>
           );
         })}

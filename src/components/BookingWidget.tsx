@@ -372,7 +372,7 @@ export default function BookingWidget({ initialSlug }: Props) {
               {priceData.lines.map((line) => (
                 <div key={line.label} className="flex justify-between text-sm mb-1">
                   <span className="text-muted">
-                    {line.nights}× noć ({line.label}) · {line.pricePerNight}€
+                    {line.nights}× noć · {line.pricePerNight}€
                   </span>
                   <span className="text-text font-medium">{line.subtotal}€</span>
                 </div>
