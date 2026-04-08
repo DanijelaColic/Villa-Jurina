@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { Loader2 } from 'lucide-react';
 
 type ConfirmationData = {
   id: string;
@@ -32,6 +33,9 @@ export default function BookingConfirmationPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<ConfirmationData | null>(null);
+  const [barcodeLoading, setBarcodeLoading] = useState(false);
+  const [hub3Barcode, setHub3Barcode] = useState<string | null>(null);
+  const [epcQR, setEpcQR] = useState<string | null>(null);
 
   const id = params?.id;
   const token = searchParams.get('token');
@@ -71,6 +75,40 @@ export default function BookingConfirmationPage() {
       active = false;
     };
   }, [endpoint]);
+
+  useEffect(() => {
+    let active = true;
+    async function loadBarcodes() {
+      if (!data?.deposit || !data.reference || !data.guestName) return;
+
+      setBarcodeLoading(true);
+      try {
+        const res = await fetch('/api/generate-barcode', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            amount: data.deposit,
+            guestName: data.guestName,
+            reference: data.reference,
+          }),
+        });
+        if (!res.ok) return;
+        const payload = await res.json();
+        if (!active) return;
+        setHub3Barcode(payload.hub3 ?? null);
+        setEpcQR(payload.epc ?? null);
+      } catch {
+        // QR kodovi su pomoćni; potvrda i bez njih ostaje funkcionalna.
+      } finally {
+        if (active) setBarcodeLoading(false);
+      }
+    }
+
+    loadBarcodes();
+    return () => {
+      active = false;
+    };
+  }, [data?.deposit, data?.reference, data?.guestName]);
 
   return (
     <main className="pt-24 pb-16 px-4 sm:px-6">
@@ -173,6 +211,45 @@ export default function BookingConfirmationPage() {
                 </div>
               </dl>
             </div>
+
+            {(barcodeLoading || hub3Barcode || epcQR) && (
+              <div className="rounded-xl border border-sand-light bg-sand-light/40 p-5 sm:p-6 mt-6">
+                <h2 className="font-semibold text-text mb-4">QR kodovi za brzo plaćanje</h2>
+                {barcodeLoading ? (
+                  <div className="flex items-center justify-center gap-2 py-4 text-sm text-muted">
+                    <Loader2 size={16} className="animate-spin" />
+                    Generiranje QR kodova...
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {hub3Barcode && (
+                      <div className="bg-white border border-sand rounded-lg p-3 text-center">
+                        <p className="text-[11px] font-semibold text-text mb-2">
+                          Hrvatska banka (HUB3)
+                        </p>
+                        <img
+                          src={hub3Barcode}
+                          alt="HUB3 PDF417 barkod za uplatu"
+                          className="max-w-full h-auto mx-auto"
+                        />
+                      </div>
+                    )}
+                    {epcQR && (
+                      <div className="bg-white border border-sand rounded-lg p-3 text-center">
+                        <p className="text-[11px] font-semibold text-text mb-2">
+                          EU / međunarodne banke (EPC)
+                        </p>
+                        <img
+                          src={epcQR}
+                          alt="EPC SEPA QR kod za uplatu"
+                          className="max-w-full h-auto mx-auto"
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
           </>
         )}
 
