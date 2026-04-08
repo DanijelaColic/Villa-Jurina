@@ -3,6 +3,7 @@ import { createServerSupabaseClient } from '@/lib/supabase';
 import { getApartment } from '@/lib/apartments';
 import { parseLocalDate, isRangeAvailable, diffDays } from '@/lib/dates';
 import { sendNewBookingEmails } from '@/lib/email';
+import { createBookingViewToken, getBookingConfirmationUrl } from '@/lib/bookingConfirmation';
 
 // GET /api/bookings?apartment=slug
 // Vraća zauzete datume za odabrani apartman
@@ -155,6 +156,10 @@ export async function POST(request: NextRequest) {
 
     if (insertError) throw insertError;
 
+    // Sigurni javni link za original potvrdu rezervacije (isti URL ide i u email i u success ekran).
+    const confirmationToken = createBookingViewToken(booking.id, guest_email);
+    const confirmationUrl = getBookingConfirmationUrl(booking.id, confirmationToken);
+
     // Slanje emailova (gost + vlasnik) — booking.id koristi se za QR kod i poziv na broj
     await sendNewBookingEmails({
       guestName: guest_name,
@@ -167,9 +172,13 @@ export async function POST(request: NextRequest) {
       totalPrice,
       deposit,
       bookingId: booking.id,
+      confirmationUrl,
     });
 
-    return NextResponse.json({ success: true, bookingId: booking.id }, { status: 201 });
+    return NextResponse.json(
+      { success: true, bookingId: booking.id, confirmationUrl },
+      { status: 201 },
+    );
   } catch (err) {
     console.error('Booking error:', err);
     return NextResponse.json(

@@ -40,6 +40,7 @@ export default function BookingWidget({ initialSlug }: Props) {
   const [hub3Barcode, setHub3Barcode] = useState<string | null>(null);
   const [epcQR, setEpcQR] = useState<string | null>(null);
   const [barcodeLoading, setBarcodeLoading] = useState(false);
+  const [bookingReference, setBookingReference] = useState<string | null>(null);
   const successRef = useRef<HTMLDivElement | null>(null);
 
   const selectedApartment = apartments.find((a) => a.slug === selectedSlug);
@@ -133,6 +134,9 @@ export default function BookingWidget({ initialSlug }: Props) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? 'Greška pri slanju');
       setSuccess(true);
+      setBookingReference(
+        data.bookingId ? `REZ-${String(data.bookingId).substring(0, 8).toUpperCase()}` : null,
+      );
       // Generiraj barcodes u pozadini — ne blokira prikaz success screena
       if (priceData && data.bookingId) {
         fetchBarcodes(priceData.deposit, form.name, data.bookingId);
@@ -162,7 +166,7 @@ export default function BookingWidget({ initialSlug }: Props) {
         </h2>
         <p className="text-muted leading-relaxed mb-6">
           Hvala, <strong className="text-text">{form.name}</strong>! Potvrdu s detaljima poslali smo
-          na <strong className="text-text">{form.email}</strong>. Kontaktirat ćemo vas u kratkom roku.
+          na <strong className="text-text">{form.email}</strong>.
         </p>
         {priceData && (
           <div className="bg-sand-light rounded-xl p-5 text-left text-sm mb-6">
@@ -181,6 +185,10 @@ export default function BookingWidget({ initialSlug }: Props) {
               <strong className="text-text">Broj noći:</strong>{' '}
               {priceData.nights}
             </p>
+            <p className="text-muted mb-1">
+              <strong className="text-text">Cijena / noć:</strong>{' '}
+              {Math.round(priceData.totalPrice / priceData.nights)}€
+            </p>
             <div className="border-t border-sand mt-3 pt-3 flex justify-between items-center">
               <strong className="text-text">Ukupno:</strong>
               <span className="text-primary font-bold text-lg">{priceData.totalPrice}€</span>
@@ -189,9 +197,36 @@ export default function BookingWidget({ initialSlug }: Props) {
               <strong className="text-text">Depozit za uplatu (30%):</strong>{' '}
               <span className="text-secondary font-semibold">{priceData.deposit}€</span>
             </p>
-            <p className="mt-3 font-mono text-xs bg-white border border-sand px-3 py-2 rounded-lg">
-              IBAN: HR6523900013223724831
+            <p className="text-muted mt-2">
+              Uplatu depozita molimo izvršiti u roku od 24 sata. Ako uplata ne bude evidentirana u
+              tom roku, rezervacija se smatra nevažećom.
             </p>
+            <div className="mt-3 bg-white border border-sand px-3 py-3 rounded-lg space-y-1">
+              <p className="text-xs text-muted">
+                <strong className="text-text">Primatelj:</strong> Antonija Pušić
+              </p>
+              <p className="font-mono text-xs text-muted">
+                <strong className="text-text">IBAN:</strong> HR6523900013223724831
+              </p>
+              <p className="text-xs text-muted">
+                <strong className="text-text">BIC/SWIFT:</strong> HPBZHR2X
+              </p>
+              <p className="text-xs text-muted">
+                <strong className="text-text">Banka:</strong> Hrvatska poštanska banka d.d.
+              </p>
+              <p className="text-xs text-muted">
+                <strong className="text-text">Adresa banke:</strong> Jurišićeva 4, 10000 Zagreb, Croatia
+              </p>
+              <p className="text-xs text-muted">
+                <strong className="text-text">Opis plaćanja:</strong> Rezervacija Villa Jurina
+              </p>
+              <p className="text-xs text-muted">
+                <strong className="text-text">Poziv na broj:</strong>{' '}
+                <span className="font-semibold text-text">
+                  {bookingReference ?? `${form.name} — Apartman ${selectedApartment?.name}`}
+                </span>
+              </p>
+            </div>
 
             {/* ── QR barcodes za uplatu depozita ────────────────────── */}
             {(barcodeLoading || hub3Barcode || epcQR) && (
@@ -245,6 +280,7 @@ export default function BookingWidget({ initialSlug }: Props) {
         <button
           onClick={() => {
             setSuccess(false);
+            setBookingReference(null);
             setHub3Barcode(null);
             setEpcQR(null);
             handleReset();

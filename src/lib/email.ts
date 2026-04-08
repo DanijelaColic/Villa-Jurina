@@ -14,6 +14,7 @@ export type BookingEmailData = {
   totalPrice: number;
   deposit: number;
   bookingId?: string; // koristi se za generiranje QR kodova i poziva na broj
+  confirmationUrl?: string;
 };
 
 function getResend(): Resend | null {
@@ -198,7 +199,7 @@ function guestReceivedHtml(d: FullData) {
         </p>
         <p style="margin: 10px 0 0; font-size: 13px; color: #6b7a85; line-height: 1.6;">
           Potvrdu rezervacije i upute za uplatu možete otvoriti i na:
-          <a href="${PAYMENT_INSTRUCTIONS_URL()}" style="color: #1e4a5f; word-break: break-all;">${PAYMENT_INSTRUCTIONS_URL()}</a>
+          <a href="${d.confirmationUrl ?? PAYMENT_INSTRUCTIONS_URL()}" style="color: #1e4a5f; word-break: break-all;">${d.confirmationUrl ?? PAYMENT_INSTRUCTIONS_URL()}</a>
         </p>
         ${d.reference ? `
         <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 6px; padding: 12px 16px; margin-top: 14px; font-size: 13px; color: #0c4a6e; line-height: 1.6;">
@@ -267,7 +268,7 @@ function guestConfirmedHtml(d: FullData) {
         </p>
         <p style="margin: 10px 0 0; font-size: 13px; color: #6b7a85; line-height: 1.6;">
           Potvrdu rezervacije i upute za uplatu možete otvoriti i na:
-          <a href="${PAYMENT_INSTRUCTIONS_URL()}" style="color: #1e4a5f; word-break: break-all;">${PAYMENT_INSTRUCTIONS_URL()}</a>
+          <a href="${d.confirmationUrl ?? PAYMENT_INSTRUCTIONS_URL()}" style="color: #1e4a5f; word-break: break-all;">${d.confirmationUrl ?? PAYMENT_INSTRUCTIONS_URL()}</a>
         </p>
         ${d.reference ? `
         <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 6px; padding: 12px 16px; margin-top: 14px; font-size: 13px; color: #0c4a6e; line-height: 1.6;">
