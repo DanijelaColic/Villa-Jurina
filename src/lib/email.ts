@@ -26,6 +26,8 @@ function getResend(): Resend | null {
 
 const FROM = () => process.env.RESEND_FROM?.trim() ?? 'onboarding@resend.dev';
 const OWNER = () => process.env.OWNER_EMAIL?.trim() ?? 'villajurina@gmail.com';
+const SITE_URL = () => (process.env.NEXT_PUBLIC_SITE_URL?.trim() || 'https://villajurina.com').replace(/\/$/, '');
+const PAYMENT_INSTRUCTIONS_URL = () => `${SITE_URL()}/upute-za-uplatu`;
 
 // Šalje gost email (primljeno) + vlasnik email (nova rezervacija)
 export async function sendNewBookingEmails(data: BookingEmailData) {
@@ -152,6 +154,7 @@ export async function sendContactEmail(opts: {
 type FullData = BookingEmailData & { checkInStr: string; checkOutStr: string; reference: string | null };
 
 function guestReceivedHtml(d: FullData) {
+  const pricePerNight = Math.round(d.totalPrice / d.nights);
   return `
 <!DOCTYPE html>
 <html lang="hr">
@@ -164,7 +167,7 @@ function guestReceivedHtml(d: FullData) {
     </div>
     <div style="padding: 40px;">
       <p style="font-size: 18px; margin-top: 0;">Poštovani/a ${d.guestName},</p>
-      <p style="color: #6b7a85; line-height: 1.7;">Vaša rezervacija je uspješno primljena. Kontaktirat ćemo vas u kratkom roku s potvrdom i uputama za plaćanje depozita.</p>
+      <p style="color: #6b7a85; line-height: 1.7;">Vaša rezervacija je uspješno zaprimljena. U nastavku emaila nalaze se upute za uplatu depozita; nakon evidentirane uplate rezervacija postaje važeća.</p>
       <div style="background: #fdf8f3; border-radius: 8px; padding: 24px; margin: 24px 0; border-left: 4px solid #c4975a;">
         <h2 style="font-size: 16px; margin: 0 0 16px; color: #c4975a; text-transform: uppercase; letter-spacing: 1px;">Detalji rezervacije</h2>
         <table style="width: 100%; border-collapse: collapse;">
@@ -172,19 +175,29 @@ function guestReceivedHtml(d: FullData) {
           <tr><td style="padding: 6px 0; color: #6b7a85;">Check-in</td><td style="font-weight: bold;">${d.checkInStr} od 14:00</td></tr>
           <tr><td style="padding: 6px 0; color: #6b7a85;">Check-out</td><td style="font-weight: bold;">${d.checkOutStr} do 11:00</td></tr>
           <tr><td style="padding: 6px 0; color: #6b7a85;">Broj noći</td><td style="font-weight: bold;">${d.nights}</td></tr>
+          <tr><td style="padding: 6px 0; color: #6b7a85;">Cijena / noć</td><td style="font-weight: bold;">${pricePerNight}€</td></tr>
           <tr><td style="padding: 6px 0; color: #6b7a85;">Ukupno</td><td style="font-weight: bold; font-size: 18px; color: #1e4a5f;">${d.totalPrice}€</td></tr>
         </table>
       </div>
       <div style="background: #fff8e7; border-radius: 8px; padding: 20px; margin: 24px 0;">
         <h3 style="margin: 0 0 12px; font-size: 15px;">Uplata depozita (30%)</h3>
         <p style="margin: 0; color: #6b7a85; font-size: 14px; line-height: 1.7;">
-          Molimo uplatite <strong style="color: #1c2b35;">${d.deposit}€</strong> na račun u roku od 24 sata:
+          Molimo uplatite <strong style="color: #1c2b35;">${d.deposit}€</strong> na račun u roku od 24 sata. Ako uplata ne bude evidentirana u tom roku, rezervacija se smatra nevažećom.
         </p>
-        <p style="margin: 12px 0 0; font-family: monospace; background: #fff; border: 1px solid #f0e6d3; padding: 10px 14px; border-radius: 6px; font-size: 14px;">
-          IBAN: HR6523900013223724831
-        </p>
+        <div style="margin: 12px 0 0; background: #fff; border: 1px solid #f0e6d3; padding: 12px 14px; border-radius: 6px; font-size: 14px; line-height: 1.7;">
+          <div><strong>Primatelj:</strong> Antonija Pušić</div>
+          <div><strong>IBAN:</strong> HR6523900013223724831</div>
+          <div><strong>BIC/SWIFT:</strong> HPBZHR2X</div>
+          <div><strong>Banka:</strong> Hrvatska poštanska banka d.d.</div>
+          <div><strong>Adresa banke:</strong> Jurišićeva 4, 10000 Zagreb, Croatia</div>
+          <div><strong>Opis plaćanja:</strong> Rezervacija Villa Jurina</div>
+        </div>
         <p style="margin: 8px 0 0; font-size: 13px; color: #6b7a85;">
           Poziv na broj: <strong style="color: #1c2b35;">${d.reference ?? `${d.guestName} — Apartman ${d.apartmentName}`}</strong>
+        </p>
+        <p style="margin: 10px 0 0; font-size: 13px; color: #6b7a85; line-height: 1.6;">
+          Potvrdu rezervacije i upute za uplatu možete otvoriti i na:
+          <a href="${PAYMENT_INSTRUCTIONS_URL()}" style="color: #1e4a5f; word-break: break-all;">${PAYMENT_INSTRUCTIONS_URL()}</a>
         </p>
         ${d.reference ? `
         <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 6px; padding: 12px 16px; margin-top: 14px; font-size: 13px; color: #0c4a6e; line-height: 1.6;">
@@ -207,6 +220,7 @@ function guestReceivedHtml(d: FullData) {
 }
 
 function guestConfirmedHtml(d: FullData) {
+  const pricePerNight = Math.round(d.totalPrice / d.nights);
   return `
 <!DOCTYPE html>
 <html lang="hr">
@@ -230,19 +244,29 @@ function guestConfirmedHtml(d: FullData) {
           <tr><td style="padding: 6px 0; color: #6b7a85;">Check-in</td><td style="font-weight: bold;">${d.checkInStr} od 14:00</td></tr>
           <tr><td style="padding: 6px 0; color: #6b7a85;">Check-out</td><td style="font-weight: bold;">${d.checkOutStr} do 11:00</td></tr>
           <tr><td style="padding: 6px 0; color: #6b7a85;">Broj noći</td><td style="font-weight: bold;">${d.nights}</td></tr>
+          <tr><td style="padding: 6px 0; color: #6b7a85;">Cijena / noć</td><td style="font-weight: bold;">${pricePerNight}€</td></tr>
           <tr><td style="padding: 6px 0; color: #6b7a85;">Ukupno</td><td style="font-weight: bold; font-size: 18px; color: #1e4a5f;">${d.totalPrice}€</td></tr>
         </table>
       </div>
       <div style="background: #fff8e7; border-radius: 8px; padding: 20px; margin: 24px 0;">
         <h3 style="margin: 0 0 8px; font-size: 15px;">Depozit (30% = ${d.deposit}€)</h3>
         <p style="margin: 0; color: #6b7a85; font-size: 14px; line-height: 1.7;">
-          Ako još niste platili depozit, molimo da ga uplatite što prije:
+          Ako još niste platili depozit, molimo uplatite ga u roku od 24 sata. Ako uplata ne bude evidentirana u tom roku, rezervacija se smatra nevažećom.
         </p>
-        <p style="margin: 12px 0 0; font-family: monospace; background: #fff; border: 1px solid #f0e6d3; padding: 10px 14px; border-radius: 6px; font-size: 14px;">
-          IBAN: HR6523900013223724831
-        </p>
+        <div style="margin: 12px 0 0; background: #fff; border: 1px solid #f0e6d3; padding: 12px 14px; border-radius: 6px; font-size: 14px; line-height: 1.7;">
+          <div><strong>Primatelj:</strong> Antonija Pušić</div>
+          <div><strong>IBAN:</strong> HR6523900013223724831</div>
+          <div><strong>BIC/SWIFT:</strong> HPBZHR2X</div>
+          <div><strong>Banka:</strong> Hrvatska poštanska banka d.d.</div>
+          <div><strong>Adresa banke:</strong> Jurišićeva 4, 10000 Zagreb, Croatia</div>
+          <div><strong>Opis plaćanja:</strong> Rezervacija Villa Jurina</div>
+        </div>
         <p style="margin: 8px 0 0; font-size: 13px; color: #6b7a85;">
           Poziv na broj: <strong style="color: #1c2b35;">${d.reference ?? `${d.guestName} — Apartman ${d.apartmentName}`}</strong>
+        </p>
+        <p style="margin: 10px 0 0; font-size: 13px; color: #6b7a85; line-height: 1.6;">
+          Potvrdu rezervacije i upute za uplatu možete otvoriti i na:
+          <a href="${PAYMENT_INSTRUCTIONS_URL()}" style="color: #1e4a5f; word-break: break-all;">${PAYMENT_INSTRUCTIONS_URL()}</a>
         </p>
         ${d.reference ? `
         <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 6px; padding: 12px 16px; margin-top: 14px; font-size: 13px; color: #0c4a6e; line-height: 1.6;">
