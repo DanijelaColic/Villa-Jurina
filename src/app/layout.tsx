@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
+import { getSiteUrl } from '@/lib/siteUrl';
 
 const inter = Inter({
   variable: '--font-inter',
@@ -12,7 +13,7 @@ const playfair = Playfair_Display({
   subsets: ['latin'],
 });
 
-const BASE_URL = 'https://villajurina.com';
+const BASE_URL = getSiteUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

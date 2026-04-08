@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
+import { getSiteUrl } from '@/lib/siteUrl';
 
-const BASE_URL = 'https://villajurina.com';
+const BASE_URL = getSiteUrl();
 
 export default function robots(): MetadataRoute.Robots {
   return {

@@ -1,6 +1,7 @@
 import { Resend } from 'resend';
 import { formatDisplayDate } from './dates';
 import { generateHUB3Buffer, generateEPCBuffer } from './barcodeUtils';
+import { getSiteUrl } from './siteUrl';
 
 export type BookingEmailData = {
   guestName: string;
@@ -26,7 +27,7 @@ function getResend(): Resend | null {
 
 const FROM = () => process.env.RESEND_FROM?.trim() ?? 'onboarding@resend.dev';
 const OWNER = () => process.env.OWNER_EMAIL?.trim() ?? 'villajurina@gmail.com';
-const SITE_URL = () => (process.env.NEXT_PUBLIC_SITE_URL?.trim() || 'https://villajurina.com').replace(/\/$/, '');
+const SITE_URL = () => getSiteUrl();
 const PAYMENT_INSTRUCTIONS_URL = () => `${SITE_URL()}/upute-za-uplatu`;
 
 // Šalje gost email (primljeno) + vlasnik email (nova rezervacija)

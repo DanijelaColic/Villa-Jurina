@@ -2,8 +2,9 @@
  * Structured data (JSON-LD) komponente za schema.org markup.
  * Poboljšavaju prikaz u Google rezultatima (rich snippets).
  */
+import { getSiteUrl } from '@/lib/siteUrl';
 
-const BASE_URL = 'https://villajurina.com';
+const BASE_URL = getSiteUrl();
 
 /** FAQPage — Google može prikazati FAQ odgovore direktno u search rezultatima */
 export function FAQJsonLd({ items }: { items: { q: string; a: string }[] }) {

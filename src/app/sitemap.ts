@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next';
 import { apartments } from '@/lib/apartments';
+import { getSiteUrl } from '@/lib/siteUrl';
 
-const BASE_URL = 'https://villajurina.com';
+const BASE_URL = getSiteUrl();
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
