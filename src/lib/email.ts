@@ -16,7 +16,7 @@ export type BookingEmailData = {
 };
 
 function getResend(): Resend | null {
-  const apiKey = process.env.RESEND_API_KEY;
+  const apiKey = process.env.RESEND_API_KEY?.trim();
   if (!apiKey) {
     console.warn('RESEND_API_KEY nije postavljen — emailovi se ne šalju');
     return null;
@@ -24,8 +24,8 @@ function getResend(): Resend | null {
   return new Resend(apiKey);
 }
 
-const FROM = () => process.env.RESEND_FROM ?? 'onboarding@resend.dev';
-const OWNER = () => process.env.OWNER_EMAIL ?? 'villajurina@gmail.com';
+const FROM = () => process.env.RESEND_FROM?.trim() ?? 'onboarding@resend.dev';
+const OWNER = () => process.env.OWNER_EMAIL?.trim() ?? 'villajurina@gmail.com';
 
 // Šalje gost email (primljeno) + vlasnik email (nova rezervacija)
 export async function sendNewBookingEmails(data: BookingEmailData) {
@@ -73,8 +73,17 @@ export async function sendNewBookingEmails(data: BookingEmailData) {
       html: ownerNewBookingHtml(fullData),
     }),
   ]);
-  if (guestResult.status === 'rejected') console.error('[email] Guest email failed:', guestResult.reason);
-  if (ownerResult.status === 'rejected') console.error('[email] Owner email failed:', ownerResult.reason);
+  if (guestResult.status === 'rejected') {
+    console.error('[email] Guest email failed:', guestResult.reason);
+  } else if (guestResult.value.error) {
+    console.error('[email] Guest email API error:', guestResult.value.error);
+  }
+
+  if (ownerResult.status === 'rejected') {
+    console.error('[email] Owner email failed:', ownerResult.reason);
+  } else if (ownerResult.value.error) {
+    console.error('[email] Owner email API error:', ownerResult.value.error);
+  }
 }
 
 // Šalje samo gostu — potvrda kad admin odobri rezervaciju
@@ -126,12 +135,16 @@ export async function sendContactEmail(opts: {
   const resend = getResend();
   if (!resend) return;
 
-  await resend.emails.send({
+  const result = await resend.emails.send({
     from: FROM(),
     to: OWNER(),
     subject: `Nova poruka s web stranice – ${opts.senderName}`,
     html: contactEmailHtml(opts),
   });
+
+  if (result.error) {
+    console.error('[email] Contact email API error:', result.error);
+  }
 }
 
 // ── HTML predlošci ────────────────────────────────────────────────

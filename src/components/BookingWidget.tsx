@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { Check, AlertCircle, Loader2 } from 'lucide-react';
 import clsx from 'clsx';
 import BookingCalendar from './BookingCalendar';
@@ -40,6 +40,7 @@ export default function BookingWidget({ initialSlug }: Props) {
   const [hub3Barcode, setHub3Barcode] = useState<string | null>(null);
   const [epcQR, setEpcQR] = useState<string | null>(null);
   const [barcodeLoading, setBarcodeLoading] = useState(false);
+  const successRef = useRef<HTMLDivElement | null>(null);
 
   const selectedApartment = apartments.find((a) => a.slug === selectedSlug);
   const priceData = checkIn && checkOut && selectedApartment
@@ -143,10 +144,16 @@ export default function BookingWidget({ initialSlug }: Props) {
     }
   };
 
+  useEffect(() => {
+    if (!success) return;
+    // Nakon uspješnog slanja, osiguraj da je potvrda odmah vidljiva korisniku.
+    successRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [success]);
+
   // ── Uspješna rezervacija ─────────────────────────────────────────
   if (success) {
     return (
-      <div className="max-w-lg mx-auto text-center py-16 px-4">
+      <div ref={successRef} className="max-w-lg mx-auto text-center py-16 px-4">
         <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
           <Check size={32} className="text-green-600" />
         </div>
