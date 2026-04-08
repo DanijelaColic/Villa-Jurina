@@ -59,6 +59,8 @@ export default function AdminDashboard() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showMonthlyStats, setShowMonthlyStats] = useState(false);
   const [toasts, setToasts] = useState<ToastItem[]>([]);
+  const [selectedBookingIds, setSelectedBookingIds] = useState<Set<string>>(new Set());
+  const [bulkDeleteLoading, setBulkDeleteLoading] = useState(false);
 
   const fetchBookings = useCallback(async () => {
     setLoading(true);
@@ -77,6 +79,16 @@ export default function AdminDashboard() {
   }, []);
 
   useEffect(() => { fetchBookings(); }, [fetchBookings]);
+
+  useEffect(() => {
+    // Očisti selekciju za stavke koje više ne postoje nakon refresh/filter promjena.
+    setSelectedBookingIds((prev) => {
+      const bookingIdSet = new Set(bookings.map((booking) => booking.id));
+      const next = new Set([...prev].filter((id) => bookingIdSet.has(id)));
+      if (next.size === prev.size) return prev;
+      return next;
+    });
+  }, [bookings]);
 
   const handleLogout = async () => {
     await fetch('/api/admin/login', { method: 'DELETE' });
@@ -111,6 +123,15 @@ export default function AdminDashboard() {
     else showToast('Greška pri brisanju', 'error');
     await fetchBookings();
     setActionLoading(null);
+  };
+
+  const toggleBookingSelection = (id: string) => {
+    setSelectedBookingIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
   };
 
   const resendEmail = async (booking: Booking) => {
@@ -206,6 +227,10 @@ export default function AdminDashboard() {
       return sortAsc ? (av < bv ? -1 : 1) : (av > bv ? -1 : 1);
     });
 
+  const filteredIds = filtered.map((booking) => booking.id);
+  const selectedFilteredCount = filteredIds.filter((id) => selectedBookingIds.has(id)).length;
+  const allFilteredSelected = filtered.length > 0 && selectedFilteredCount === filtered.length;
+
   // Stats
   const stats = {
     total: bookings.filter((b) => b.status !== 'cancelled').length,
@@ -245,6 +270,42 @@ export default function AdminDashboard() {
     a.download = `rezervacije-villa-jurina-${todayStr}.csv`;
     a.click();
     URL.revokeObjectURL(url);
+  };
+
+  const toggleSelectAllFiltered = () => {
+    setSelectedBookingIds((prev) => {
+      const next = new Set(prev);
+      if (allFilteredSelected) {
+        filteredIds.forEach((id) => next.delete(id));
+      } else {
+        filteredIds.forEach((id) => next.add(id));
+      }
+      return next;
+    });
+  };
+
+  const deleteSelectedBookings = async () => {
+    if (selectedFilteredCount === 0) return;
+    if (!confirm(`Obriši ${selectedFilteredCount} odabranih rezervacija?`)) return;
+    setBulkDeleteLoading(true);
+    const idsToDelete = filteredIds.filter((id) => selectedBookingIds.has(id));
+    const res = await fetch('/api/admin/bookings', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ids: idsToDelete }),
+    });
+    if (res.ok) {
+      showToast(`Obrisano ${idsToDelete.length} rezervacija`);
+      setSelectedBookingIds((prev) => {
+        const next = new Set(prev);
+        idsToDelete.forEach((id) => next.delete(id));
+        return next;
+      });
+      await fetchBookings();
+    } else {
+      showToast('Greška pri grupnom brisanju', 'error');
+    }
+    setBulkDeleteLoading(false);
   };
 
   return (
@@ -571,6 +632,18 @@ export default function AdminDashboard() {
                 {filtered.length} / {bookings.length}
               </span>
               <button
+                onClick={deleteSelectedBookings}
+                disabled={selectedFilteredCount === 0 || bulkDeleteLoading}
+                title="Obriši odabrane"
+                className="flex items-center gap-1.5 text-sm text-red-600 hover:text-red-700 border border-red-200 hover:border-red-300 rounded-lg px-3 py-1.5 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                <Trash2 size={14} />
+                <span className="hidden sm:inline">
+                  {bulkDeleteLoading ? 'Brišem...' : `Briši odabrane (${selectedFilteredCount})`}
+                </span>
+                <span className="sm:hidden">{selectedFilteredCount}</span>
+              </button>
+              <button
                 onClick={exportCSV}
                 disabled={filtered.length === 0}
                 title="Izvezi u CSV"
@@ -692,6 +765,15 @@ export default function AdminDashboard() {
               <table className="w-full text-sm">
                 <thead className="bg-gray-50 border-b border-gray-100">
                   <tr>
+                    <th className="text-center px-3 py-3 text-xs text-gray-500 font-medium uppercase tracking-wide">
+                      <input
+                        type="checkbox"
+                        checked={allFilteredSelected}
+                        onChange={toggleSelectAllFiltered}
+                        aria-label="Odaberi sve filtrirane rezervacije"
+                        className="h-4 w-4 accent-primary cursor-pointer"
+                      />
+                    </th>
                     <th className="text-left px-4 py-3 text-xs text-gray-500 font-medium uppercase tracking-wide">
                       Apartman
                     </th>
@@ -739,6 +821,15 @@ export default function AdminDashboard() {
                           booking.status === 'cancelled' && 'opacity-50',
                         )}
                       >
+                        <td className="px-3 py-3 text-center">
+                          <input
+                            type="checkbox"
+                            checked={selectedBookingIds.has(booking.id)}
+                            onChange={() => toggleBookingSelection(booking.id)}
+                            aria-label={`Odaberi rezervaciju ${booking.guest_name}`}
+                            className="h-4 w-4 accent-primary cursor-pointer"
+                          />
+                        </td>
                         <td className="px-4 py-3 font-medium text-primary">
                           {APT_NAMES[booking.apartment_slug] ?? booking.apartment_slug}
                         </td>
@@ -828,7 +919,7 @@ export default function AdminDashboard() {
                       {/* Expanded details */}
                       {expandedId === booking.id && (
                         <tr key={`${booking.id}-expanded`} className="bg-blue-50/30">
-                          <td colSpan={9} className="px-4 py-3">
+                          <td colSpan={10} className="px-4 py-3">
                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
                               <div>
                                 <p className="text-xs text-gray-400 mb-0.5">Telefon</p>

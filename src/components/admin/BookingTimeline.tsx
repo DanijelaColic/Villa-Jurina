@@ -19,8 +19,8 @@ const MONTHS_HR = [
 const DAYS_SHORT = ['Po', 'Ut', 'Sr', 'Če', 'Pe', 'Su', 'Ne'];
 
 const BAR_COLORS: Record<string, string> = {
-  pending: 'bg-amber-400 text-amber-950 hover:bg-amber-500',
-  confirmed: 'bg-primary text-white hover:bg-primary/90',
+  pending: 'text-amber-950',
+  confirmed: 'text-white',
   cancelled: 'bg-gray-200 text-gray-400 line-through',
 };
 
@@ -29,6 +29,18 @@ const DOT_COLORS: Record<string, string> = {
   confirmed: 'bg-primary',
   cancelled: 'bg-gray-300',
 };
+
+// Vedrije boje po apartmanima za bolju vizualnu separaciju timeline traka.
+const APARTMENT_TIMELINE_COLORS = [
+  '#ec4899', // pink
+  '#f97316', // orange
+  '#eab308', // yellow
+  '#22c55e', // green
+  '#06b6d4', // cyan
+  '#3b82f6', // blue
+  '#8b5cf6', // violet
+  '#ef4444', // red
+];
 
 // ── Props ────────────────────────────────────────────────────────
 type Props = {
@@ -59,6 +71,13 @@ export default function BookingTimeline({ bookings, onEditBooking }: Props) {
   }, []);
 
   const [offset, setOffset] = useState(0); // offset u mjesecima od trenutnog
+
+  const apartmentColorBySlug = useMemo(() => {
+    return apartments.reduce<Record<string, string>>((acc, apt, index) => {
+      acc[apt.slug] = APARTMENT_TIMELINE_COLORS[index % APARTMENT_TIMELINE_COLORS.length];
+      return acc;
+    }, {});
+  }, []);
 
   // Dva vidljiva mjeseca
   const months = useMemo(() => {
@@ -253,7 +272,13 @@ export default function BookingTimeline({ bookings, onEditBooking }: Props) {
                   className="shrink-0 flex items-center px-3 border-r border-gray-100"
                 >
                   <div>
-                    <p className="text-sm font-semibold text-gray-800 leading-tight">{apt.name}</p>
+                    <p className="text-sm font-semibold text-gray-800 leading-tight flex items-center gap-1.5">
+                      <span
+                        className="inline-block w-2.5 h-2.5 rounded-full"
+                        style={{ backgroundColor: apartmentColorBySlug[apt.slug] }}
+                      />
+                      {apt.name}
+                    </p>
                     <p className="text-[11px] text-gray-400 leading-tight">{apt.capacityNote}</p>
                   </div>
                 </div>
@@ -291,23 +316,37 @@ export default function BookingTimeline({ bookings, onEditBooking }: Props) {
                   {aptBookings.map((booking) => {
                     const { left, width, clipped } = getBar(booking);
                     if (width <= 0) return null;
+                    const apartmentColor = apartmentColorBySlug[booking.apartment_slug] ?? '#3b82f6';
+                    const isPending = booking.status === 'pending';
+                    const barStyle = booking.status === 'confirmed'
+                      ? { backgroundColor: apartmentColor }
+                      : isPending
+                        ? {
+                          backgroundColor: `${apartmentColor}33`,
+                          borderColor: `${apartmentColor}99`,
+                        }
+                        : undefined;
 
                     return (
                       <button
                         key={booking.id}
                         onClick={() => onEditBooking(booking)}
+                        // Potvrđene koriste punu boju apartmana; pending ostaje svjetliji radi status signala.
                         style={{
                           left,
                           width,
                           top: 7,
                           height: ROW_H - 14,
+                          ...barStyle,
                         }}
                         className={clsx(
                           'absolute flex items-center px-2 overflow-hidden z-20',
                           'rounded-lg transition-all shadow-sm',
                           'focus:outline-none focus:ring-2 focus:ring-primary/40',
+                          booking.status === 'pending' && 'border border-dashed',
                           BAR_COLORS[booking.status],
                           clipped && 'rounded-l-none border-l-2 border-l-white/40',
+                          booking.status !== 'cancelled' && 'hover:opacity-90',
                         )}
                         title={`${booking.guest_name} · ${booking.check_in} → ${booking.check_out} · ${booking.total_price}€`}
                       >
@@ -330,7 +369,7 @@ export default function BookingTimeline({ bookings, onEditBooking }: Props) {
       </div>
 
       <p className="text-xs text-gray-400 mt-3 text-center">
-        Klikni na rezervaciju za uređivanje · žuta = na čekanju · plava = potvrđeno
+        Klikni na rezervaciju za uređivanje · apartmani su obojani različitim bojama · isprekidano = na čekanju
       </p>
     </div>
   );

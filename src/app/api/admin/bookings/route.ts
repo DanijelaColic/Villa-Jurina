@@ -73,3 +73,23 @@ export async function POST(request: NextRequest) {
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json(data, { status: 201 });
 }
+
+// DELETE /api/admin/bookings — grupno brisanje rezervacija
+export async function DELETE(request: NextRequest) {
+  if (!isAdminAuthenticatedFromRequest(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const body = await request.json().catch(() => null);
+  const ids = body?.ids;
+
+  if (!Array.isArray(ids) || ids.length === 0 || !ids.every((id) => typeof id === 'string')) {
+    return NextResponse.json({ error: 'Polje ids mora biti neprazan niz stringova' }, { status: 400 });
+  }
+
+  const supabase = createServerSupabaseClient();
+  const { error } = await supabase.from('bookings').delete().in('id', ids);
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  return NextResponse.json({ success: true, deletedCount: ids.length });
+}
