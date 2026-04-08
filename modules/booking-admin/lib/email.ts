@@ -24,7 +24,8 @@ function getResend(): Resend | null {
 }
 
 const FROM = () => process.env.RESEND_FROM ?? 'onboarding@resend.dev';
-const OWNER = () => OWNER_EMAIL || (process.env.OWNER_EMAIL ?? '');
+// Owner inbox je fiksan kako bi sve poruke išle samo na jednu adresu.
+const OWNER = () => 'villajurina@gmail.com';
 const DEPOSIT_PCT_DISPLAY = Math.round(DEPOSIT_PERCENT * 100);
 
 /** Šalje gost email (potvrda primitka) + vlasnik email (nova rezervacija) */

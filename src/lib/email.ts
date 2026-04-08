@@ -27,7 +27,8 @@ function getResend(): Resend | null {
 }
 
 const FROM = () => process.env.RESEND_FROM?.trim() ?? 'onboarding@resend.dev';
-const OWNER = () => process.env.OWNER_EMAIL?.trim() ?? 'villajurina@gmail.com';
+// Poruke za vlasnika uvijek idu na glavnu adresu.
+const OWNER = () => 'villajurina@gmail.com';
 const SITE_URL = () => getSiteUrl();
 const PAYMENT_INSTRUCTIONS_URL = () => `${SITE_URL()}/upute-za-uplatu`;
 
