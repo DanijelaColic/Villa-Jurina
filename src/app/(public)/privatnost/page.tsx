@@ -40,7 +40,9 @@ export default async function PrivatnostPage() {
   const locale = await getLocale();
   const t = await getTranslations('privacyPage');
   const messages = await getMessages({ locale });
-  const c = (messages as Record<string, any>)?.privacyPage?.content as PrivacyContent;
+  const c = {
+    sections: ((messages as Record<string, any>)?.privacyPage?.content ?? {}) as PrivacyContent,
+  };
 
   return (
     <div className="pt-20 pb-20">
