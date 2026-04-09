@@ -51,18 +51,37 @@ const attractions = [
   { id: 'izleti', icon: Camera, image: '/images/Okolica/Split.jpg' },
 ] as const;
 
+type AttractionItem = {
+  name: string;
+  desc: string;
+};
+
+type LocalizedAttractionSection = {
+  eyebrow: string;
+  title: string;
+  imageAlt: string;
+  intro: string;
+  items: AttractionItem[];
+};
+
+type RenderAttraction = (typeof attractions)[number] & LocalizedAttractionSection;
+
 export default async function DrasnicePage() {
   const locale = await getLocale();
   const t = await getTranslations('drasnicePage');
   const messages = await getMessages({ locale });
-  const sectionsById = (messages as Record<string, any>)?.drasnicePage?.attractions?.sections ?? {};
+  const sectionsById =
+    ((messages as Record<string, any>)?.drasnicePage?.attractions?.sections ?? {}) as Record<
+      string,
+      LocalizedAttractionSection | undefined
+    >;
   const localizedAttractions = attractions
     .map((section) => {
       const localized = sectionsById[section.id];
       if (!localized) return null;
       return { ...section, ...localized };
     })
-    .filter((section): section is (typeof attractions)[number] & Record<string, any> => Boolean(section));
+    .filter((section): section is RenderAttraction => Boolean(section));
 
   return (
     <div className="pt-20">
