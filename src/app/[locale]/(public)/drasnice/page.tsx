@@ -1,1 +1,1 @@
-export { default, metadata } from '../../../(public)/drasnice/page';
+export { default, generateMetadata } from '../../../(public)/drasnice/page';
