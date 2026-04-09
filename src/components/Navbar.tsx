@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
+import { usePathname as useRawPathname, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import clsx from 'clsx';
@@ -15,6 +15,7 @@ export default function Navbar() {
   const t = useTranslations('navbar');
   const locale = useLocale();
   const pathname = usePathname();
+  const rawPathname = useRawPathname();
   const searchParams = useSearchParams();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -36,7 +37,7 @@ export default function Navbar() {
 
   const isTransparent = isHome && !scrolled;
   const query = searchParams.toString();
-  const localeHref = query ? `${pathname || '/'}?${query}` : pathname || '/';
+  const localeHref = query ? `${rawPathname || '/'}?${query}` : rawPathname || '/';
 
   return (
     <header
