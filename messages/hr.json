@@ -1,0 +1,914 @@
+{
+  "common": {
+    "siteName": "Villa Jurina"
+  },
+  "navbar": {
+    "apartments": "Apartmani",
+    "gallery": "Galerija",
+    "surroundings": "Okolica",
+    "booking": "Rezervacija",
+    "contact": "Kontakt",
+    "bookNow": "Rezerviraj",
+    "toggleMenu": "Prikaži ili sakrij izbornik",
+    "languageLabel": "Jezik"
+  },
+  "footer": {
+    "story": "Kuća dida Jure — sagradena uz more s ljubavlju i strpljivošću. Ovdje se jutra bude uz šum mora, a večeri smiruju pod zvijezdama.",
+    "navigation": "Navigacija",
+    "apartments": "Apartmani",
+    "booking": "Rezervacija",
+    "privacy": "Politika privatnosti",
+    "contact": "Kontakt",
+    "rights": "Sva prava pridržana.",
+    "location": "Drašnice, Makarska rivijera",
+    "madeBy": "Izradio"
+  },
+  "cookies": {
+    "ariaLabel": "Obavijest o kolačićima",
+    "title": "Kolačići 🍪",
+    "description": "Koristimo kolačiće za poboljšanje iskustva na stranici (analitika i preference). Pročitajte našu",
+    "privacyLink": "politiku privatnosti",
+    "acceptAll": "Prihvati sve",
+    "essentialOnly": "Samo nužni"
+  },
+  "faq": {
+    "help": "Pomoć",
+    "title": "Često postavljana pitanja",
+    "subtitle": "Sve što trebate znati prije dolaska.",
+    "notFound": "Niste pronašli odgovor?",
+    "contactUs": "Kontaktirajte nas",
+    "orCall": "ili nas nazovite na",
+    "items": {
+      "checkin": {
+        "q": "Kad je check-in i check-out?",
+        "a": "Check-in je od 14:00, check-out do 11:00. Ako dolazite ranije ili odlazite kasnije, javite nam se unaprijed — nastojimo izaći u susret kada je to moguće."
+      },
+      "minStay": {
+        "q": "Koji je minimalni boravak?",
+        "a": "Minimalni boravak je 2 noći tijekom cijele godine."
+      },
+      "parking": {
+        "q": "Je li parking besplatan?",
+        "a": "Da, besplatni parking za sve goste dostupan je neposredno uz vilu. Nema dodatnih troškova."
+      },
+      "pets": {
+        "q": "Smiju li se dovoditi kućni ljubimci?",
+        "a": "Kako bismo osigurali ugodan boravak za sve goste, kućni ljubimci nisu dozvoljeni u smještaju."
+      },
+      "payment": {
+        "q": "Kako plaćam rezervaciju?",
+        "a": "Rezervacija se potvrđuje uplatom depozita od 30% ukupnog iznosa. Ostatak se plaća pri dolasku — gotovinom ili bankovnim transferom. Plaćanje karticom nije dostupno."
+      },
+      "beachDistance": {
+        "q": "Koliko je daleko plaža?",
+        "a": "Šljunčana plaža u Drašnicama je 50 metara od vile — doslovno iza ugla. More je iznimno čisto i prozirno, s laganim ulaskom."
+      },
+      "wifi": {
+        "q": "Je li WiFi uključen?",
+        "a": "Da, brzi bežični internet dostupan je besplatno u svim apartmanima."
+      },
+      "kitchen": {
+        "q": "Imam li pristup kuhinji?",
+        "a": "Svi apartmani imaju potpuno opremljenu kuhinju s hladnjakom, mikrovalnom, kuhalom za vodu i svom potrebnom opremom za kuhanje."
+      },
+      "groupBooking": {
+        "q": "Mogu li rezervirati više apartmana za grupu?",
+        "a": "Naravno — vila ima 4 apartmana i idealna je za veće obitelji ili grupe prijatelja. Kontaktirajte nas direktno za grupnu rezervaciju i posebnu ponudu."
+      },
+      "nearby": {
+        "q": "Što je u blizini vile?",
+        "a": "U neposrednoj blizini je plaža, restoran s dalmatinskom kuhinjom i dječje igralište. Makarska je 10 minuta vožnje, Biokovo Skywalk 30 minuta, a trajekti za Hvar i Brač kreću iz Makarske."
+      }
+    }
+  },
+  "bookingPage": {
+    "eyebrow": "Online booking",
+    "title": "Rezervacija",
+    "description": "Odaberite apartman, provjerite slobodne termine i pošaljite zahtjev. Kontaktirat ćemo vas u kratkom roku s potvrdom.",
+    "strip": {
+      "checkInLabel": "Check-in",
+      "checkInValue": "od 14:00",
+      "checkOutLabel": "Check-out",
+      "checkOutValue": "do 11:00",
+      "minStayLabel": "Min. boravak",
+      "minStayValue": "2 noći",
+      "depositLabel": "Depozit",
+      "depositValue": "30%"
+    },
+    "faq": {
+      "title": "Pitanja o rezervaciji",
+      "subtitle": "Sve što trebate znati o procesu rezervacije i boravku.",
+      "items": {
+        "confirm": {
+          "q": "Kako potvrđujem rezervaciju?",
+          "a": "Nakon što pošaljete zahtjev, javit ćemo vam se u roku od nekoliko sati s potvrdom dostupnosti i uputama za plaćanje depozita (30%). Rezervacija je aktivna tek po uplati depozita."
+        },
+        "minStay": {
+          "q": "Koji je minimalni boravak?",
+          "a": "Minimalni boravak je 2 noći tijekom cijele godine."
+        },
+        "cancel": {
+          "q": "Mogu li otkazati rezervaciju?",
+          "a": "Otkazivanje je moguće uz povrat depozita ako se obavijest dostavi najmanje 30 dana prije dolaska. Za kasnija otkazivanja depozit se ne vraća."
+        },
+        "payment": {
+          "q": "Kako se plaća ostatak iznosa?",
+          "a": "Ostatak iznosa plaća se pri dolasku — gotovinom ili bankovnim transferom. Plaćanje karticom nije dostupno."
+        },
+        "capacity": {
+          "q": "Mogu li tražiti apartman za određeni broj osoba?",
+          "a": "Da. Sky prima do 2, Luna i Arba do 4, a Harmonia do 6 osoba. Za veće grupe moguće je rezervirati više apartmana — kontaktirajte nas za ponudu."
+        }
+      }
+    }
+  },
+  "contactPage": {
+    "eyebrow": "Dođite nam",
+    "title": "Kontakt",
+    "description": "Tu smo za sva vaša pitanja — javite se putem WhatsAppa, emaila ili nas posjetite.",
+    "info": {
+      "title": "Informacije za kontakt",
+      "address": "Adresa",
+      "phone": "WhatsApp / Telefon",
+      "email": "E-mail"
+    },
+    "helpful": {
+      "title": "Korisne info",
+      "checkIn": "Check-in:",
+      "checkOut": "Check-out:",
+      "minStay": "Min. boravak:",
+      "minStayValue": "2 noći",
+      "deposit": "Depozit:",
+      "beach": "Plaža:"
+    },
+    "formTitle": "Pišite nam",
+    "map": {
+      "title": "Kako nas pronaći",
+      "description": "Drašnice 133, Podgora — 50 metara od šljunčane plaže, između Makarske i Podgore.",
+      "open": "Otvori u Google Mapsu"
+    }
+  },
+  "contactForm": {
+    "fields": {
+      "name": "Ime i prezime",
+      "email": "Email",
+      "message": "Poruka"
+    },
+    "placeholders": {
+      "name": "Vaše ime",
+      "email": "vaš@email.com",
+      "message": "Vaša poruka..."
+    },
+    "submit": {
+      "sending": "Slanje...",
+      "send": "Pošalji poruku"
+    },
+    "success": {
+      "title": "Poruka je poslana!",
+      "description": "Odgovoriti ćemo vam u kratkom roku.",
+      "newMessage": "Pošalji novu poruku"
+    },
+    "errors": {
+      "submit": "Greška pri slanju",
+      "message": "Greška pri slanju poruke"
+    }
+  },
+  "apartmentsPage": {
+    "eyebrow": "Smještaj",
+    "title": "Apartmani",
+    "description": "Četiri pažljivo uređena apartmana s pogledom na more, svaki s vlastitim karakterom i atmosferom. Renovirani 2025. godine.",
+    "stats": {
+      "duplex": "Dvoetažni",
+      "seaView": "Pogled na more",
+      "balcony": "Balkon"
+    },
+    "price": {
+      "title": "Cijena po noći",
+      "offSeason": "Izvan sezone",
+      "highSeason": "Srpanj / Kolovoz",
+      "unavailable": "Apartman nije dostupan za rezervaciju u sezoni 2025."
+    },
+    "actions": {
+      "details": "Više detalja",
+      "book": "Rezerviraj"
+    }
+  },
+  "apartmentDetailPage": {
+    "eyebrow": "Apartman",
+    "stats": {
+      "duplex": "Dvoetažni",
+      "seaView": "Pogled na more",
+      "balcony": "Balkon"
+    },
+    "beds": {
+      "title": "Kreveti"
+    },
+    "amenities": {
+      "title": "Što je uključeno"
+    },
+    "price": {
+      "title": "Cijena po noći",
+      "offSeason": "Izvan sezone",
+      "highSeason": "Srpanj / Kolovoz"
+    },
+    "rules": {
+      "checkInLabel": "Check-in:",
+      "checkOutLabel": "Check-out:",
+      "petsLabel": "Kućni ljubimci:",
+      "petsValue": "Nisu dozvoljeni",
+      "smokingLabel": "Pušenje:",
+      "smokingValue": "Nije dozvoljeno",
+      "minStayLabel": "Minimalni boravak:",
+      "minStay": "Minimalni boravak: 2 noći",
+      "depositLabel": "Depozit:",
+      "depositValue": "od ukupnog iznosa"
+    },
+    "actions": {
+      "bookThis": "Rezerviraj ovaj apartman"
+    },
+    "unavailable": {
+      "title": "Zauzeto za sezonu 2025.",
+      "description": "Pogledajte ostale dostupne apartmane.",
+      "cta": "Ostali apartmani"
+    }
+  },
+  "galleryPage": {
+    "eyebrow": "Villa Jurina · Drašnice",
+    "title": "Galerija",
+    "description": "Pregledajte fotografije naših apartmana, pogleda na more i okolice Drašnica i Makarske rivijere.",
+    "metadata": {
+      "title": "Galerija",
+      "description": "Fotografije apartmana Arba, Harmonia, Luna i Sky te okolice Drašnica i Makarske rivijere.",
+      "openGraphTitle": "Galerija | Villa Jurina",
+      "openGraphDescription": "Fotografije apartmana i okolice Drašnica na Makarskoj rivijeri."
+    }
+  },
+  "notFoundPage": {
+    "eyebrow": "Greška 404",
+    "title": "Stranica nije pronađena",
+    "description": "Stranica koju tražite ne postoji ili je premještena. Provjerite URL ili se vratite na početnu stranicu.",
+    "actions": {
+      "home": "Početna stranica",
+      "apartments": "Pogledaj apartmane"
+    }
+  },
+  "paymentInstructionsPage": {
+    "title": "Upute za uplatu depozita",
+    "description": "Rezervacija postaje važeća nakon evidentirane uplate depozita. Molimo izvršite uplatu u roku od 24 sata od zaprimljene potvrde.",
+    "paymentData": "Podaci za uplatu",
+    "labels": {
+      "recipient": "Primatelj",
+      "bank": "Banka",
+      "bankAddress": "Adresa banke",
+      "paymentDescription": "Opis plaćanja"
+    },
+    "note": "Napomena: u email potvrdi rezervacije dobivate i točan iznos depozita, poziv na broj te QR kodove za brzo plaćanje."
+  },
+  "privacyPage": {
+    "eyebrow": "Pravne informacije",
+    "title": "Politika privatnosti",
+    "lastUpdated": "Zadnja izmjena:",
+    "backHome": "← Natrag na početnu",
+    "content": {
+      "controller": {
+        "title": "1. Voditelj obrade",
+        "lead": "Voditelj obrade osobnih podataka je Villa Jurina, Drašnice 133, 21328 Podgora, Hrvatska.",
+        "contactIntro": "Za sva pitanja vezana uz obradu osobnih podataka možete nas kontaktirati:",
+        "email": "Email",
+        "phone": "Telefon / WhatsApp"
+      },
+      "dataCollected": {
+        "title": "2. Koje podatke prikupljamo",
+        "intro": "Prikupljamo sljedeće kategorije osobnih podataka:",
+        "cards": [
+          {
+            "title": "Podaci o rezervaciji",
+            "body": "Ime i prezime, e-mail adresa, broj telefona, odabrani apartman, datum check-in/check-out, broj odraslih i djece, napomene."
+          },
+          {
+            "title": "Podaci iz kontakt forme",
+            "body": "Ime, e-mail adresa, sadržaj poruke."
+          },
+          {
+            "title": "Tehnički podaci",
+            "body": "IP adresa, vrsta preglednika i uređaja, stranice koje ste posjetili — za potrebe analize i sigurnosti stranice. Ne koristimo ove podatke za identifikaciju pojedinaca."
+          }
+        ]
+      },
+      "legalBasis": {
+        "title": "3. Svrha i pravna osnova obrade",
+        "tableHeaders": [
+          "Svrha",
+          "Pravna osnova (GDPR)"
+        ],
+        "rows": [
+          [
+            "Obrada i potvrda rezervacije",
+            "Izvršenje ugovora (čl. 6(1)(b))"
+          ],
+          [
+            "Slanje potvrde i komunikacija o boravku",
+            "Izvršenje ugovora (čl. 6(1)(b))"
+          ],
+          [
+            "Odgovor na upit putem kontakt forme",
+            "Legitimni interes (čl. 6(1)(f))"
+          ],
+          [
+            "Ispunjavanje zakonskih obveza (porezni zapisi)",
+            "Pravna obveza (čl. 6(1)(c))"
+          ],
+          [
+            "Poboljšanje i analitika web stranice",
+            "Legitimni interes (čl. 6(1)(f))"
+          ]
+        ]
+      },
+      "sharing": {
+        "title": "4. S kim dijelimo vaše podatke",
+        "intro": "Vaše osobne podatke ne prodajemo ni trećim stranama ne dajemo u komercijalne svrhe. Podatke dijelimo isključivo s pouzdanim pružateljima usluga koji su nam potrebni za funkcioniranje rezervacijskog sustava:",
+        "providers": [
+          {
+            "name": "Supabase",
+            "desc": "Baza podataka u kojoj se pohranjuju rezervacije (EU infrastruktura).",
+            "policy": "Politika privatnosti Supabase →"
+          },
+          {
+            "name": "Resend",
+            "desc": "Servis za slanje transakcijskih e-mailova (potvrda rezervacije).",
+            "policy": "Politika privatnosti Resend →"
+          }
+        ]
+      },
+      "retention": {
+        "title": "5. Rok čuvanja podataka",
+        "booking": "Podatke o rezervacijama čuvamo 5 godina od datuma odjave, sukladno poreznim i računovodstvenim propisima Republike Hrvatske.",
+        "contact": "Podatke iz kontakt forme koji nisu rezultirali rezervacijom brišemo u roku od 12 mjeseci od primitka upita."
+      },
+      "rights": {
+        "title": "6. Vaša prava",
+        "intro": "Sukladno GDPR-u imate sljedeća prava:",
+        "items": [
+          {
+            "title": "Pravo na pristup",
+            "desc": "možete zatražiti kopiju osobnih podataka koje obrađujemo o vama."
+          },
+          {
+            "title": "Pravo na ispravak",
+            "desc": "možete zatražiti ispravak netočnih podataka."
+          },
+          {
+            "title": "Pravo na brisanje",
+            "desc": "možete zatražiti brisanje podataka, osim ako je čuvanje zakonski obvezno."
+          },
+          {
+            "title": "Pravo na ograničenje obrade",
+            "desc": "možete privremeno ograničiti obradu svojih podataka."
+          },
+          {
+            "title": "Pravo na prenosivost podataka",
+            "desc": "možete primiti svoje podatke u strojno čitljivom formatu."
+          },
+          {
+            "title": "Pravo na prigovor",
+            "desc": "možete se usprotiviti obradi temeljnoj na legitimnom interesu."
+          }
+        ],
+        "exercise": "Za ostvarivanje navedenih prava pišite na villajurina@gmail.com. Odgovoriti ćemo u roku od 30 dana.",
+        "azop": "Ako smatrate da vaša prava nisu zaštićena, možete podnijeti pritužbu Agenciji za zaštitu osobnih podataka (AZOP):"
+      },
+      "cookies": {
+        "title": "7. Kolačići (cookies)",
+        "intro": "Koristimo kolačiće za poboljšanje iskustva korištenja stranice. Kolačići su male tekstualne datoteke koje se pohranjuju na vašem uređaju.",
+        "essential": {
+          "title": "Nužni kolačići",
+          "body": "Potrebni za osnovnu funkcionalnost stranice (vaše postavke privatnosti). Uvijek aktivni — ne mogu se isključiti."
+        },
+        "analytics": {
+          "title": "Analitički kolačići",
+          "body": "Pomažu nam razumjeti kako posjetitelji koriste stranicu. Aktiviraju se samo uz vašu suglasnost."
+        },
+        "settings": "Postavke kolačića možete promijeniti u svakom trenutku brisanjem postavke villa-jurina-cookies iz lokalnog pohrana vašeg preglednika, ili kontaktiranjem."
+      },
+      "security": {
+        "title": "8. Sigurnost podataka",
+        "body": "Primjenjujemo tehničke i organizacijske mjere za zaštitu vaših osobnih podataka od neovlaštenog pristupa, gubitka ili uništenja. Komunikacija s našom stranicom zaštićena je SSL enkripcijom (HTTPS). Pristup podacima rezervacija ograničen je isključivo na vlasnika objekta."
+      },
+      "updates": {
+        "title": "9. Izmjene ove politike",
+        "body": "Zadržavamo pravo izmjene ove politike privatnosti. Sve bitne izmjene objavit ćemo na ovoj stranici s ažuriranim datumom. Preporučujemo povremenu provjeru."
+      }
+    }
+  },
+  "homePage": {
+    "hero": {
+      "imageAlt": "Pogled na more s balkona Villa Jurina",
+      "eyebrow": "Drašnice · Makarska rivijera",
+      "description": "50 metara od šljunčane plaže. Apartmani s pogledom na more, sagrađeni s ljubavlju.",
+      "scroll": "SKROLAJ",
+      "actions": {
+        "book": "Rezerviraj smještaj",
+        "viewApartments": "Pogledaj apartmane"
+      }
+    },
+    "faqJsonLd": {
+      "checkIn": {
+        "q": "Kad je check-in i check-out?",
+        "a": "Check-in je od 14:00, check-out do 11:00."
+      },
+      "beachDistance": {
+        "q": "Koliko je daleko plaža?",
+        "a": "Šljunčana plaža u Drašnicama je 50 metara od vile."
+      },
+      "parking": {
+        "q": "Je li parking besplatan?",
+        "a": "Da, besplatni parking za sve goste dostupan je neposredno uz vilu."
+      },
+      "minStay": {
+        "q": "Koji je minimalni boravak?",
+        "a": "Minimalni boravak je 2 noći tijekom cijele godine."
+      },
+      "pets": {
+        "q": "Smiju li se dovoditi kućni ljubimci?",
+        "a": "Kako bismo osigurali ugodan boravak za sve goste, kućni ljubimci nisu dozvoljeni u smještaju."
+      }
+    },
+    "story": {
+      "eyebrow": "Naša priča",
+      "title": "Kuća dida Jure",
+      "paragraphs": {
+        "first": "Kuća dida Jure stoji uz samo more, tamo gdje su kamen i val oduvijek razgovarali. Sagradio ju je did Jure vlastitim rukama — polako, strpljivo i s ljubavlju, kao što se nekad gradilo: da traje, da diše i da okuplja generacije.",
+        "second": "Drašnice su uvijek bile mjesto koje nije tražilo pažnju — tiho, skromno i iskreno. Dok su okolna mjesta rasla, Drašnice su čuvale ono najvrednije: autentičnost, sporost i blizinu mora koje ovdje nije kulisa, nego svakodnevica.",
+        "third": "Ovdje se jutra bude uz šum mora, a večeri smiruju pod zvijezdama i miomiris lavande. Ova kuća nije nastala kao investicija, nego kao dom. Danas svoja vrata otvara svima koji traže mir, jednostavnost i osjećaj da su došli na pravo mjesto."
+      },
+      "gallery": {
+        "oldVillaAlt": "Villa Jurina nekad",
+        "seaViewAlt": "Drašnice, pogled na more",
+        "houseBuildAlt": "Gradnja kuće dida Jure",
+        "familyAlt": "Obitelj Jurina",
+        "caption": "Fotografije iz obiteljskog albuma — sjećanja koja su oblikovala ovaj dom."
+      }
+    },
+    "apartments": {
+      "eyebrow": "Smještaj",
+      "title": "Naši apartmani",
+      "badges": {
+        "fullyBooked": "Zauzeto — sezona 2025."
+      },
+      "price": {
+        "from": "od",
+        "perNight": "noć",
+        "unavailable": "Nije dostupno"
+      },
+      "actions": {
+        "allApartments": "Svi apartmani"
+      }
+    },
+    "amenities": {
+      "eyebrow": "Sve što trebate",
+      "title": "Pogodnosti",
+      "items": {
+        "wifi": "Besplatni WiFi",
+        "airConditioning": "Klima uređaj",
+        "freeParking": "Besplatni parking",
+        "kitchen": "Kuhinja",
+        "kettle": "Kuhalo za vodu"
+      }
+    },
+    "galleryPreview": {
+      "eyebrow": "Fotografije",
+      "title": "Galerija",
+      "description": "Pogledajte naše apartmane, pogled na more i okolicu Drašnica.",
+      "images": {
+        "arbaAlt": "Apartman Arba",
+        "harmoniaAlt": "Apartman Harmonia",
+        "lunaAlt": "Apartman Luna",
+        "skyAlt": "Apartman Sky",
+        "beachAlt": "Drašnice — plaža",
+        "biokovoAlt": "Biokovo"
+      },
+      "actions": {
+        "viewAllPhotos": "Pogledaj sve fotografije"
+      }
+    },
+    "location": {
+      "eyebrow": "Lokacija",
+      "title": "Drašnice, Makarska rivijera",
+      "description": "Drašnice su jedno od onih mjesta koja se pamte. Mala dalmatinska uvala između Makarske i Podgore, zaštićena Biokovom s leđa i otvorena prema pučini ispred. Šljunčana plaža je doslovno iza ugla — 50 metara hoda — a more je ovdje iznimno čisto i prozirno.",
+      "points": {
+        "beachDistanceStrong": "50 m",
+        "beachDistanceText": "do šljunčane plaže — kristalno čisto more, mirna uvala, bez gužve",
+        "nearbyTownsStrong": "10 min",
+        "nearbyTownsText": "do Makarske, 5 min do Podgore i Tučepa — sve na dohvat ruke, ali daleko od vreve",
+        "restaurant": "Restoran u sklopu objekta — dalmatinska kuhinja s pogledom na more",
+        "hvarPrefix": "Trajekt za",
+        "hvarStrong": "otok Hvar",
+        "hvarSuffix": "dostupan iz Drašnica — dnevni izlet za nezaboravno iskustvo"
+      },
+      "activities": {
+        "title": "Što raditi u okolici",
+        "items": {
+          "diving": "Ronjenje",
+          "kayakSup": "Kajak & SUP",
+          "hvarTrip": "Izlet na Hvar",
+          "biokovoSkywalk": "Biokovo Skywalk",
+          "hiking": "Planinarenje",
+          "cycling": "Biciklizam",
+          "gradac": "Gradac",
+          "tucepi": "Tučepi"
+        }
+      },
+      "mapTitle": "Villa Jurina lokacija"
+    },
+    "surroundings": {
+      "eyebrow": "Istraži okolicu",
+      "title": "Drašnice — idealno polazište za Dalmaciju",
+      "description": "Biokovo Skywalk, plaža Zlatni rat na Braču, otok Hvar, rafting na Cetini, Split, Dubrovnik — sve je na dohvat ruke. Saznajte više o tome što vas čeka u okolici.",
+      "actions": {
+        "whatToSee": "Što vidjeti u okolici"
+      },
+      "cards": {
+        "biokovo": {
+          "label": "Biokovo Skywalk",
+          "sub": "30 min vožnje"
+        },
+        "hvar": {
+          "label": "Otok Hvar",
+          "sub": "u vidokrugu"
+        },
+        "zlatniRat": {
+          "label": "Zlatni rat, Brač",
+          "sub": "trajekt iz Makarske"
+        },
+        "split": {
+          "label": "Split",
+          "sub": "1,5 h vožnje"
+        }
+      }
+    },
+    "cta": {
+      "eyebrow": "Drašnice · Makarska rivijera",
+      "title": "Vaše more čeka",
+      "description": "Četiri apartmana, jedno more, nebrojene uspomene. Rezervirajte danas i osigurajte svoje mjesto u Drašnicama.",
+      "strip": "Minimalni boravak 2 noći · Check-in od 14:00 · Check-out do 11:00",
+      "actions": {
+        "checkDates": "Provjeri slobodne termine",
+        "contact": "Kontaktirajte nas"
+      }
+    }
+  },
+  "drasnicePage": {
+    "metadata": {
+      "title": "Što vidjeti u Drašnicama i okolici",
+      "description": "Otkrijte Drašnice i Makarsku rivijeru: Biokovo Skywalk, plaža Zlatni rat, otok Hvar, rafting na Cetini, Split i Dubrovnik. Idealno polazište za nezaboravne izlete."
+    },
+    "hero": {
+      "eyebrow": "Drašnice · Makarska rivijera",
+      "title": "Što vidjeti u Drašnicama i okolici",
+      "description": "Plaže, planine, otoci i gradovi puni povijesti — sve na dohvat ruke iz vaše baze na Makarskoj rivijeri.",
+      "action": "Rezerviraj smještaj u Drašnicama"
+    },
+    "intro": {
+      "text": "Drašnice su tiho dalmatinsko mjesto na Makarskoj rivijeri — idealno polazište za istraživanje jednog od najbogatijih turističkih prostora Hrvatske. Od šljunčanih plaža s tirkiznim morem, preko planine Biokovo s legendarnim Skywalkom, do jadranskih otoka Hvara i Brača — sve je ovdje na dohvat ruke.",
+      "highlight": "Villa Jurina smještena je samo 50 metara od plaže",
+      "tail": "i savršena je baza za vaše avanture."
+    },
+    "practical": {
+      "eyebrow": "Korisno znati",
+      "title": "Drašnice — vaša baza na rivijeri",
+      "cards": {
+        "beach": {
+          "title": "50 m do plaže",
+          "desc": "Šljunčana plaža s kristalno čistim morem doslovno iza ugla."
+        },
+        "makarska": {
+          "title": "10 min do Makarske",
+          "desc": "Centar rivijere s restoranima, barovima i trajektima za otoke."
+        },
+        "biokovo": {
+          "title": "Biokovo uz vrata",
+          "desc": "Skywalk i planinarske staze dostupni u manje od 30 minuta vožnje."
+        },
+        "hvar": {
+          "title": "Hvar u vidokrugu",
+          "desc": "Najsunčaniji otok vidi se direktno s plaže — trajekt iz Makarske."
+        }
+      }
+    },
+    "cta": {
+      "eyebrow": "Drašnice · Villa Jurina",
+      "title": "Sve ovo čeka vas na dohvat ruke",
+      "description": "Smjestite se u Villa Jurina — 50 metara od mora, s pogledom koji oduzima dah — i istraživajte Makarsku rivijeru, Biokovo i jadranske otoke po svom ritmu.",
+      "strip": "Minimalni boravak 2 noći · Check-in od 14:00 · Check-out do 11:00",
+      "actions": {
+        "checkDates": "Provjeri slobodne termine",
+        "viewApartments": "Pogledaj apartmane"
+      }
+    },
+    "attractions": {
+      "sections": {
+        "drasnice": {
+          "eyebrow": "Lokalna čarolija",
+          "title": "Drašnice — autentična dalmatinska uvala",
+          "imageAlt": "Šljunčana plaža u Drašnicama",
+          "intro": "Malo dalmatinsko selo koje čuva sve što modernom turistu nedostaje: mir, čistoću i autentičnost. Nema gužvi ni buke — samo more, kamen i zvjezdano nebo.",
+          "items": [
+            {
+              "name": "Šljunčane plaže i skrivene uvale",
+              "desc": "Kristalno čisto more i šljunčane plaže na kojima možete naći vlastiti kutak daleko od vreve. More je ovdje iznimno prozirno — idealano za plivanje, ronjenje i snorkling."
+            },
+            {
+              "name": "Staro selo Drašnice",
+              "desc": "Prošetajte kamenim uličicama autentičnog dalmatinskog sela. Stare kamene kuće, miris lavande i osjećaj da je vrijeme stalo — pravo dalmatinsko iskustvo koje ne možete kupiti."
+            },
+            {
+              "name": "Crkva sv. Jurja",
+              "desc": "Mala crkva uz more, posvećena zaštitniku mjesta, odiše mirom i tišinom. Idealna za jutarnju šetnju, kratku molitvu ili trenutak sabranosti, gdje pogled na more dodatno pojačava osjećaj Božje blizine i zahvalnosti."
+            },
+            {
+              "name": "Šetnica uz more",
+              "desc": "Lagana večernja šetnja uz obalu s direktnim pogledom na otok Hvar. Zalazak sunca ovdje je posebno doživljaj koji ćete pamtiti."
+            }
+          ]
+        },
+        "biokovo": {
+          "eyebrow": "Prirodni park",
+          "title": "Park prirode Biokovo — planina iznad mora",
+          "imageAlt": "Pogled s planine Biokovo na more",
+          "intro": "Neposredno iznad Drašnica uzdiže se masiv Biokova, jedan od najimpresivnijih prirodnih parkova Hrvatske. Kontrast planinskog i mediteranskog krajolika ovdje je jedinstven na Jadranu.",
+          "items": [
+            {
+              "name": "Skywalk Biokovo",
+              "desc": "Staklena viseća platforma iznad litice s pogledom na more s visine od gotovo 1000 metara. Jedna od najatraktivnijih atrakcija u cijeloj Dalmaciji — neobavezna za avanturiste i obavezna za sve ostale."
+            },
+            {
+              "name": "Planinarske staze i vidikovci",
+              "desc": "Desetine označenih staza različitih težina za pješake i planinare. Vidikovci iznad Drašnica pružaju panoramski pogled na cijelu Makarsku rivijeru i otoke — Hvar, Brač i Korčulu."
+            },
+            {
+              "name": "Botanički vrt i flora",
+              "desc": "Biokovo je dom endemskim biljnim vrstama koje ne možete pronaći nigdje drugdje na svijetu. Botanički vrt pri vrhu planine pravo je iznenađenje za ljubitelje prirode."
+            }
+          ]
+        },
+        "okolna-mjesta": {
+          "eyebrow": "Makarska rivijera",
+          "title": "Okolna mjesta — rivijera na dohvat ruke",
+          "imageAlt": "Makarska rivijera — pogled na obalu",
+          "intro": "Drašnice su smještene u srcu Makarske rivijere, okružene živopisnim mjestima koja su svako po nečemu posebno. Sve je na manje od 15 minuta vožnje.",
+          "items": [
+            {
+              "name": "Tučepi — elegancija rivijere",
+              "desc": "Jedno od najpopularnijih mjesta Makarske rivijere s dugačkom šljunčanom plažom, restoranima i šetnicom. Svega 5 minuta vožnje od Drašnica."
+            },
+            {
+              "name": "Podgora — mirno i autentično",
+              "desc": "Malo ribarsko mjesto s prepoznatljivim Galebovim krilima, simbolom mjesta. Izvrsna riblja restorana i mirna atmosfera izvan glavne sezone."
+            },
+            {
+              "name": "Makarska — centar rivijere",
+              "desc": "Živahni grad s dugačkom rivom, Franjevačkim samostanom i bogatim noćnim životom. 10 minuta vožnje. Tu su i trajekti za Sumartin na Braču."
+            },
+            {
+              "name": "Igrane — skriveni dragulj",
+              "desc": "Tihanje mjesto s jednom od najljepših plaža Makarske rivijere, polupjeskovitom uvalom zaštićenom od vjetra. Pravo lokalno tajno mjesto."
+            }
+          ]
+        },
+        "otoci": {
+          "eyebrow": "Izleti brodom",
+          "title": "Otoci — jednodnevni izleti brodom",
+          "imageAlt": "Zlatni rat, Brač — jadranski otoci",
+          "intro": "Jadranski otoci su nadohvat ruke. Iz Drašnica i okolnih luka kreću brodovi prema najboljim otocima Dalmacije — svaki s vlastitim karakterom i pričom.",
+          "items": [
+            {
+              "name": "Hvar — kraljica jadranskih otoka",
+              "desc": "Najsunčaniji otok u Hrvatskoj s prozirnim uvalama, vinogradima i živahnim starim gradom. Direktni pogled s plaže u Drašnicama. Trajekti i brodske linije dostupni iz obližnjih luka."
+            },
+            {
+              "name": "Brač — Zlatni rat",
+              "desc": "Dom legendarne plaže Zlatni rat, jedne od najprepozvatljivijih plaža na Mediteranu. Jedinstven rt koji mijenja oblik ovisno o struji mora. Obavezno za posjet."
+            },
+            {
+              "name": "Korčula — grad vina i šuma",
+              "desc": "Malo dalje, ali vrijedna putovanja. Stari grad Korčula podsjeća na mali Dubrovnik. Poznata po izvrsnim vinima plavac mali i mošt."
+            }
+          ]
+        },
+        "aktivni": {
+          "eyebrow": "Adrenalin i priroda",
+          "title": "Aktivni odmor — za one koji traže više",
+          "imageAlt": "Kayak na moru — aktivni odmor na Jadranu",
+          "intro": "Makarska rivijera nije samo plaža. Tko voli adrenalinska iskustva, planinari, biciklisti i ljubitelji prirode pronaći će ovdje pravo bogatstvo.",
+          "items": [
+            {
+              "name": "Kajak i SUP",
+              "desc": "Rentirajte kajak ili dasku za stojeće veslanje i istražite obalu iz perspektive mora. Lokalni iznajmljivači nude opremu i vođene ture duž obale."
+            },
+            {
+              "name": "Ronjenje i snorkling",
+              "desc": "Podmorje Makarske rivijere bogato je životom. Lokalni ronilački centri nude tečajeve i vođena ronjenja za sve razine iskustva."
+            },
+            {
+              "name": "Pješačenje i planinarenje",
+              "desc": "Staze od samih Drašnica vode u Biokovo i dalje prema vidikovcima. Neke staze su lagane i prikladne za obitelji, druge su zahtjevne i nagrađuju nevjerojatnim pogledima."
+            },
+            {
+              "name": "Biciklizam",
+              "desc": "Ceste duž rivijere idealne su za bicikliste. Postoje rute različitih težina — od laganih obalnih do zahtjevnih uspona prema Biokovu."
+            }
+          ]
+        },
+        "izleti": {
+          "eyebrow": "Jednodnevni izleti",
+          "title": "Malo dalje — jednodnevni izleti",
+          "imageAlt": "Stari grad Split — Dioklecijanova palača",
+          "intro": "Drašnice su odlično polazište za jednodnevne izlete do nekih od najljepših gradova i prirodnih atrakcija Dalmacije i Hercegovine.",
+          "items": [
+            {
+              "name": "Omiš — adrenalin na Cetini",
+              "desc": "Sat vožnje prema sjeveru. Rafting i zipline na rijeci Cetini, gotova tvrđava Mirabela i jedinstveni spoj planine i mora. Idealno za obitelji i avanturiste."
+            },
+            {
+              "name": "Split — Dioklecijanova palača",
+              "desc": "Sat i pol vožnje. Drugi najveći grad Hrvatske s Dioklecijanovom palačom iz 4. stoljeća, živahnom rivom i izvrsnom gastronomijom. Obavezan posjet."
+            },
+            {
+              "name": "Mostar — most koji spaja",
+              "desc": "Dva sata vožnje prema istoku. UNESCO-ova baština, čuveni Stari most nad Neretvom i bogata bosanska kultura. Jedinstveno iskustvo koje proširuje horizonte."
+            },
+            {
+              "name": "Dubrovnik — grad koji nikad ne razočara",
+              "desc": "Dva do tri sata vožnje prema jugu. Biserna kruna Jadrana, stari grad opasan zidinama i jedan od najljepših gradova na svijetu. Za duži jednodnevni izlet."
+            }
+          ]
+        }
+      }
+    }
+  },
+  "bookingConfirmationPage": {
+    "title": "Potvrda rezervacije",
+    "loading": "Učitavanje potvrde rezervacije...",
+    "description": "Rezervacija vrijedi nakon evidentirane uplate depozita u roku od 24 sata.",
+    "errors": {
+      "missingLink": "Nedostaje pristupni link za potvrdu rezervacije.",
+      "cannotOpen": "Potvrdu rezervacije nije moguće otvoriti."
+    },
+    "sections": {
+      "details": "Detalji rezervacije",
+      "payment": "Podaci za uplatu",
+      "qr": "QR kodovi za brzo plaćanje"
+    },
+    "labels": {
+      "confirmationNumber": "Broj potvrde",
+      "guest": "Gost",
+      "apartment": "Apartman",
+      "nights": "Broj noći",
+      "pricePerNight": "Cijena / noć",
+      "total": "Ukupno",
+      "deposit": "Depozit (30%)",
+      "recipient": "Primatelj",
+      "bank": "Banka",
+      "bankAddress": "Adresa banke",
+      "paymentDescription": "Opis plaćanja",
+      "referenceNumber": "Poziv na broj"
+    },
+    "qr": {
+      "generating": "Generiranje QR kodova...",
+      "hub3Title": "Hrvatska banka (HUB3)",
+      "hub3Alt": "HUB3 PDF417 barkod za uplatu",
+      "epcTitle": "EU / međunarodne banke (EPC)",
+      "epcAlt": "EPC SEPA QR kod za uplatu"
+    },
+    "actions": {
+      "newBooking": "Nova rezervacija"
+    }
+  },
+  "galleryClient": {
+    "categories": {
+      "all": "Sve",
+      "surroundings": "Okolica & Vila"
+    },
+    "lightbox": {
+      "close": "Zatvori",
+      "previous": "Prethodna",
+      "next": "Sljedeća"
+    }
+  },
+  "siteMetadata": {
+    "title": "Villa Jurina | Drašnice, Makarska rivijera",
+    "description": "Apartmani s pogledom na more u Drašnicama. 50 m od šljunčane plaže na Makarskoj rivijeri. Rezervirajte online.",
+    "openGraphAlt": "Villa Jurina — pogled na more, Drašnice"
+  },
+  "bookingWidget": {
+    "errors": {
+      "capacity": "Apartman {apartment} prima maksimalno {capacity} osoba.",
+      "send": "Greška pri slanju",
+      "booking": "Greška pri slanju rezervacije"
+    },
+    "success": {
+      "title": "Rezervacija primljena!",
+      "prefix": "Hvala,",
+      "middle": "! Potvrdu s detaljima poslali smo na"
+    },
+    "labels": {
+      "apartment": "Apartman",
+      "checkIn": "Check-in",
+      "checkOut": "Check-out",
+      "nights": "Broj noći",
+      "pricePerNight": "Cijena / noć",
+      "total": "Ukupno",
+      "deposit": "Depozit za uplatu (30%)",
+      "recipient": "Primatelj",
+      "bank": "Banka",
+      "bankAddress": "Adresa banke",
+      "paymentDescription": "Opis plaćanja",
+      "reference": "Poziv na broj",
+      "seaView": "Pogled na more",
+      "balcony": "Balkon",
+      "nightsSuffix": "noći"
+    },
+    "deposit": {
+      "note": "Uplatu depozita molimo izvršiti u roku od 24 sata. Ako uplata ne bude evidentirana u tom roku, rezervacija se smatra nevažećom."
+    },
+    "qr": {
+      "title": "Brzo plaćanje QR kodom:",
+      "generating": "Generiranje QR kodova...",
+      "croatianBank": "Hrvatska banka",
+      "internationalBanks": "EU / međunarodne banke"
+    },
+    "actions": {
+      "newBooking": "Nova rezervacija",
+      "sending": "Slanje...",
+      "submitRequest": "Pošalji zahtjev za rezervaciju"
+    },
+    "steps": {
+      "apartment": "1. Odaberite apartman",
+      "dates": "2. Odaberite datume",
+      "guestData": "3. Vaši podaci"
+    },
+    "summary": {
+      "title": "Sažetak troškova"
+    },
+    "form": {
+      "fullName": "Ime i prezime",
+      "phone": "Telefon / WhatsApp",
+      "adults": "Odrasli",
+      "children": "Djeca",
+      "maxGuests": "Max. {capacity} osoba ukupno",
+      "noteOptional": "Napomena (opcionalno)",
+      "notePlaceholder": "Posebni zahtjevi, pitanja...",
+      "fullNamePlaceholder": "Ana Horvat",
+      "emailPlaceholder": "ana@email.com",
+      "phonePlaceholder": "+385 91 234 5678"
+    },
+    "rules": {
+      "checkInLabel": "Check-in:",
+      "checkOutLabel": "Check-out:",
+      "petsLabel": "Kućni ljubimci:",
+      "petsValue": "nisu dozvoljeni",
+      "smokingLabel": "Pušenje:",
+      "smokingValue": "nije dozvoljeno",
+      "depositLabel": "Depozit:",
+      "depositValue": "30% od ukupne cijene ({amount}€) — uplata unutar 24h potvrđuje rezervaciju",
+      "accept": "Slažem se s kućnim pravilima i uvjetima rezervacije Villa Jurina."
+    }
+  },
+  "testimonials": {
+    "eyebrow": "Što kažu gosti",
+    "title": "Recenzije",
+    "rating": "5.0 — svi gosti preporučuju",
+    "items": {
+      "r1": {
+        "name": "Markus & Julia B.",
+        "origin": "Beč, Austrija",
+        "text": "Savršen bijeg za dvoje. Pogled s terase na otvoreno more bio je nevjerojatan — jutarnja kava uz zvuk valova i Hvar u daljini. Apartman je bio čist, moderan i imao je sve što nam je trebalo. Plaža je doslovno 50 metara — nismo trebali auto cijeli tjedan."
+      },
+      "r2": {
+        "name": "Obitelj Kovač",
+        "origin": "Zagreb, Hrvatska",
+        "text": "Harmonia je bila savršena za nas petero. Dva balkona, pogled na more s oba, dovoljno prostora da djeca imaju svoju sobu, a mi svoju tišinu. Domaćini su bili izuzetno ljubazni i uvijek dostupni. Vraćamo se sigurno — ovo je naš novi omiljeni odmor."
+      },
+      "r3": {
+        "name": "Pieter & Anke V.",
+        "origin": "Amsterdam, Nizozemska",
+        "text": "Pronašli smo pravo skriveno mjesto! Drašnice su tako mirne i autentične — bez turističkih gužvi. Djeca su obožavala plažu i igralište, a mi smo konačno imali pravi odmor. Izlet na Biokovo Skywalk bio je nezaboravan. Apartman Arba — sve preporučujemo!"
+      },
+      "r4": {
+        "name": "Valentina R.",
+        "origin": "Milano, Italija",
+        "text": "Luna je romantičan apartman koji nadilazi očekivanja. Balkon s pogledom na more, uređenje s ukusom, miran položaj — idealno za par koji želi pravi odmor. More je savršeno čisto. Makarska je 10 minuta vožnje, ali iskreno — nismo ni htjeli odlaziti iz Drašnica."
+      },
+      "r5": {
+        "name": "Familie Gruber",
+        "origin": "München, Njemačka",
+        "text": "Zweimal waren wir schon hier — und kommen wieder. Die Lage ist perfekt: ruhig, direkt am Meer, toller Ausblick auf Hvar. Die Wohnung Harmonia ist sehr geräumig und stilvoll eingerichtet. Die Gastgeber sind immer hilfsbereit. Biokovo Skywalk ist ein Muss!"
+      },
+      "r6": {
+        "name": "Maja in Tomaž P.",
+        "origin": "Ljubljana, Slovenija",
+        "text": "Odlična lokacija, tih apartman s prekrasnim pogledom. Rado bi izpostavila izjemno prijazne gostiteljice — vedno so bile pripravljene pomagati. Plaža je korak stran, Makarska 10 minut, Biokovo pa takoj za hišo. Čudovit teden, ki ga bomo dolgo ohranili v spominu."
+      }
+    }
+  }
+}

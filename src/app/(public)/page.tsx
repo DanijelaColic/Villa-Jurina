@@ -1,45 +1,49 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, UtensilsCrossed, Car, Wifi, Wind, Tv, Coffee, Waves } from 'lucide-react';
-import { apartments } from '@/lib/apartments';
+import { getLocale, getTranslations } from 'next-intl/server';
+import { getApartments } from '@/lib/apartments';
 import Testimonials from '@/components/Testimonials';
 import FAQ from '@/components/FAQ';
 import { LodgingBusinessJsonLd, FAQJsonLd } from '@/components/JsonLd';
+import { Link } from '@/i18n/navigation';
 
-const amenities = [
-  { icon: Wifi, label: 'Besplatni WiFi' },
-  { icon: Wind, label: 'Klima uređaj' },
-  { icon: Car, label: 'Besplatni parking' },
-  { icon: Tv, label: 'TV' },
-  { icon: UtensilsCrossed, label: 'Kuhinja' },
-  { icon: Coffee, label: 'Kuhalo za vodu' },
-];
+export default async function Home() {
+  const locale = await getLocale();
+  const t = await getTranslations('homePage');
+  const apartments = getApartments(locale as 'hr' | 'en' | 'de');
+  const amenities = [
+    { icon: Wifi, label: t('amenities.items.wifi') },
+    { icon: Wind, label: t('amenities.items.airConditioning') },
+    { icon: Car, label: t('amenities.items.freeParking') },
+    { icon: Tv, label: 'TV' },
+    { icon: UtensilsCrossed, label: t('amenities.items.kitchen') },
+    { icon: Coffee, label: t('amenities.items.kettle') },
+  ];
 
-export default function Home() {
   return (
     <>
       <LodgingBusinessJsonLd />
       <FAQJsonLd
         items={[
           {
-            q: 'Kad je check-in i check-out?',
-            a: 'Check-in je od 14:00, check-out do 11:00.',
+            q: t('faqJsonLd.checkIn.q'),
+            a: t('faqJsonLd.checkIn.a'),
           },
           {
-            q: 'Koliko je daleko plaža?',
-            a: 'Šljunčana plaža u Drašnicama je 50 metara od vile.',
+            q: t('faqJsonLd.beachDistance.q'),
+            a: t('faqJsonLd.beachDistance.a'),
           },
           {
-            q: 'Je li parking besplatan?',
-            a: 'Da, besplatni parking za sve goste dostupan je neposredno uz vilu.',
+            q: t('faqJsonLd.parking.q'),
+            a: t('faqJsonLd.parking.a'),
           },
           {
-            q: 'Koji je minimalni boravak?',
-            a: 'Minimalni boravak je 2 noći tijekom cijele godine.',
+            q: t('faqJsonLd.minStay.q'),
+            a: t('faqJsonLd.minStay.a'),
           },
           {
-            q: 'Smiju li se dovoditi kućni ljubimci?',
-            a: 'Kako bismo osigurali ugodan boravak za sve goste, kućni ljubimci nisu dozvoljeni u smještaju.',
+            q: t('faqJsonLd.pets.q'),
+            a: t('faqJsonLd.pets.a'),
           },
         ]}
       />
@@ -48,7 +52,7 @@ export default function Home() {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <Image
           src="/images/hero/hero3.jpeg"
-          alt="Pogled na more s balkona Villa Jurina"
+          alt={t('hero.imageAlt')}
           fill
           className="object-cover object-[center_40%]"
           priority
@@ -58,33 +62,33 @@ export default function Home() {
 
         <div className="relative z-10 text-center text-white px-4 max-w-3xl mx-auto">
           <p className="text-secondary font-medium tracking-widest text-sm uppercase mb-4">
-            Drašnice · Makarska rivijera
+            {t('hero.eyebrow')}
           </p>
           <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-semibold leading-tight mb-6">
             Villa Jurina
           </h1>
           <p className="text-white/80 text-lg sm:text-xl leading-relaxed mb-10 max-w-xl mx-auto">
-            50 metara od šljunčane plaže. Apartmani s pogledom na more, sagrađeni s ljubavlju.
+            {t('hero.description')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/rezervacija"
               className="bg-secondary hover:bg-secondary-light text-white font-medium px-8 py-3.5 rounded-full transition-colors text-sm tracking-wide"
             >
-              Rezerviraj smještaj
+              {t('hero.actions.book')}
             </Link>
             <Link
               href="/apartmani"
               className="border border-white/60 hover:border-white text-white font-medium px-8 py-3.5 rounded-full transition-colors text-sm tracking-wide"
             >
-              Pogledaj apartmane
+              {t('hero.actions.viewApartments')}
             </Link>
           </div>
         </div>
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/50 text-xs tracking-widest">
-          <span>SCROLL</span>
+          <span>{t('hero.scroll')}</span>
           <div className="w-px h-8 bg-white/30 animate-pulse" />
         </div>
       </section>
@@ -93,27 +97,15 @@ export default function Home() {
       <section className="py-20 lg:py-28 bg-sand-light">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
           <p className="text-secondary font-medium tracking-widest text-xs uppercase mb-4">
-            Naša priča
+            {t('story.eyebrow')}
           </p>
           <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-text mb-6">
-            Kuća dida Jure
+            {t('story.title')}
           </h2>
           <div className="space-y-4 text-muted leading-relaxed text-base sm:text-lg">
-            <p>
-              Kuća dida Jure stoji uz samo more, tamo gdje su kamen i val oduvijek razgovarali.
-              Sagradio ju je did Jure vlastitim rukama — polako, strpljivo i s ljubavlju, kao
-              što se nekad gradilo: da traje, da diše i da okuplja generacije.
-            </p>
-            <p>
-              Drašnice su uvijek bile mjesto koje nije tražilo pažnju — tiho, skromno i iskreno.
-              Dok su okolna mjesta rasla, Drašnice su čuvale ono najvrednije: autentičnost,
-              sporost i blizinu mora koje ovdje nije kulisa, nego svakodnevica.
-            </p>
-            <p>
-              Ovdje se jutra bude uz šum mora, a večeri smiruju pod zvijezdama i miomiris
-              lavande. Ova kuća nije nastala kao investicija, nego kao dom. Danas svoja vrata
-              otvara svima koji traže mir, jednostavnost i osjećaj da su došli na pravo mjesto.
-            </p>
+            <p>{t('story.paragraphs.first')}</p>
+            <p>{t('story.paragraphs.second')}</p>
+            <p>{t('story.paragraphs.third')}</p>
           </div>
         </div>
 
@@ -121,10 +113,10 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 mt-14">
           <div className="grid grid-cols-4 gap-3">
             {[
-              { src: '/images/povijest/Povijest1.jpeg', alt: 'Villa Jurina nekad' },
-              { src: '/images/povijest/Povijest2.jpeg', alt: 'Drašnice, pogled na more' },
-              { src: '/images/povijest/Povijest3.jpeg', alt: 'Gradnja kuće dida Jure' },
-              { src: '/images/povijest/Povijest4.jpeg', alt: 'Obitelj Jurina' },
+              { src: '/images/povijest/Povijest1.jpeg', alt: t('story.gallery.oldVillaAlt') },
+              { src: '/images/povijest/Povijest2.jpeg', alt: t('story.gallery.seaViewAlt') },
+              { src: '/images/povijest/Povijest3.jpeg', alt: t('story.gallery.houseBuildAlt') },
+              { src: '/images/povijest/Povijest4.jpeg', alt: t('story.gallery.familyAlt') },
             ].map((img) => (
               <div
                 key={img.src}
@@ -141,7 +133,7 @@ export default function Home() {
             ))}
           </div>
           <p className="text-center text-xs text-muted/50 mt-4 tracking-wide italic">
-            Fotografije iz obiteljskog albuma — sjećanja koja su oblikovala ovaj dom.
+            {t('story.gallery.caption')}
           </p>
         </div>
       </section>
@@ -151,10 +143,10 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <p className="text-secondary font-medium tracking-widest text-xs uppercase mb-3">
-              Smještaj
+              {t('apartments.eyebrow')}
             </p>
             <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-text">
-              Naši apartmani
+              {t('apartments.title')}
             </h2>
           </div>
 
@@ -178,7 +170,7 @@ export default function Home() {
                   )}
                   {apt.fullyBooked && (
                     <div className="absolute top-4 left-4 bg-text/80 text-white text-xs font-medium px-3 py-1 rounded-full z-10">
-                      Zauzeto — sezona 2025.
+                      {t('apartments.badges.fullyBooked')}
                     </div>
                   )}
                 </div>
@@ -197,11 +189,15 @@ export default function Home() {
                     <span className="text-xs text-muted">{apt.capacityNote}</span>
                     {!apt.fullyBooked ? (
                       <span className="text-primary font-semibold text-sm">
-                        od {apt.priceOffSeason}€
-                        <span className="text-muted font-normal"> /noć</span>
+                        {t('apartments.price.from')} {apt.priceOffSeason}€
+                        <span className="text-muted font-normal">
+                          {' '}/{t('apartments.price.perNight')}
+                        </span>
                       </span>
                     ) : (
-                      <span className="text-muted text-sm">Nije dostupno</span>
+                      <span className="text-muted text-sm">
+                        {t('apartments.price.unavailable')}
+                      </span>
                     )}
                   </div>
                 </div>
@@ -214,7 +210,7 @@ export default function Home() {
               href="/apartmani"
               className="inline-block border border-primary text-primary hover:bg-primary hover:text-white font-medium px-8 py-3 rounded-full transition-colors text-sm"
             >
-              Svi apartmani
+              {t('apartments.actions.allApartments')}
             </Link>
           </div>
         </div>
@@ -225,9 +221,11 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <p className="text-secondary font-medium tracking-widest text-xs uppercase mb-3">
-              Sve što trebate
+              {t('amenities.eyebrow')}
             </p>
-            <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-text">Pogodnosti</h2>
+            <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-text">
+              {t('amenities.title')}
+            </h2>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
@@ -248,25 +246,28 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <p className="text-secondary font-medium tracking-widest text-xs uppercase mb-3">
-              Fotografije
+              {t('galleryPreview.eyebrow')}
             </p>
             <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-text mb-4">
-              Galerija
+              {t('galleryPreview.title')}
             </h2>
             <p className="text-muted max-w-xl mx-auto">
-              Pogledajte naše apartmane, pogled na more i okolicu Drašnica.
+              {t('galleryPreview.description')}
             </p>
           </div>
 
           {/* 6-thumbnail preview grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 mb-8">
             {[
-              { src: '/images/apartments/arba/Arba1.jpeg', alt: 'Apartman Arba' },
-              { src: '/images/apartments/harmonia/Harmonia1.jpeg', alt: 'Apartman Harmonia' },
-              { src: '/images/apartments/luna/Luna1.jpeg', alt: 'Apartman Luna' },
-              { src: '/images/apartments/sky/Sky1.jpeg', alt: 'Apartman Sky' },
-              { src: '/images/Okolica/Drašnice 1.jpeg', alt: 'Drašnice — plaža' },
-              { src: '/images/Okolica/biokovo.webp', alt: 'Biokovo' },
+              { src: '/images/apartments/arba/Arba1.jpeg', alt: t('galleryPreview.images.arbaAlt') },
+              {
+                src: '/images/apartments/harmonia/Harmonia1.jpeg',
+                alt: t('galleryPreview.images.harmoniaAlt'),
+              },
+              { src: '/images/apartments/luna/Luna1.jpeg', alt: t('galleryPreview.images.lunaAlt') },
+              { src: '/images/apartments/sky/Sky1.jpeg', alt: t('galleryPreview.images.skyAlt') },
+              { src: '/images/Okolica/Drašnice 1.jpeg', alt: t('galleryPreview.images.beachAlt') },
+              { src: '/images/Okolica/biokovo.webp', alt: t('galleryPreview.images.biokovoAlt') },
             ].map((img) => (
               <div key={img.src} className="aspect-4/3 relative overflow-hidden rounded-xl">
                 <Image
@@ -285,7 +286,7 @@ export default function Home() {
               href="/galerija"
               className="inline-flex items-center gap-2 border border-secondary text-secondary hover:bg-secondary hover:text-white font-medium px-7 py-3 rounded-full transition-colors text-sm"
             >
-              Pogledaj sve fotografije
+              {t('galleryPreview.actions.viewAllPhotos')}
               <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
             </Link>
           </div>
@@ -298,63 +299,59 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <p className="text-secondary font-medium tracking-widest text-xs uppercase mb-3">
-                Lokacija
+                {t('location.eyebrow')}
               </p>
               <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-text mb-6">
-                Drašnice, Makarska rivijera
+                {t('location.title')}
               </h2>
 
               <p className="text-muted text-sm leading-relaxed mb-6">
-                Drašnice su jedno od onih mjesta koja se pamte. Mala dalmatinska uvala između
-                Makarske i Podgore, zaštićena Biokovom s leđa i otvorena prema pučini ispred.
-                Šljunčana plaža je doslovno iza ugla — 50 metara hoda — a more je ovdje
-                iznimno čisto i prozirno.
+                {t('location.description')}
               </p>
 
               <ul className="space-y-4 text-muted text-sm mb-8">
                 <li className="flex items-start gap-3">
                   <Waves size={18} className="text-secondary shrink-0 mt-0.5" />
                   <span>
-                    <strong className="text-text">50 m</strong> do šljunčane plaže — kristalno
-                    čisto more, mirna uvala, bez gužve
+                    <strong className="text-text">{t('location.points.beachDistanceStrong')}</strong>{' '}
+                    {t('location.points.beachDistanceText')}
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <MapPin size={18} className="text-secondary shrink-0 mt-0.5" />
                   <span>
-                    <strong className="text-text">10 min</strong> do Makarske, 5 min do Podgore i
-                    Tučepa — sve na dohvat ruke, ali daleko od vreve
+                    <strong className="text-text">{t('location.points.nearbyTownsStrong')}</strong>{' '}
+                    {t('location.points.nearbyTownsText')}
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <UtensilsCrossed size={18} className="text-secondary shrink-0 mt-0.5" />
-                  <span>
-                    Restoran u sklopu objekta — dalmatinska kuhinja s pogledom na more
-                  </span>
+                  <span>{t('location.points.restaurant')}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <MapPin size={18} className="text-secondary shrink-0 mt-0.5" />
                   <span>
-                    Trajekt za <strong className="text-text">otok Hvar</strong> dostupan iz
-                    Drašnica — dnevni izlet za nezaboravno iskustvo
+                    {t('location.points.hvarPrefix')}{' '}
+                    <strong className="text-text">{t('location.points.hvarStrong')}</strong>{' '}
+                    {t('location.points.hvarSuffix')}
                   </span>
                 </li>
               </ul>
 
               <div>
                 <p className="text-xs text-muted uppercase tracking-widest font-medium mb-3">
-                  Što raditi u okolici
+                  {t('location.activities.title')}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {[
-                    'Ronjenje',
-                    'Kajak & SUP',
-                    'Izlet na Hvar',
-                    'Biokovo Skywalk',
-                    'Planinarenje',
-                    'Biciklizam',
-                    'Gradac',
-                    'Tučepi',
+                    t('location.activities.items.diving'),
+                    t('location.activities.items.kayakSup'),
+                    t('location.activities.items.hvarTrip'),
+                    t('location.activities.items.biokovoSkywalk'),
+                    t('location.activities.items.hiking'),
+                    t('location.activities.items.cycling'),
+                    t('location.activities.items.gradac'),
+                    t('location.activities.items.tucepi'),
                   ].map((activity) => (
                     <span
                       key={activity}
@@ -377,7 +374,7 @@ export default function Home() {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Villa Jurina lokacija"
+                title={t('location.mapTitle')}
               />
             </div>
           </div>
@@ -390,30 +387,31 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <p className="text-secondary font-medium tracking-widest text-xs uppercase mb-3">
-                Istraži okolicu
+                {t('surroundings.eyebrow')}
               </p>
               <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-text mb-4">
-                Drašnice — idealno polazište za Dalmaciju
+                {t('surroundings.title')}
               </h2>
               <p className="text-muted leading-relaxed mb-6">
-                Biokovo Skywalk, plaža Zlatni rat na Braču, otok Hvar, rafting na Cetini,
-                Split, Dubrovnik — sve je na dohvat ruke. Saznajte više o tome što vas čeka
-                u okolici.
+                {t('surroundings.description')}
               </p>
               <Link
                 href="/drasnice"
                 className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-medium px-7 py-3 rounded-full transition-colors text-sm"
               >
-                Što vidjeti u okolici
+                {t('surroundings.actions.whatToSee')}
                 <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
               </Link>
             </div>
             <div className="grid grid-cols-2 gap-3">
               {[
-                { label: 'Biokovo Skywalk', sub: '30 min vožnje' },
-                { label: 'Otok Hvar', sub: 'u vidokrugu' },
-                { label: 'Zlatni rat, Brač', sub: 'trajekt iz Makarske' },
-                { label: 'Split', sub: '1,5 h vožnje' },
+                { label: t('surroundings.cards.biokovo.label'), sub: t('surroundings.cards.biokovo.sub') },
+                { label: t('surroundings.cards.hvar.label'), sub: t('surroundings.cards.hvar.sub') },
+                {
+                  label: t('surroundings.cards.zlatniRat.label'),
+                  sub: t('surroundings.cards.zlatniRat.sub'),
+                },
+                { label: t('surroundings.cards.split.label'), sub: t('surroundings.cards.split.sub') },
               ].map(({ label, sub }) => (
                 <div key={label} className="bg-white rounded-2xl p-5 border border-sand text-center">
                   <p className="font-serif font-semibold text-text text-base mb-1">{label}</p>
@@ -433,30 +431,29 @@ export default function Home() {
       <section className="py-20 bg-primary text-white text-center">
         <div className="max-w-2xl mx-auto px-4">
           <p className="text-secondary font-medium tracking-widest text-xs uppercase mb-4">
-            Drašnice · Makarska rivijera
+            {t('cta.eyebrow')}
           </p>
           <h2 className="font-serif text-3xl sm:text-4xl font-semibold mb-4">
-            Vaše more čeka
+            {t('cta.title')}
           </h2>
           <p className="text-white/70 mb-2 text-base leading-relaxed">
-            Četiri apartmana, jedno more, nebrojene uspomene.
-            Rezervirajte danas i osigurajte svoje mjesto u Drašnicama.
+            {t('cta.description')}
           </p>
           <p className="text-white/50 text-sm mb-8">
-            Minimalni boravak 2 noći · Check-in od 14:00 · Check-out do 11:00
+            {t('cta.strip')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/rezervacija"
               className="inline-block bg-secondary hover:bg-secondary-light text-white font-medium px-10 py-4 rounded-full transition-colors text-sm tracking-wide"
             >
-              Provjeri slobodne termine
+              {t('cta.actions.checkDates')}
             </Link>
             <Link
               href="/kontakt"
               className="inline-block border border-white/40 hover:border-white text-white font-medium px-10 py-4 rounded-full transition-colors text-sm tracking-wide"
             >
-              Kontaktirajte nas
+              {t('cta.actions.contact')}
             </Link>
           </div>
         </div>

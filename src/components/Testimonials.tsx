@@ -1,59 +1,16 @@
-const reviews = [
-  {
-    name: 'Markus & Julia B.',
-    origin: 'Beč, Austrija',
-    apartment: 'Sky',
-    initials: 'MJ',
-    color: 'bg-blue-100 text-blue-700',
-    rating: 5,
-    text: 'Savršen bijeg za dvoje. Pogled s terase na otvoreno more bio je nevjerojetan — jutarnja kava uz zvuk valova i Hvar u daljini. Apartman je bio čist, moderan i imao je sve što nam je trebalo. Plaža je doslovno 50 metara — nismo trebali auto cijeli tjedan.',
-  },
-  {
-    name: 'Obitelj Kovač',
-    origin: 'Zagreb, Hrvatska',
-    apartment: 'Harmonia',
-    initials: 'OK',
-    color: 'bg-amber-100 text-amber-700',
-    rating: 5,
-    text: 'Harmonia je bila savršena za nas petero. Dva balkona, pogled na more s oba, dovoljno prostora da djeca imaju svoju sobu, a mi svoju tišinu. Domaćini su bili izuzetno ljubazni i uvijek dostupni. Vraćamo se sigurno — ovo je naš novi omiljeni odmor.',
-  },
-  {
-    name: 'Pieter & Anke V.',
-    origin: 'Amsterdam, Nizozemska',
-    apartment: 'Arba',
-    initials: 'PA',
-    color: 'bg-green-100 text-green-700',
-    rating: 5,
-    text: 'Pronašli smo pravo skriveno mjesto! Drašnice su tako mirne i autentične — bez turističkih gužvi. Djeca su obožavala plažu i igralište, a mi smo konačno imali pravi odmor. Izlet na Biokovo Skywalk bio je nezaboravan. Apartman Arba — sve preporučujemo!',
-  },
-  {
-    name: 'Valentina R.',
-    origin: 'Milano, Italija',
-    apartment: 'Luna',
-    initials: 'VR',
-    color: 'bg-rose-100 text-rose-700',
-    rating: 5,
-    text: 'Luna je romantičan apartman koji nadilazi očekivanja. Balkon s pogledom na more, uređenje s ukusom, miran položaj — idealno za par koji želi pravi odmor. More je savršeno čisto. Makarska je 10 minuta vožnje, ali iskreno — nismo ni htjeli odlaziti iz Drašnica.',
-  },
-  {
-    name: 'Familie Gruber',
-    origin: 'München, Njemačka',
-    apartment: 'Harmonia',
-    initials: 'FG',
-    color: 'bg-purple-100 text-purple-700',
-    rating: 5,
-    text: 'Zweimal waren wir schon hier — und kommen wieder. Die Lage ist perfekt: ruhig, direkt am Meer, toller Ausblick auf Hvar. Die Wohnung Harmonia ist sehr geräumig und stilvoll eingerichtet. Die Gastgeber sind immer hilfsbereit. Biokovo Skywalk ist ein Muss!',
-  },
-  {
-    name: 'Maja in Tomaž P.',
-    origin: 'Ljubljana, Slovenija',
-    apartment: 'Arba',
-    initials: 'MT',
-    color: 'bg-teal-100 text-teal-700',
-    rating: 5,
-    text: 'Odlična lokacija, tih apartman s prekrasnim pogledom. Rado bi izpostavila izjemno prijazne gostiteljice — vedno so bile pripravljene pomagati. Plaža je korak stran, Makarska 10 minut, Biokovo pa takoj za hišo. Čudovit teden, ki ga bomo dolgo ohranili v spominu.',
-  },
-];
+'use client';
+
+import { useTranslations } from 'next-intl';
+
+const reviewIds = ['r1', 'r2', 'r3', 'r4', 'r5', 'r6'] as const;
+const reviewMeta = {
+  r1: { apartment: 'Sky', initials: 'MJ', color: 'bg-blue-100 text-blue-700', rating: 5 },
+  r2: { apartment: 'Harmonia', initials: 'OK', color: 'bg-amber-100 text-amber-700', rating: 5 },
+  r3: { apartment: 'Arba', initials: 'PA', color: 'bg-green-100 text-green-700', rating: 5 },
+  r4: { apartment: 'Luna', initials: 'VR', color: 'bg-rose-100 text-rose-700', rating: 5 },
+  r5: { apartment: 'Harmonia', initials: 'FG', color: 'bg-purple-100 text-purple-700', rating: 5 },
+  r6: { apartment: 'Arba', initials: 'MT', color: 'bg-teal-100 text-teal-700', rating: 5 },
+} as const;
 
 function Stars({ count }: { count: number }) {
   return (
@@ -73,20 +30,27 @@ function Stars({ count }: { count: number }) {
 }
 
 export default function Testimonials() {
+  const t = useTranslations('testimonials');
+  const reviews = reviewIds.map((id) => ({
+    ...reviewMeta[id],
+    name: t(`items.${id}.name`),
+    origin: t(`items.${id}.origin`),
+    text: t(`items.${id}.text`),
+  }));
   return (
     <section className="py-20 lg:py-28 bg-sand-light">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-xl mx-auto mb-14">
           <p className="text-secondary font-medium tracking-widest text-xs uppercase mb-3">
-            Što kažu gosti
+            {t('eyebrow')}
           </p>
           <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-text mb-3">
-            Recenzije
+            {t('title')}
           </h2>
           <div className="flex items-center justify-center gap-2">
             <Stars count={5} />
-            <span className="text-sm text-muted font-medium">5.0 — svi gosti preporučuju</span>
+            <span className="text-sm text-muted font-medium">{t('rating')}</span>
           </div>
         </div>
 

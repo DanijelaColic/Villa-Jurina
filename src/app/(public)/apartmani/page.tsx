@@ -1,7 +1,8 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import { Users, Maximize2 } from 'lucide-react';
-import { apartments } from '@/lib/apartments';
+import { getLocale, getTranslations } from 'next-intl/server';
+import { getApartments } from '@/lib/apartments';
+import { Link } from '@/i18n/navigation';
 
 export const metadata = {
   title: 'Apartmani',
@@ -17,21 +18,24 @@ export const metadata = {
   alternates: { canonical: 'https://villajurina.com/apartmani' },
 };
 
-export default function ApartmaniPage() {
+export default async function ApartmaniPage() {
+  const locale = await getLocale();
+  const t = await getTranslations('apartmentsPage');
+  const apartments = getApartments(locale as 'hr' | 'en' | 'de');
+
   return (
     <div className="pt-20">
       {/* Header */}
       <section className="py-16 lg:py-20 bg-sand-light text-center">
         <div className="max-w-2xl mx-auto px-4">
           <p className="text-secondary font-medium tracking-widest text-xs uppercase mb-3">
-            Smještaj
+            {t('eyebrow')}
           </p>
           <h1 className="font-serif text-4xl sm:text-5xl font-semibold text-text mb-4">
-            Apartmani
+            {t('title')}
           </h1>
           <p className="text-muted text-base leading-relaxed">
-            Četiri pažljivo uređena apartmana s pogledom na more, svaki s vlastitim karakterom i
-            atmosferom. Renovirani 2025. godine.
+            {t('description')}
           </p>
         </div>
       </section>
@@ -89,17 +93,17 @@ export default function ApartmaniPage() {
                   </div>
                   {apt.floors > 1 && (
                     <span className="text-xs bg-sand text-text px-3 py-1 rounded-full">
-                      Dvoetažni
+                      {t('stats.duplex')}
                     </span>
                   )}
                   {apt.view && (
                     <span className="text-xs bg-sand text-text px-3 py-1 rounded-full">
-                      Pogled na more
+                      {t('stats.seaView')}
                     </span>
                   )}
                   {apt.balcony && (
                     <span className="text-xs bg-sand text-text px-3 py-1 rounded-full">
-                      Balkon
+                      {t('stats.balcony')}
                     </span>
                   )}
                 </div>
@@ -108,23 +112,23 @@ export default function ApartmaniPage() {
                 {!apt.fullyBooked ? (
                   <div className="mb-6 p-4 bg-sand-light rounded-xl">
                     <p className="text-xs text-muted uppercase tracking-widest font-medium mb-2">
-                      Cijena po noći
+                      {t('price.title')}
                     </p>
                     <div className="flex gap-6">
                       <div>
-                        <p className="text-xs text-muted mb-0.5">Izvan sezone</p>
+                        <p className="text-xs text-muted mb-0.5">{t('price.offSeason')}</p>
                         <p className="text-primary font-semibold text-lg">{apt.priceOffSeason}€</p>
                       </div>
                       <div className="w-px bg-sand" />
                       <div>
-                        <p className="text-xs text-muted mb-0.5">Srpanj / Kolovoz</p>
+                        <p className="text-xs text-muted mb-0.5">{t('price.highSeason')}</p>
                         <p className="text-primary font-semibold text-lg">{apt.priceHighSeason}€</p>
                       </div>
                     </div>
                   </div>
                 ) : (
                   <div className="mb-6 p-4 bg-sand-light rounded-xl text-muted text-sm">
-                    Apartman nije dostupan za rezervaciju u sezoni 2025.
+                    {t('price.unavailable')}
                   </div>
                 )}
 
@@ -133,14 +137,14 @@ export default function ApartmaniPage() {
                     href={`/apartmani/${apt.slug}`}
                     className="border border-primary text-primary hover:bg-primary hover:text-white font-medium px-6 py-2.5 rounded-full transition-colors text-sm"
                   >
-                    Više detalja
+                    {t('actions.details')}
                   </Link>
                   {!apt.fullyBooked && (
                     <Link
                       href={`/rezervacija?apartman=${apt.slug}`}
                       className="bg-secondary hover:bg-secondary-light text-white font-medium px-6 py-2.5 rounded-full transition-colors text-sm"
                     >
-                      Rezerviraj
+                      {t('actions.book')}
                     </Link>
                   )}
                 </div>

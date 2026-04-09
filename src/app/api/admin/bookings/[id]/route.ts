@@ -36,6 +36,7 @@ export async function PATCH(request: NextRequest, { params }: Params) {
         totalPrice: booking.total_price,
         deposit: booking.deposit,
         bookingId: booking.id,
+        locale: 'hr',
       }).catch((err) => console.error('Resend email failed:', err));
     }
     return NextResponse.json({ success: true });
@@ -109,6 +110,7 @@ export async function PATCH(request: NextRequest, { params }: Params) {
         totalPrice: existing.total_price,
         deposit: existing.deposit,
         bookingId: existing.id,
+        locale: 'hr',
       }).catch((err) => console.error('Confirmation email failed:', err));
     }
   }

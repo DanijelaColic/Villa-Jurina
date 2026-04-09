@@ -2,6 +2,7 @@ import { Resend } from 'resend';
 import { formatDisplayDate } from './dates';
 import { generateHUB3Buffer, generateEPCBuffer } from './barcodeUtils';
 import { getSiteUrl } from './siteUrl';
+import type { AppLocale } from './requestLocale';
 
 export type BookingEmailData = {
   guestName: string;
@@ -15,6 +16,7 @@ export type BookingEmailData = {
   deposit: number;
   bookingId?: string; // koristi se za generiranje QR kodova i poziva na broj
   confirmationUrl?: string;
+  locale?: AppLocale;
 };
 
 function getResend(): Resend | null {
@@ -43,6 +45,7 @@ export async function sendNewBookingEmails(data: BookingEmailData) {
     ? `REZ-${data.bookingId.substring(0, 8).toUpperCase()}`
     : null;
   const fullData: FullData = { ...data, checkInStr, checkOutStr, reference };
+  const locale = data.locale ?? 'hr';
 
   // Generiraj QR attachmente samo ako imamo booking ID
   const attachments: { filename: string; content: string }[] = [];
@@ -67,14 +70,24 @@ export async function sendNewBookingEmails(data: BookingEmailData) {
     resend.emails.send({
       from: FROM(),
       to: data.guestEmail,
-      subject: `Potvrda rezervacije – Apartman ${data.apartmentName} | Villa Jurina`,
-      html: guestReceivedHtml(fullData),
+      subject:
+        locale === 'en'
+          ? `Booking received – Apartment ${data.apartmentName} | Villa Jurina`
+          : locale === 'de'
+            ? `Buchung eingegangen – Apartment ${data.apartmentName} | Villa Jurina`
+            : `Potvrda rezervacije – Apartman ${data.apartmentName} | Villa Jurina`,
+      html: guestReceivedHtml(fullData, locale),
       ...(attachments.length > 0 && { attachments }),
     }),
     resend.emails.send({
       from: FROM(),
       to: OWNER(),
-      subject: `Nova rezervacija – ${data.guestName} | Apartman ${data.apartmentName}`,
+      subject:
+        locale === 'en'
+          ? `New booking – ${data.guestName} | Apartment ${data.apartmentName}`
+          : locale === 'de'
+            ? `Neue Buchung – ${data.guestName} | Apartment ${data.apartmentName}`
+            : `Nova rezervacija – ${data.guestName} | Apartman ${data.apartmentName}`,
       html: ownerNewBookingHtml(fullData),
     }),
   ]);
@@ -102,6 +115,7 @@ export async function sendConfirmationEmail(data: BookingEmailData) {
     ? `REZ-${data.bookingId.substring(0, 8).toUpperCase()}`
     : null;
   const fullData: FullData = { ...data, checkInStr, checkOutStr, reference };
+  const locale = data.locale ?? 'hr';
 
   const attachments: { filename: string; content: string }[] = [];
   if (reference) {
@@ -124,8 +138,13 @@ export async function sendConfirmationEmail(data: BookingEmailData) {
   const result = await resend.emails.send({
     from: FROM(),
     to: data.guestEmail,
-    subject: `Rezervacija potvrđena ✓ – Apartman ${data.apartmentName} | Villa Jurina`,
-    html: guestConfirmedHtml(fullData),
+    subject:
+      locale === 'en'
+        ? `Booking confirmed ✓ – Apartment ${data.apartmentName} | Villa Jurina`
+        : locale === 'de'
+          ? `Buchung bestätigt ✓ – Apartment ${data.apartmentName} | Villa Jurina`
+          : `Rezervacija potvrđena ✓ – Apartman ${data.apartmentName} | Villa Jurina`,
+    html: guestConfirmedHtml(fullData, locale),
     ...(attachments.length > 0 && { attachments }),
   });
   if (result.error) console.error('[email] Confirmation email failed:', result.error);
@@ -136,6 +155,7 @@ export async function sendContactEmail(opts: {
   senderName: string;
   senderEmail: string;
   message: string;
+  locale?: AppLocale;
 }) {
   const resend = getResend();
   if (!resend) return;
@@ -143,8 +163,13 @@ export async function sendContactEmail(opts: {
   const result = await resend.emails.send({
     from: FROM(),
     to: OWNER(),
-    subject: `Nova poruka s web stranice – ${opts.senderName}`,
-    html: contactEmailHtml(opts),
+    subject:
+      opts.locale === 'en'
+        ? `New website message – ${opts.senderName}`
+        : opts.locale === 'de'
+          ? `Neue Nachricht von der Website – ${opts.senderName}`
+          : `Nova poruka s web stranice – ${opts.senderName}`,
+    html: contactEmailHtml(opts, opts.locale ?? 'hr'),
   });
 
   if (result.error) {
@@ -156,8 +181,66 @@ export async function sendContactEmail(opts: {
 
 type FullData = BookingEmailData & { checkInStr: string; checkOutStr: string; reference: string | null };
 
-function guestReceivedHtml(d: FullData) {
+function guestReceivedHtml(d: FullData, locale: AppLocale) {
   const pricePerNight = Math.round(d.totalPrice / d.nights);
+  if (locale === 'en' || locale === 'de') {
+    const copy = {
+      en: {
+        dear: 'Dear',
+        intro:
+          'Your booking request has been received successfully. Please complete the deposit payment within 24 hours to validate the booking.',
+        apartment: 'Apartment',
+        nights: 'Nights',
+        pricePerNight: 'Price / night',
+        total: 'Total',
+        deposit: 'Deposit (30%)',
+        paymentLink: 'Payment link:',
+      },
+      de: {
+        dear: 'Sehr geehrte/r',
+        intro:
+          'Ihre Buchungsanfrage wurde erfolgreich empfangen. Bitte zahlen Sie die Anzahlung innerhalb von 24 Stunden, um die Buchung zu bestätigen.',
+        apartment: 'Apartment',
+        nights: 'Nächte',
+        pricePerNight: 'Preis / Nacht',
+        total: 'Gesamt',
+        deposit: 'Anzahlung (30%)',
+        paymentLink: 'Zahlungslink:',
+      },
+    } as const;
+    const c = copy[locale];
+    return `
+<!DOCTYPE html>
+<html lang="${locale}">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="font-family: Georgia, serif; color: #1c2b35; background: #fdfcfa; margin: 0; padding: 20px;">
+  <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border: 1px solid #f0e6d3; border-radius: 12px; overflow: hidden;">
+    <div style="background: #1e4a5f; padding: 32px 40px; text-align: center;">
+      <h1 style="color: #ffffff; font-size: 28px; margin: 0; letter-spacing: 1px;">Villa Jurina</h1>
+      <p style="color: #c4975a; margin: 8px 0 0; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;">Drašnice · Makarska Riviera</p>
+    </div>
+    <div style="padding: 40px;">
+      <p style="font-size: 18px; margin-top: 0;">${c.dear} ${d.guestName},</p>
+      <p style="color: #6b7a85; line-height: 1.7;">
+        ${c.intro}
+      </p>
+      <p style="color: #6b7a85; line-height: 1.7;">
+        ${c.apartment}: <strong>${d.apartmentName}</strong><br>
+        Check-in: <strong>${d.checkInStr} (14:00)</strong><br>
+        Check-out: <strong>${d.checkOutStr} (11:00)</strong><br>
+        ${c.nights}: <strong>${d.nights}</strong><br>
+        ${c.pricePerNight}: <strong>${pricePerNight}€</strong><br>
+        ${c.total}: <strong>${d.totalPrice}€</strong><br>
+        ${c.deposit}: <strong>${d.deposit}€</strong>
+      </p>
+      <p style="color: #6b7a85; line-height: 1.7;">
+        ${c.paymentLink} <a href="${d.confirmationUrl ?? PAYMENT_INSTRUCTIONS_URL()}" style="color: #1e4a5f; word-break: break-all;">${d.confirmationUrl ?? PAYMENT_INSTRUCTIONS_URL()}</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>`;
+  }
   return `
 <!DOCTYPE html>
 <html lang="hr">
@@ -222,8 +305,64 @@ function guestReceivedHtml(d: FullData) {
 </html>`;
 }
 
-function guestConfirmedHtml(d: FullData) {
+function guestConfirmedHtml(d: FullData, locale: AppLocale) {
   const pricePerNight = Math.round(d.totalPrice / d.nights);
+  if (locale === 'en' || locale === 'de') {
+    const copy = {
+      en: {
+        dear: 'Dear',
+        confirmed: 'Your booking is confirmed.',
+        apartment: 'Apartment',
+        nights: 'Nights',
+        pricePerNight: 'Price / night',
+        total: 'Total',
+        deposit: 'Deposit (30%)',
+        paymentLink: 'Booking details and payment link:',
+      },
+      de: {
+        dear: 'Sehr geehrte/r',
+        confirmed: 'Ihre Buchung ist bestätigt.',
+        apartment: 'Apartment',
+        nights: 'Nächte',
+        pricePerNight: 'Preis / Nacht',
+        total: 'Gesamt',
+        deposit: 'Anzahlung (30%)',
+        paymentLink: 'Buchungsdetails und Zahlungslink:',
+      },
+    } as const;
+    const c = copy[locale];
+    return `
+<!DOCTYPE html>
+<html lang="${locale}">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="font-family: Georgia, serif; color: #1c2b35; background: #fdfcfa; margin: 0; padding: 20px;">
+  <div style="max-width: 600px; margin: 0 auto; background: #ffffff; border: 1px solid #f0e6d3; border-radius: 12px; overflow: hidden;">
+    <div style="background: #1e4a5f; padding: 32px 40px; text-align: center;">
+      <h1 style="color: #ffffff; font-size: 28px; margin: 0; letter-spacing: 1px;">Villa Jurina</h1>
+      <p style="color: #c4975a; margin: 8px 0 0; font-size: 14px; letter-spacing: 2px; text-transform: uppercase;">Drašnice · Makarska Riviera</p>
+    </div>
+    <div style="padding: 40px;">
+      <p style="font-size: 18px; margin-top: 0;">${c.dear} ${d.guestName},</p>
+      <p style="color: #166534; line-height: 1.7; font-weight: bold;">
+        ${c.confirmed}
+      </p>
+      <p style="color: #6b7a85; line-height: 1.7;">
+        ${c.apartment}: <strong>${d.apartmentName}</strong><br>
+        Check-in: <strong>${d.checkInStr} (14:00)</strong><br>
+        Check-out: <strong>${d.checkOutStr} (11:00)</strong><br>
+        ${c.nights}: <strong>${d.nights}</strong><br>
+        ${c.pricePerNight}: <strong>${pricePerNight}€</strong><br>
+        ${c.total}: <strong>${d.totalPrice}€</strong><br>
+        ${c.deposit}: <strong>${d.deposit}€</strong>
+      </p>
+      <p style="color: #6b7a85; line-height: 1.7;">
+        ${c.paymentLink} <a href="${d.confirmationUrl ?? PAYMENT_INSTRUCTIONS_URL()}" style="color: #1e4a5f; word-break: break-all;">${d.confirmationUrl ?? PAYMENT_INSTRUCTIONS_URL()}</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>`;
+  }
   return `
 <!DOCTYPE html>
 <html lang="hr">
@@ -319,7 +458,38 @@ function ownerNewBookingHtml(d: FullData) {
 </html>`;
 }
 
-function contactEmailHtml(d: { senderName: string; senderEmail: string; message: string }) {
+function contactEmailHtml(
+  d: { senderName: string; senderEmail: string; message: string },
+  locale: AppLocale,
+) {
+  if (locale === 'en' || locale === 'de') {
+    const copy = {
+      en: { title: 'New website message', name: 'Name' },
+      de: { title: 'Neue Nachricht von der Website', name: 'Name' },
+    } as const;
+    const c = copy[locale];
+    return `
+<!DOCTYPE html>
+<html lang="${locale}">
+<head><meta charset="UTF-8"></head>
+<body style="font-family: Arial, sans-serif; color: #1c2b35; background: #f5f5f5; margin: 0; padding: 20px;">
+  <div style="max-width: 500px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e5e7eb;">
+    <div style="background: #1e4a5f; padding: 24px 32px;">
+      <h1 style="color: #ffffff; font-size: 20px; margin: 0;">${c.title}</h1>
+    </div>
+    <div style="padding: 32px;">
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+        <tr><td style="padding: 8px 12px; color: #6b7a85; width: 80px;">${c.name}</td><td style="padding: 8px 12px; font-weight: bold;">${d.senderName}</td></tr>
+        <tr style="background: #fafafa;"><td style="padding: 8px 12px; color: #6b7a85;">Email</td><td style="padding: 8px 12px;"><a href="mailto:${d.senderEmail}">${d.senderEmail}</a></td></tr>
+      </table>
+      <div style="background: #f9fafb; border-radius: 8px; padding: 16px; border: 1px solid #e5e7eb;">
+        <p style="margin: 0; color: #374151; line-height: 1.7; white-space: pre-wrap;">${d.message}</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>`;
+  }
   return `
 <!DOCTYPE html>
 <html lang="hr">

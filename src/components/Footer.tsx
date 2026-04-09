@@ -1,8 +1,11 @@
-import Link from 'next/link';
 import Image from 'next/image';
 import { MapPin, Phone, Mail, Instagram } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 
-export default function Footer() {
+export default async function Footer() {
+  const t = await getTranslations('footer');
+
   return (
     <footer className="bg-primary text-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -20,22 +23,21 @@ export default function Footer() {
               <h3 className="font-serif text-xl font-semibold">Villa Jurina</h3>
             </div>
             <p className="text-white/70 text-sm leading-relaxed">
-              Kuća dida Jure — sagradena uz more s ljubavlju i strpljivošću. Ovdje se jutra bude uz
-              šum mora, a večeri smiruju pod zvijezdama.
+              {t('story')}
             </p>
           </div>
 
           {/* Links */}
           <div>
             <h4 className="font-medium text-white/90 mb-4 tracking-wide text-sm uppercase">
-              Navigacija
+              {t('navigation')}
             </h4>
             <ul className="space-y-2">
               {[
-                { href: '/apartmani', label: 'Apartmani' },
-                { href: '/rezervacija', label: 'Rezervacija' },
-                { href: '/kontakt', label: 'Kontakt' },
-                { href: '/privatnost', label: 'Politika privatnosti' },
+                { href: '/apartmani', label: t('apartments') },
+                { href: '/rezervacija', label: t('booking') },
+                { href: '/kontakt', label: t('contact') },
+                { href: '/privatnost', label: t('privacy') },
               ].map(({ href, label }) => (
                 <li key={href}>
                   <Link
@@ -52,7 +54,7 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <h4 className="font-medium text-white/90 mb-4 tracking-wide text-sm uppercase">
-              Kontakt
+              {t('contact')}
             </h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-2 text-white/70 text-sm">
@@ -95,10 +97,12 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-2 text-white/40 text-xs">
-          <p>© {new Date().getFullYear()} Villa Jurina. Sva prava pridržana.</p>
-          <p>Drašnice, Makarska rivijera</p>
           <p>
-            Izradio{' '}
+            © {new Date().getFullYear()} Villa Jurina. {t('rights')}
+          </p>
+          <p>{t('location')}</p>
+          <p>
+            {t('madeBy')}{' '}
             <a
               href="https://www.enkr.hr"
               target="_blank"

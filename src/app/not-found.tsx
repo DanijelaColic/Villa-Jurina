@@ -1,38 +1,44 @@
-import Link from 'next/link';
 import type { Metadata } from 'next';
+import { getLocale, getTranslations } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 
-export const metadata: Metadata = {
-  title: 'Stranica nije pronađena',
-  description: 'Tražena stranica ne postoji. Vratite se na početnu stranicu Villa Jurina.',
-  robots: { index: false },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const t = await getTranslations({ locale, namespace: 'notFoundPage' });
+  return {
+    title: t('title'),
+    description: t('description'),
+    robots: { index: false },
+  };
+}
 
-export default function NotFound() {
+export default async function NotFound() {
+  const t = await getTranslations('notFoundPage');
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-sand-light px-4">
       <div className="text-center max-w-md">
         <p className="text-secondary font-medium tracking-widest text-xs uppercase mb-4">
-          Greška 404
+          {t('eyebrow')}
         </p>
         <h1 className="font-serif text-5xl sm:text-6xl font-semibold text-text mb-4">
-          Stranica nije pronađena
+          {t('title')}
         </h1>
         <p className="text-muted text-base leading-relaxed mb-8">
-          Stranica koju tražite ne postoji ili je premještena. Provjerite URL ili se vratite na
-          početnu stranicu.
+          {t('description')}
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             href="/"
             className="bg-primary hover:bg-primary/90 text-white font-medium px-8 py-3 rounded-full transition-colors text-sm"
           >
-            Početna stranica
+            {t('actions.home')}
           </Link>
           <Link
             href="/apartmani"
             className="border border-primary text-primary hover:bg-primary hover:text-white font-medium px-8 py-3 rounded-full transition-colors text-sm"
           >
-            Pogledaj apartmane
+            {t('actions.apartments')}
           </Link>
         </div>
       </div>

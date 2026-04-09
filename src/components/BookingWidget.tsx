@@ -3,11 +3,10 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { Check, AlertCircle, Loader2 } from 'lucide-react';
 import clsx from 'clsx';
+import { useLocale, useTranslations } from 'next-intl';
 import BookingCalendar from './BookingCalendar';
-import { apartments } from '@/lib/apartments';
+import { getApartments } from '@/lib/apartments';
 import { formatDisplayDate, formatShortDate, formatDate, calculatePrice } from '@/lib/dates';
-
-const AVAILABLE_APARTMENTS = apartments.filter((a) => !a.fullyBooked);
 
 type FormData = {
   name: string;
@@ -24,6 +23,12 @@ type Props = {
 };
 
 export default function BookingWidget({ initialSlug }: Props) {
+  const locale = useLocale() as 'hr' | 'en' | 'de';
+  const t = useTranslations('bookingWidget');
+  const apartments = getApartments(locale);
+  const AVAILABLE_APARTMENTS = apartments.filter((a) => !a.fullyBooked);
+  const nightUnit = locale === 'de' ? 'Nacht' : locale === 'en' ? 'night' : 'noć';
+
   const defaultSlug = initialSlug && !apartments.find(a => a.slug === initialSlug)?.fullyBooked
     ? initialSlug
     : AVAILABLE_APARTMENTS[0]?.slug ?? '';
@@ -106,7 +111,10 @@ export default function BookingWidget({ initialSlug }: Props) {
     const totalGuests = parseInt(form.adults) + parseInt(form.children);
     if (totalGuests > selectedApartment.capacity) {
       setSubmitError(
-        `Apartman ${selectedApartment.name} prima maksimalno ${selectedApartment.capacity} ${selectedApartment.capacity === 1 ? 'osobu' : selectedApartment.capacity < 5 ? 'osobe' : 'osoba'}.`,
+        t('errors.capacity', {
+          apartment: selectedApartment.name,
+          capacity: selectedApartment.capacity,
+        }),
       );
       return;
     }
@@ -132,7 +140,7 @@ export default function BookingWidget({ initialSlug }: Props) {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? 'Greška pri slanju');
+      if (!res.ok) throw new Error(data.error ?? t('errors.send'));
       setSuccess(true);
       setBookingReference(
         data.bookingId ? `REZ-${String(data.bookingId).substring(0, 8).toUpperCase()}` : null,
@@ -142,7 +150,7 @@ export default function BookingWidget({ initialSlug }: Props) {
         fetchBarcodes(priceData.deposit, form.name, data.bookingId);
       }
     } catch (err) {
-      setSubmitError(err instanceof Error ? err.message : 'Greška pri slanju rezervacije');
+      setSubmitError(err instanceof Error ? err.message : t('errors.booking'));
     } finally {
       setSubmitting(false);
     }
@@ -162,48 +170,48 @@ export default function BookingWidget({ initialSlug }: Props) {
           <Check size={32} className="text-green-600" />
         </div>
         <h2 className="font-serif text-2xl font-semibold text-text mb-3">
-          Rezervacija primljena!
+          {t('success.title')}
         </h2>
         <p className="text-muted leading-relaxed mb-6">
-          Hvala, <strong className="text-text">{form.name}</strong>! Potvrdu s detaljima poslali smo
-          na <strong className="text-text">{form.email}</strong>.
+          {t('success.prefix')} <strong className="text-text">{form.name}</strong>
+          {t('success.middle')}{' '}
+          <strong className="text-text">{form.email}</strong>.
         </p>
         {priceData && (
           <div className="bg-sand-light rounded-xl p-5 text-left text-sm mb-6">
             <p className="text-muted mb-1">
-              <strong className="text-text">Apartman:</strong> {selectedApartment?.name}
+              <strong className="text-text">{t('labels.apartment')}:</strong> {selectedApartment?.name}
             </p>
             <p className="text-muted mb-1">
-              <strong className="text-text">Check-in:</strong>{' '}
+              <strong className="text-text">{t('labels.checkIn')}:</strong>{' '}
               {checkIn ? formatDisplayDate(checkIn) : ''}
             </p>
             <p className="text-muted mb-1">
-              <strong className="text-text">Check-out:</strong>{' '}
+              <strong className="text-text">{t('labels.checkOut')}:</strong>{' '}
               {checkOut ? formatDisplayDate(checkOut) : ''}
             </p>
             <p className="text-muted mb-1">
-              <strong className="text-text">Broj noći:</strong>{' '}
+              <strong className="text-text">{t('labels.nights')}:</strong>{' '}
               {priceData.nights}
             </p>
             <p className="text-muted mb-1">
-              <strong className="text-text">Cijena / noć:</strong>{' '}
+              <strong className="text-text">{t('labels.pricePerNight')}:</strong>{' '}
               {Math.round(priceData.totalPrice / priceData.nights)}€
             </p>
             <div className="border-t border-sand mt-3 pt-3 flex justify-between items-center">
-              <strong className="text-text">Ukupno:</strong>
+                <strong className="text-text">{t('labels.total')}:</strong>
               <span className="text-primary font-bold text-lg">{priceData.totalPrice}€</span>
             </div>
             <p className="text-muted mt-2">
-              <strong className="text-text">Depozit za uplatu (30%):</strong>{' '}
+              <strong className="text-text">{t('labels.deposit')}:</strong>{' '}
               <span className="text-secondary font-semibold">{priceData.deposit}€</span>
             </p>
             <p className="text-muted mt-2">
-              Uplatu depozita molimo izvršiti u roku od 24 sata. Ako uplata ne bude evidentirana u
-              tom roku, rezervacija se smatra nevažećom.
+              {t('deposit.note')}
             </p>
             <div className="mt-3 bg-white border border-sand px-3 py-3 rounded-lg space-y-1">
               <p className="text-xs text-muted">
-                <strong className="text-text">Primatelj:</strong> Antonija Pušić
+                <strong className="text-text">{t('labels.recipient')}:</strong> Antonija Pušić
               </p>
               <p className="font-mono text-xs text-muted">
                 <strong className="text-text">IBAN:</strong> HR6523900013223724831
@@ -212,16 +220,16 @@ export default function BookingWidget({ initialSlug }: Props) {
                 <strong className="text-text">BIC/SWIFT:</strong> HPBZHR2X
               </p>
               <p className="text-xs text-muted">
-                <strong className="text-text">Banka:</strong> Hrvatska poštanska banka d.d.
+                <strong className="text-text">{t('labels.bank')}:</strong> Hrvatska poštanska banka d.d.
               </p>
               <p className="text-xs text-muted">
-                <strong className="text-text">Adresa banke:</strong> Jurišićeva 4, 10000 Zagreb, Croatia
+                <strong className="text-text">{t('labels.bankAddress')}:</strong> Jurišićeva 4, 10000 Zagreb, Croatia
               </p>
               <p className="text-xs text-muted">
-                <strong className="text-text">Opis plaćanja:</strong> Rezervacija Villa Jurina
+                <strong className="text-text">{t('labels.paymentDescription')}:</strong> Rezervacija Villa Jurina
               </p>
               <p className="text-xs text-muted">
-                <strong className="text-text">Poziv na broj:</strong>{' '}
+                <strong className="text-text">{t('labels.reference')}:</strong>{' '}
                 <span className="font-semibold text-text">
                   {bookingReference ?? `${form.name} — Apartman ${selectedApartment?.name}`}
                 </span>
@@ -232,19 +240,19 @@ export default function BookingWidget({ initialSlug }: Props) {
             {(barcodeLoading || hub3Barcode || epcQR) && (
               <div className="mt-4 pt-4 border-t border-sand">
                 <p className="text-xs font-semibold text-text mb-3">
-                  Brzo plaćanje QR kodom:
+                  {t('qr.title')}
                 </p>
                 {barcodeLoading ? (
                   <div className="flex items-center justify-center gap-2 py-4 text-xs text-muted">
                     <Loader2 size={14} className="animate-spin" />
-                    Generiranje QR kodova...
+                    {t('qr.generating')}
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {hub3Barcode && (
                       <div className="bg-white border border-sand rounded-lg p-3 text-center">
                         <p className="text-[11px] font-semibold text-text mb-2">
-                          🇭🇷 Hrvatska banka
+                          🇭🇷 {t('qr.croatianBank')}
                         </p>
                         <img
                           src={hub3Barcode}
@@ -259,7 +267,7 @@ export default function BookingWidget({ initialSlug }: Props) {
                     {epcQR && (
                       <div className="bg-white border border-sand rounded-lg p-3 text-center">
                         <p className="text-[11px] font-semibold text-text mb-2">
-                          🌍 EU / međunarodne banke
+                          🌍 {t('qr.internationalBanks')}
                         </p>
                         <img
                           src={epcQR}
@@ -288,7 +296,7 @@ export default function BookingWidget({ initialSlug }: Props) {
           }}
           className="text-sm text-primary underline underline-offset-2"
         >
-          Nova rezervacija
+          {t('actions.newBooking')}
         </button>
       </div>
     );
@@ -299,7 +307,7 @@ export default function BookingWidget({ initialSlug }: Props) {
       {/* ── Odabir apartmana ──────────────────────────────────────── */}
       <section className="mb-8">
         <h2 className="font-serif text-xl font-semibold text-text mb-4">
-          1. Odaberite apartman
+          {t('steps.apartment')}
         </h2>
         <div className="flex flex-wrap gap-3">
           {AVAILABLE_APARTMENTS.map((apt) => (
@@ -321,8 +329,8 @@ export default function BookingWidget({ initialSlug }: Props) {
         {selectedApartment && (
           <p className="text-sm text-muted mt-3">
             {selectedApartment.size} m² · {selectedApartment.beds}
-            {selectedApartment.view && ' · Pogled na more'}
-            {selectedApartment.balcony && ' · Balkon'}
+            {selectedApartment.view && ` · ${t('labels.seaView')}`}
+            {selectedApartment.balcony && ` · ${t('labels.balcony')}`}
           </p>
         )}
       </section>
@@ -331,12 +339,12 @@ export default function BookingWidget({ initialSlug }: Props) {
       <section className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-serif text-xl font-semibold text-text">
-            2. Odaberite datume
+            {t('steps.dates')}
           </h2>
           {checkIn && checkOut && (
             <span className="text-sm text-secondary font-medium">
               {formatShortDate(checkIn)} → {formatShortDate(checkOut)}
-              {' '}· {priceData?.nights} noći
+              {' '}· {priceData?.nights} {t('labels.nightsSuffix')}
             </span>
           )}
         </div>
@@ -359,32 +367,32 @@ export default function BookingWidget({ initialSlug }: Props) {
           {/* Price summary */}
           <section className="mb-8">
             <h2 className="font-serif text-xl font-semibold text-text mb-4">
-              Sažetak troškova
+              {t('summary.title')}
             </h2>
             <div className="bg-sand-light rounded-xl p-5">
               <div className="flex justify-between items-center mb-3">
                 <span className="text-sm text-muted">
                   {formatDisplayDate(checkIn)} → {formatDisplayDate(checkOut)}
                 </span>
-                <span className="text-sm text-muted">{priceData.nights} noći</span>
+                <span className="text-sm text-muted">{priceData.nights} {t('labels.nightsSuffix')}</span>
               </div>
 
               {priceData.lines.map((line) => (
                 <div key={line.label} className="flex justify-between text-sm mb-1">
                   <span className="text-muted">
-                    {line.nights}× noć · {line.pricePerNight}€
+                    {line.nights}× {nightUnit} · {line.pricePerNight}€
                   </span>
                   <span className="text-text font-medium">{line.subtotal}€</span>
                 </div>
               ))}
 
               <div className="border-t border-sand mt-3 pt-3 flex justify-between items-center">
-                <span className="font-semibold text-text">Ukupno</span>
+                <span className="font-semibold text-text">{t('labels.total')}</span>
                 <span className="font-semibold text-primary text-xl">{priceData.totalPrice}€</span>
               </div>
 
               <div className="mt-3 flex justify-between items-center text-sm">
-                <span className="text-muted">Depozit za uplatu (30%)</span>
+                <span className="text-muted">{t('labels.deposit')}</span>
                 <span className="font-medium text-secondary">{priceData.deposit}€</span>
               </div>
               <p className="text-xs text-muted mt-1 font-mono">
@@ -396,13 +404,13 @@ export default function BookingWidget({ initialSlug }: Props) {
           {/* Forma */}
           <section>
             <h2 className="font-serif text-xl font-semibold text-text mb-4">
-              3. Vaši podaci
+              {t('steps.guestData')}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-text mb-1.5">
-                    Ime i prezime <span className="text-red-400">*</span>
+                    {t('form.fullName')} <span className="text-red-400">*</span>
                   </label>
                   <input
                     name="name"
@@ -410,7 +418,7 @@ export default function BookingWidget({ initialSlug }: Props) {
                     onChange={handleFormChange}
                     required
                     className="w-full border border-sand rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors"
-                    placeholder="Ana Horvat"
+                    placeholder={t('form.fullNamePlaceholder')}
                   />
                 </div>
                 <div>
@@ -424,7 +432,7 @@ export default function BookingWidget({ initialSlug }: Props) {
                     onChange={handleFormChange}
                     required
                     className="w-full border border-sand rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors"
-                    placeholder="ana@email.com"
+                    placeholder={t('form.emailPlaceholder')}
                   />
                 </div>
               </div>
@@ -432,7 +440,7 @@ export default function BookingWidget({ initialSlug }: Props) {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-text mb-1.5">
-                    Telefon / WhatsApp <span className="text-red-400">*</span>
+                    {t('form.phone')} <span className="text-red-400">*</span>
                   </label>
                   <input
                     name="phone"
@@ -441,12 +449,12 @@ export default function BookingWidget({ initialSlug }: Props) {
                     onChange={handleFormChange}
                     required
                     className="w-full border border-sand rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors"
-                    placeholder="+385 91 234 5678"
+                    placeholder={t('form.phonePlaceholder')}
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-text mb-1.5">
-                    Odrasli
+                    {t('form.adults')}
                   </label>
                   <select
                     name="adults"
@@ -465,7 +473,7 @@ export default function BookingWidget({ initialSlug }: Props) {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-text mb-1.5">
-                    Djeca
+                    {t('form.children')}
                   </label>
                   <select
                     name="children"
@@ -489,14 +497,14 @@ export default function BookingWidget({ initialSlug }: Props) {
                     ))}
                   </select>
                   <p className="text-xs text-muted mt-1">
-                    Max. {selectedApartment.capacity} osoba ukupno
+                    {t('form.maxGuests', { capacity: selectedApartment.capacity })}
                   </p>
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-text mb-1.5">
-                  Napomena (opcionalno)
+                  {t('form.noteOptional')}
                 </label>
                 <textarea
                   name="notes"
@@ -504,15 +512,15 @@ export default function BookingWidget({ initialSlug }: Props) {
                   onChange={handleFormChange}
                   rows={3}
                   className="w-full border border-sand rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors resize-none"
-                  placeholder="Posebni zahtjevi, pitanja..."
+                  placeholder={t('form.notePlaceholder')}
                 />
               </div>
 
               {/* Pravila */}
               <div className="bg-sand-light rounded-xl p-4 text-xs text-muted space-y-1">
-                <p><strong className="text-text">Check-in:</strong> 14:00 – 23:00 &nbsp;|&nbsp; <strong className="text-text">Check-out:</strong> 09:00 – 11:00</p>
-                <p><strong className="text-text">Kućni ljubimci:</strong> nisu dozvoljeni &nbsp;|&nbsp; <strong className="text-text">Pušenje:</strong> nije dozvoljeno</p>
-                <p><strong className="text-text">Depozit:</strong> 30% od ukupne cijene ({priceData.deposit}€) — uplata unutar 24h potvrđuje rezervaciju</p>
+                <p><strong className="text-text">{t('rules.checkInLabel')}</strong> 14:00 – 23:00 &nbsp;|&nbsp; <strong className="text-text">{t('rules.checkOutLabel')}</strong> 09:00 – 11:00</p>
+                <p><strong className="text-text">{t('rules.petsLabel')}</strong> {t('rules.petsValue')} &nbsp;|&nbsp; <strong className="text-text">{t('rules.smokingLabel')}</strong> {t('rules.smokingValue')}</p>
+                <p><strong className="text-text">{t('rules.depositLabel')}</strong> {t('rules.depositValue', { amount: priceData.deposit })}</p>
               </div>
 
               <label className="flex items-start gap-3 cursor-pointer">
@@ -525,7 +533,7 @@ export default function BookingWidget({ initialSlug }: Props) {
                   className="mt-0.5 accent-primary"
                 />
                 <span className="text-sm text-muted">
-                  Slažem se s kućnim pravilima i uvjetima rezervacije Villa Jurina.
+                  {t('rules.accept')}
                   <span className="text-red-400"> *</span>
                 </span>
               </label>
@@ -543,7 +551,7 @@ export default function BookingWidget({ initialSlug }: Props) {
                 className="w-full bg-secondary hover:bg-secondary-light disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-4 rounded-full transition-colors text-sm flex items-center justify-center gap-2"
               >
                 {submitting && <Loader2 size={16} className="animate-spin" />}
-                {submitting ? 'Slanje...' : `Pošalji zahtjev za rezervaciju · ${priceData.totalPrice}€`}
+                {submitting ? t('actions.sending') : `${t('actions.submitRequest')} · ${priceData.totalPrice}€`}
               </button>
             </form>
           </section>

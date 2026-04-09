@@ -1,9 +1,10 @@
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
 import { Users, Maximize2, Check } from 'lucide-react';
+import { getLocale, getTranslations } from 'next-intl/server';
 import { apartments, getApartment } from '@/lib/apartments';
 import ImageGallery from '@/components/ImageGallery';
 import { ApartmentJsonLd, BreadcrumbJsonLd } from '@/components/JsonLd';
+import { Link } from '@/i18n/navigation';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -34,8 +35,10 @@ export async function generateMetadata({ params }: Props) {
 }
 
 export default async function ApartmanPage({ params }: Props) {
+  const locale = await getLocale();
+  const t = await getTranslations('apartmentDetailPage');
   const { slug } = await params;
-  const apt = getApartment(slug);
+  const apt = getApartment(slug, locale as 'hr' | 'en' | 'de');
 
   if (!apt) notFound();
 
@@ -86,7 +89,7 @@ export default async function ApartmanPage({ params }: Props) {
           {/* Left: details */}
           <div className="lg:col-span-2">
             <p className="text-secondary font-medium tracking-widest text-xs uppercase mb-2">
-              Apartman
+              {t('eyebrow')}
             </p>
             <h1 className="font-serif text-4xl font-semibold text-text mb-2">{apt.name}</h1>
             <p className="text-muted text-base mb-8">{apt.tagline}</p>
@@ -105,28 +108,28 @@ export default async function ApartmanPage({ params }: Props) {
               </div>
               {apt.floors > 1 && (
                 <span className="text-sm bg-sand text-text px-4 py-2 rounded-full">
-                  Dvoetažni
+                  {t('stats.duplex')}
                 </span>
               )}
               {apt.view && (
                 <span className="text-sm bg-sand text-text px-4 py-2 rounded-full">
-                  Pogled na more
+                  {t('stats.seaView')}
                 </span>
               )}
               {apt.balcony && (
-                <span className="text-sm bg-sand text-text px-4 py-2 rounded-full">Balkon</span>
+                <span className="text-sm bg-sand text-text px-4 py-2 rounded-full">{t('stats.balcony')}</span>
               )}
             </div>
 
             {/* Kreveti */}
             <div className="mb-8">
-              <h3 className="font-serif text-lg font-semibold text-text mb-3">Kreveti</h3>
+              <h3 className="font-serif text-lg font-semibold text-text mb-3">{t('beds.title')}</h3>
               <p className="text-muted text-sm">{apt.beds}</p>
             </div>
 
             {/* Amenities */}
             <div>
-              <h3 className="font-serif text-lg font-semibold text-text mb-4">Što je uključeno</h3>
+              <h3 className="font-serif text-lg font-semibold text-text mb-4">{t('amenities.title')}</h3>
               <ul className="grid grid-cols-2 gap-2">
                 {apt.amenities.map((item) => (
                   <li key={item} className="flex items-center gap-2 text-sm text-muted">
@@ -140,22 +143,22 @@ export default async function ApartmanPage({ params }: Props) {
             {/* Pravila */}
             <div className="mt-8 p-4 bg-sand-light rounded-xl text-sm text-muted space-y-1">
               <p>
-                <strong className="text-text">Check-in:</strong> 14:00 – 23:00
+                <strong className="text-text">{t('rules.checkInLabel')}</strong> 14:00 – 23:00
               </p>
               <p>
-                <strong className="text-text">Check-out:</strong> 09:00 – 11:00
+                <strong className="text-text">{t('rules.checkOutLabel')}</strong> 09:00 – 11:00
               </p>
               <p>
-                <strong className="text-text">Kućni ljubimci:</strong> Nisu dozvoljeni
+                <strong className="text-text">{t('rules.petsLabel')}</strong> {t('rules.petsValue')}
               </p>
               <p>
-                <strong className="text-text">Pušenje:</strong> Nije dozvoljeno
+                <strong className="text-text">{t('rules.smokingLabel')}</strong> {t('rules.smokingValue')}
               </p>
               <p>
-                <strong className="text-text">Minimalni boravak:</strong> 2 noći
+                <strong className="text-text">{t('rules.minStayLabel')}</strong> 2 noći
               </p>
               <p>
-                <strong className="text-text">Depozit:</strong> 30% od ukupnog iznosa
+                <strong className="text-text">{t('rules.depositLabel')}</strong> 30% {t('rules.depositValue')}
               </p>
             </div>
           </div>
@@ -166,15 +169,15 @@ export default async function ApartmanPage({ params }: Props) {
               {!apt.fullyBooked ? (
                 <>
                   <p className="text-xs text-muted uppercase tracking-widest font-medium mb-4">
-                    Cijena po noći
+                    {t('price.title')}
                   </p>
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted">Izvan sezone</span>
+                      <span className="text-sm text-muted">{t('price.offSeason')}</span>
                       <span className="text-primary font-semibold">{apt.priceOffSeason}€</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted">Srpanj / Kolovoz</span>
+                      <span className="text-sm text-muted">{t('price.highSeason')}</span>
                       <span className="text-primary font-semibold">{apt.priceHighSeason}€</span>
                     </div>
                   </div>
@@ -182,21 +185,21 @@ export default async function ApartmanPage({ params }: Props) {
                     href={`/rezervacija?apartman=${apt.slug}`}
                     className="block w-full text-center bg-secondary hover:bg-secondary-light text-white font-medium px-6 py-3 rounded-full transition-colors text-sm"
                   >
-                    Rezerviraj ovaj apartman
+                    {t('actions.bookThis')}
                   </Link>
-                  <p className="text-xs text-muted text-center mt-3">Minimalni boravak: 2 noći</p>
+                  <p className="text-xs text-muted text-center mt-3">{t('rules.minStay')}</p>
                 </>
               ) : (
                 <div className="text-center py-4">
-                  <p className="text-text font-medium mb-2">Zauzeto za sezonu 2025.</p>
+                  <p className="text-text font-medium mb-2">{t('unavailable.title')}</p>
                   <p className="text-sm text-muted mb-6">
-                    Pogledajte ostale dostupne apartmane.
+                    {t('unavailable.description')}
                   </p>
                   <Link
                     href="/apartmani"
                     className="block w-full text-center border border-primary text-primary hover:bg-primary hover:text-white font-medium px-6 py-3 rounded-full transition-colors text-sm"
                   >
-                    Ostali apartmani
+                    {t('unavailable.cta')}
                   </Link>
                 </div>
               )}

@@ -4,20 +4,43 @@ import { getApartment } from '@/lib/apartments';
 import { parseLocalDate, isRangeAvailable, diffDays } from '@/lib/dates';
 import { sendNewBookingEmails } from '@/lib/email';
 import { createBookingViewToken, getBookingConfirmationUrl } from '@/lib/bookingConfirmation';
+import { getRequestLocale } from '@/lib/requestLocale';
 
 // GET /api/bookings?apartment=slug
 // Vraća zauzete datume za odabrani apartman
 export async function GET(request: NextRequest) {
+  const locale = getRequestLocale(request);
+  const msg = {
+    missingApartment:
+      locale === 'en'
+        ? 'Missing apartment parameter'
+        : locale === 'de'
+          ? 'Apartment-Parameter fehlt'
+          : 'Nedostaje parametar apartment',
+    apartmentNotFound:
+      locale === 'en'
+        ? 'Apartment not found'
+        : locale === 'de'
+          ? 'Apartment nicht gefunden'
+          : 'Apartman nije pronađen',
+    fetchError:
+      locale === 'en'
+        ? 'Error fetching bookings'
+        : locale === 'de'
+          ? 'Fehler beim Laden der Buchungen'
+          : 'Greška pri dohvatu rezervacija',
+  };
+
   const { searchParams } = new URL(request.url);
   const slug = searchParams.get('apartment');
 
   if (!slug) {
-    return NextResponse.json({ error: 'Nedostaje parametar apartment' }, { status: 400 });
+    return NextResponse.json({ error: msg.missingApartment }, { status: 400 });
   }
 
   const apt = getApartment(slug);
   if (!apt) {
-    return NextResponse.json({ error: 'Apartman nije pronađen' }, { status: 404 });
+    return NextResponse.json({ error: msg.apartmentNotFound }, { status: 404 });
   }
 
   // Ako je apartman zauzet cijelu sezonu — blokiraj tekuću godinu (Lipanj–Rujan)
@@ -43,13 +66,53 @@ export async function GET(request: NextRequest) {
         ? String((err as { message: unknown }).message)
         : String(err);
     console.error('GET /api/bookings:', detail, err);
-    return NextResponse.json({ error: 'Greška pri dohvatu rezervacija' }, { status: 500 });
+    return NextResponse.json({ error: msg.fetchError }, { status: 500 });
   }
 }
 
 // POST /api/bookings
 // Kreira novu rezervaciju
 export async function POST(request: NextRequest) {
+  const locale = getRequestLocale(request);
+  const msg = {
+    missingFields:
+      locale === 'en'
+        ? 'Missing required fields'
+        : locale === 'de'
+          ? 'Erforderliche Felder fehlen'
+          : 'Nedostaju obavezna polja',
+    apartmentNotFound:
+      locale === 'en'
+        ? 'Apartment not found'
+        : locale === 'de'
+          ? 'Apartment nicht gefunden'
+          : 'Apartman nije pronađen',
+    apartmentUnavailable:
+      locale === 'en'
+        ? 'This apartment is not available for booking'
+        : locale === 'de'
+          ? 'Dieses Apartment ist nicht buchbar'
+          : 'Ovaj apartman nije dostupan za rezervaciju',
+    minStay:
+      locale === 'en'
+        ? 'Minimum stay is 2 nights'
+        : locale === 'de'
+          ? 'Mindestaufenthalt sind 2 Nächte'
+          : 'Minimalni boravak su 2 noći',
+    datesTaken:
+      locale === 'en'
+        ? 'Selected dates are already booked. Please choose different dates.'
+        : locale === 'de'
+          ? 'Die ausgewählten Termine sind bereits belegt. Bitte wählen Sie andere Daten.'
+          : 'Odabrani termini su već zauzeti. Molimo odaberite druge datume.',
+    createError:
+      locale === 'en'
+        ? 'Error creating booking. Please try again or contact us.'
+        : locale === 'de'
+          ? 'Fehler beim Erstellen der Buchung. Bitte versuchen Sie es erneut oder kontaktieren Sie uns.'
+          : 'Greška pri kreiranju rezervacije. Pokušajte ponovo ili nas kontaktirajte.',
+  };
+
   try {
     const body = await request.json();
     const {
@@ -66,17 +129,17 @@ export async function POST(request: NextRequest) {
 
     // Validacija obaveznih polja
     if (!apartment_slug || !check_in || !check_out || !guest_name || !guest_email) {
-      return NextResponse.json({ error: 'Nedostaju obavezna polja' }, { status: 400 });
+      return NextResponse.json({ error: msg.missingFields }, { status: 400 });
     }
 
     const apt = getApartment(apartment_slug);
     if (!apt) {
-      return NextResponse.json({ error: 'Apartman nije pronađen' }, { status: 404 });
+      return NextResponse.json({ error: msg.apartmentNotFound }, { status: 404 });
     }
 
     if (apt.fullyBooked) {
       return NextResponse.json(
-        { error: 'Ovaj apartman nije dostupan za rezervaciju' },
+        { error: msg.apartmentUnavailable },
         { status: 400 },
       );
     }
@@ -87,7 +150,7 @@ export async function POST(request: NextRequest) {
 
     if (nights < 2) {
       return NextResponse.json(
-        { error: 'Minimalni boravak su 2 noći' },
+        { error: msg.minStay },
         { status: 400 },
       );
     }
@@ -112,7 +175,7 @@ export async function POST(request: NextRequest) {
     const existingRanges = existing ?? [];
     if (!isRangeAvailable(checkInDate, checkOutDate, existingRanges)) {
       return NextResponse.json(
-        { error: 'Odabrani termini su već zauzeti. Molimo odaberite druge datume.' },
+        { error: msg.datesTaken },
         { status: 409 },
       );
     }
@@ -173,6 +236,7 @@ export async function POST(request: NextRequest) {
       deposit,
       bookingId: booking.id,
       confirmationUrl,
+      locale,
     });
 
     return NextResponse.json(
@@ -182,7 +246,7 @@ export async function POST(request: NextRequest) {
   } catch (err) {
     console.error('Booking error:', err);
     return NextResponse.json(
-      { error: 'Greška pri kreiranju rezervacije. Pokušajte ponovo ili nas kontaktirajte.' },
+      { error: msg.createError },
       { status: 500 },
     );
   }

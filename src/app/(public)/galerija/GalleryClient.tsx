@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 type Category = 'sve' | 'arba' | 'harmonia' | 'luna' | 'sky' | 'okolica';
 
@@ -66,8 +67,11 @@ const categories: { id: Category; label: string }[] = [
 ];
 
 export default function GalleryClient() {
+  const t = useTranslations('galleryClient');
   const [active, setActive] = useState<Category>('sve');
   const [lightbox, setLightbox] = useState<number | null>(null);
+  const allLabel = t('categories.all');
+  const surroundingsLabel = t('categories.surroundings');
 
   const filtered = active === 'sve' ? images : images.filter((img) => img.category === active);
 
@@ -115,7 +119,7 @@ export default function GalleryClient() {
                 : 'bg-white text-text border-sand hover:border-secondary hover:text-secondary'
             }`}
           >
-            {label}
+            {id === 'sve' ? allLabel : id === 'okolica' ? surroundingsLabel : label}
             {id !== 'sve' && (
               <span className="ml-1.5 text-xs opacity-60">
                 ({images.filter((img) => img.category === id).length})
@@ -156,7 +160,7 @@ export default function GalleryClient() {
           <button
             className="absolute top-4 right-4 text-white/80 hover:text-white p-2 z-10"
             onClick={closeLightbox}
-            aria-label="Zatvori"
+            aria-label={t('lightbox.close')}
           >
             <X size={28} />
           </button>
@@ -173,7 +177,7 @@ export default function GalleryClient() {
               e.stopPropagation();
               prev();
             }}
-            aria-label="Prethodna"
+            aria-label={t('lightbox.previous')}
           >
             <ChevronLeft size={32} />
           </button>
@@ -202,7 +206,7 @@ export default function GalleryClient() {
               e.stopPropagation();
               next();
             }}
-            aria-label="Sljedeća"
+            aria-label={t('lightbox.next')}
           >
             <ChevronRight size={32} />
           </button>

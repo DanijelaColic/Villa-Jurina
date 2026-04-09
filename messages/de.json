@@ -1,0 +1,914 @@
+{
+  "common": {
+    "siteName": "Villa Jurina"
+  },
+  "navbar": {
+    "apartments": "Apartments",
+    "gallery": "Galerie",
+    "surroundings": "Umgebung",
+    "booking": "Buchung",
+    "contact": "Kontakt",
+    "bookNow": "Jetzt buchen",
+    "toggleMenu": "Menü umschalten",
+    "languageLabel": "Sprache"
+  },
+  "footer": {
+    "story": "Das Haus von Opa Jure wurde mit Liebe und Geduld direkt am Meer gebaut. Hier beginnen die Morgen mit dem Rauschen der Wellen und die Abende werden unter dem Sternenhimmel ruhig.",
+    "navigation": "Navigation",
+    "apartments": "Apartments",
+    "booking": "Buchung",
+    "privacy": "Datenschutzrichtlinie",
+    "contact": "Kontakt",
+    "rights": "Alle Rechte vorbehalten.",
+    "location": "Drašnice, Makarska Riviera",
+    "madeBy": "Erstellt von"
+  },
+  "cookies": {
+    "ariaLabel": "Cookie-Hinweis",
+    "title": "Cookies 🍪",
+    "description": "Wir verwenden Cookies, um Ihr Nutzungserlebnis auf dieser Website zu verbessern (Analyse und Präferenzen). Lesen Sie unsere",
+    "privacyLink": "Datenschutzrichtlinie",
+    "acceptAll": "Alle akzeptieren",
+    "essentialOnly": "Nur notwendige"
+  },
+  "faq": {
+    "help": "Hilfe",
+    "title": "Häufig gestellte Fragen",
+    "subtitle": "Alles, was Sie vor der Anreise wissen müssen.",
+    "notFound": "Keine passende Antwort gefunden?",
+    "contactUs": "Kontaktieren Sie uns",
+    "orCall": "oder rufen Sie uns an unter",
+    "items": {
+      "checkin": {
+        "q": "Wann sind Check-in und Check-out?",
+        "a": "Check-in ist ab 14:00 Uhr, Check-out bis 11:00 Uhr. Wenn Sie früher anreisen oder später abreisen, geben Sie uns bitte im Voraus Bescheid - wir kommen Ihnen nach Möglichkeit entgegen."
+      },
+      "minStay": {
+        "q": "Wie lang ist der Mindestaufenthalt?",
+        "a": "Der Mindestaufenthalt beträgt ganzjährig 2 Nächte."
+      },
+      "parking": {
+        "q": "Ist das Parken kostenlos?",
+        "a": "Ja, kostenlose Parkplätze für alle Gäste stehen direkt bei der Villa zur Verfügung. Es gibt keine Zusatzkosten."
+      },
+      "pets": {
+        "q": "Sind Haustiere erlaubt?",
+        "a": "Um einen angenehmen Aufenthalt für alle Gäste zu gewährleisten, sind Haustiere in der Unterkunft nicht erlaubt."
+      },
+      "payment": {
+        "q": "Wie bezahle ich die Buchung?",
+        "a": "Die Buchung wird mit einer Anzahlung von 30 % des Gesamtbetrags bestätigt. Der Restbetrag wird bei Ankunft in bar oder per Banküberweisung bezahlt. Kartenzahlung ist nicht verfügbar."
+      },
+      "beachDistance": {
+        "q": "Wie weit ist der Strand entfernt?",
+        "a": "Der Kiesstrand in Drašnice ist 50 Meter von der Villa entfernt - buchstäblich um die Ecke. Das Meer ist außergewöhnlich sauber und klar und hat einen sanften Einstieg."
+      },
+      "wifi": {
+        "q": "Ist WLAN inklusive?",
+        "a": "Ja, schnelles WLAN ist in allen Apartments kostenlos verfügbar."
+      },
+      "kitchen": {
+        "q": "Gibt es eine Küche?",
+        "a": "Alle Apartments verfügen über eine voll ausgestattete Küche mit Kühlschrank, Mikrowelle, Wasserkocher und kompletter Küchenausstattung."
+      },
+      "groupBooking": {
+        "q": "Kann ich mehrere Apartments für eine Gruppe buchen?",
+        "a": "Natürlich - die Villa hat 4 Apartments und ist ideal für größere Familien oder Freundesgruppen. Kontaktieren Sie uns direkt für eine Gruppenbuchung und ein spezielles Angebot."
+      },
+      "nearby": {
+        "q": "Was befindet sich in der Nähe der Villa?",
+        "a": "In unmittelbarer Nähe befinden sich der Strand, ein Restaurant mit dalmatinischer Küche und ein Kinderspielplatz. Makarska ist 10 Fahrminuten entfernt, der Biokovo Skywalk 30 Minuten, und Fähren nach Hvar und Brač fahren ab Makarska."
+      }
+    }
+  },
+  "bookingPage": {
+    "eyebrow": "Online-Buchung",
+    "title": "Buchung",
+    "description": "Wählen Sie ein Apartment, prüfen Sie verfügbare Termine und senden Sie Ihre Anfrage. Wir melden uns kurzfristig mit einer Bestätigung.",
+    "strip": {
+      "checkInLabel": "Check-in",
+      "checkInValue": "ab 14:00",
+      "checkOutLabel": "Check-out",
+      "checkOutValue": "bis 11:00",
+      "minStayLabel": "Mindestaufenthalt",
+      "minStayValue": "2 Nächte",
+      "depositLabel": "Anzahlung",
+      "depositValue": "30%"
+    },
+    "faq": {
+      "title": "Fragen zur Buchung",
+      "subtitle": "Alles, was Sie über den Buchungsprozess und den Aufenthalt wissen müssen.",
+      "items": {
+        "confirm": {
+          "q": "Wie bestätige ich meine Buchung?",
+          "a": "Nachdem Sie die Anfrage gesendet haben, melden wir uns innerhalb weniger Stunden mit einer Verfügbarkeitsbestätigung und Anweisungen zur Anzahlung (30%). Die Buchung ist erst nach Eingang der Anzahlung aktiv."
+        },
+        "minStay": {
+          "q": "Wie lang ist der Mindestaufenthalt?",
+          "a": "Der Mindestaufenthalt beträgt ganzjährig 2 Nächte."
+        },
+        "cancel": {
+          "q": "Kann ich meine Buchung stornieren?",
+          "a": "Eine Stornierung mit Rückerstattung der Anzahlung ist möglich, wenn sie mindestens 30 Tage vor Anreise mitgeteilt wird. Bei späteren Stornierungen wird die Anzahlung nicht erstattet."
+        },
+        "payment": {
+          "q": "Wie wird der Restbetrag bezahlt?",
+          "a": "Der Restbetrag wird bei Ankunft in bar oder per Banküberweisung bezahlt. Kartenzahlung ist nicht verfügbar."
+        },
+        "capacity": {
+          "q": "Kann ich ein Apartment für eine bestimmte Personenzahl anfragen?",
+          "a": "Ja. Sky bietet Platz für bis zu 2, Luna und Arba bis zu 4 und Harmonia bis zu 6 Personen. Für größere Gruppen können mehrere Apartments gebucht werden - kontaktieren Sie uns für ein Angebot."
+        }
+      }
+    }
+  },
+  "contactPage": {
+    "eyebrow": "Besuchen Sie uns",
+    "title": "Kontakt",
+    "description": "Wir sind für alle Ihre Fragen da - kontaktieren Sie uns per WhatsApp, E-Mail oder besuchen Sie uns.",
+    "info": {
+      "title": "Kontaktinformationen",
+      "address": "Adresse",
+      "phone": "WhatsApp / Telefon",
+      "email": "E-Mail"
+    },
+    "helpful": {
+      "title": "Nützliche Infos",
+      "checkIn": "Check-in:",
+      "checkOut": "Check-out:",
+      "minStay": "Mindestaufenthalt:",
+      "minStayValue": "2 Nächte",
+      "deposit": "Anzahlung:",
+      "beach": "Strand:"
+    },
+    "formTitle": "Schreiben Sie uns",
+    "map": {
+      "title": "So finden Sie uns",
+      "description": "Drašnice 133, Podgora - 50 Meter vom Kiesstrand entfernt, zwischen Makarska und Podgora.",
+      "open": "In Google Maps öffnen"
+    }
+  },
+  "contactForm": {
+    "fields": {
+      "name": "Vor- und Nachname",
+      "email": "E-Mail",
+      "message": "Nachricht"
+    },
+    "placeholders": {
+      "name": "Ihr Name",
+      "email": "ihre@email.com",
+      "message": "Ihre Nachricht..."
+    },
+    "submit": {
+      "sending": "Wird gesendet...",
+      "send": "Nachricht senden"
+    },
+    "success": {
+      "title": "Nachricht wurde gesendet!",
+      "description": "Wir melden uns in Kürze bei Ihnen.",
+      "newMessage": "Neue Nachricht senden"
+    },
+    "errors": {
+      "submit": "Senden fehlgeschlagen",
+      "message": "Nachricht konnte nicht gesendet werden"
+    }
+  },
+  "apartmentsPage": {
+    "eyebrow": "Unterkunft",
+    "title": "Apartments",
+    "description": "Vier sorgfältig eingerichtete Apartments mit Meerblick, jedes mit eigenem Charakter und eigener Atmosphäre. 2025 renoviert.",
+    "stats": {
+      "duplex": "Zweistöckig",
+      "seaView": "Meerblick",
+      "balcony": "Balkon"
+    },
+    "price": {
+      "title": "Preis pro Nacht",
+      "offSeason": "Nebensaison",
+      "highSeason": "Juli / August",
+      "unavailable": "Dieses Apartment ist in der Saison 2025 nicht buchbar."
+    },
+    "actions": {
+      "details": "Mehr Details",
+      "book": "Buchen"
+    }
+  },
+  "apartmentDetailPage": {
+    "eyebrow": "Apartment",
+    "stats": {
+      "duplex": "Zweistöckig",
+      "seaView": "Meerblick",
+      "balcony": "Balkon"
+    },
+    "beds": {
+      "title": "Betten"
+    },
+    "amenities": {
+      "title": "Inklusive"
+    },
+    "price": {
+      "title": "Preis pro Nacht",
+      "offSeason": "Nebensaison",
+      "highSeason": "Juli / August"
+    },
+    "rules": {
+      "checkInLabel": "Check-in:",
+      "checkOutLabel": "Check-out:",
+      "petsLabel": "Haustiere:",
+      "petsValue": "Nicht erlaubt",
+      "smokingLabel": "Rauchen:",
+      "smokingValue": "Nicht erlaubt",
+      "minStayLabel": "Mindestaufenthalt:",
+      "minStay": "Mindestaufenthalt: 2 Nächte",
+      "depositLabel": "Anzahlung:",
+      "depositValue": "des Gesamtbetrags"
+    },
+    "actions": {
+      "bookThis": "Dieses Apartment buchen"
+    },
+    "unavailable": {
+      "title": "Für die Saison 2025 ausgebucht.",
+      "description": "Sehen Sie sich andere verfügbare Apartments an.",
+      "cta": "Andere Apartments"
+    }
+  },
+  "galleryPage": {
+    "eyebrow": "Villa Jurina · Drašnice",
+    "title": "Galerie",
+    "description": "Entdecken Sie Fotos unserer Apartments, des Meerblicks und der Umgebung von Drašnice und der Makarska Riviera.",
+    "metadata": {
+      "title": "Galerie",
+      "description": "Fotos der Apartments Arba, Harmonia, Luna und Sky sowie der Umgebung von Drašnice und der Makarska Riviera.",
+      "openGraphTitle": "Galerie | Villa Jurina",
+      "openGraphDescription": "Fotos der Apartments und der Umgebung von Drašnice an der Makarska Riviera."
+    }
+  },
+  "notFoundPage": {
+    "eyebrow": "Fehler 404",
+    "title": "Seite nicht gefunden",
+    "description": "Die gesuchte Seite existiert nicht oder wurde verschoben. Prüfen Sie die URL oder kehren Sie zur Startseite zurück.",
+    "actions": {
+      "home": "Startseite",
+      "apartments": "Apartments ansehen"
+    }
+  },
+  "paymentInstructionsPage": {
+    "title": "Anleitung zur Anzahlungszahlung",
+    "description": "Die Buchung wird gültig, sobald die Anzahlung verbucht ist. Bitte führen Sie die Zahlung innerhalb von 24 Stunden nach Erhalt der Bestätigung durch.",
+    "paymentData": "Zahlungsdaten",
+    "labels": {
+      "recipient": "Empfänger",
+      "bank": "Bank",
+      "bankAddress": "Bankadresse",
+      "paymentDescription": "Verwendungszweck"
+    },
+    "note": "Hinweis: In der Buchungsbestätigung per E-Mail erhalten Sie auch den genauen Anzahlungsbetrag, die Referenznummer und QR-Codes für eine schnelle Zahlung."
+  },
+  "privacyPage": {
+    "eyebrow": "Rechtliche Informationen",
+    "title": "Datenschutzrichtlinie",
+    "lastUpdated": "Zuletzt aktualisiert:",
+    "backHome": "← Zurück zur Startseite",
+    "content": {
+      "controller": {
+        "title": "1. Verantwortlicher",
+        "lead": "Verantwortlich für die Verarbeitung personenbezogener Daten ist Villa Jurina, Drašnice 133, 21328 Podgora, Kroatien.",
+        "contactIntro": "Für alle Fragen zur Verarbeitung personenbezogener Daten können Sie uns kontaktieren:",
+        "email": "E-Mail",
+        "phone": "Telefon / WhatsApp"
+      },
+      "dataCollected": {
+        "title": "2. Welche Daten wir erheben",
+        "intro": "Wir erheben folgende Kategorien personenbezogener Daten:",
+        "cards": [
+          {
+            "title": "Buchungsdaten",
+            "body": "Vor- und Nachname, E-Mail-Adresse, Telefonnummer, gewähltes Apartment, Check-in/Check-out-Datum, Anzahl der Erwachsenen und Kinder, Anmerkungen."
+          },
+          {
+            "title": "Daten aus dem Kontaktformular",
+            "body": "Name, E-Mail-Adresse, Inhalt der Nachricht."
+          },
+          {
+            "title": "Technische Daten",
+            "body": "IP-Adresse, Browser- und Gerätetyp, besuchte Seiten - zu Analyse- und Sicherheitszwecken der Website. Diese Daten werden nicht zur Identifizierung einzelner Personen verwendet."
+          }
+        ]
+      },
+      "legalBasis": {
+        "title": "3. Zweck und Rechtsgrundlage der Verarbeitung",
+        "tableHeaders": [
+          "Zweck",
+          "Rechtsgrundlage (DSGVO)"
+        ],
+        "rows": [
+          [
+            "Verarbeitung und Bestätigung der Buchung",
+            "Vertragserfüllung (Art. 6(1)(b))"
+          ],
+          [
+            "Versand von Bestätigung und Kommunikation zum Aufenthalt",
+            "Vertragserfüllung (Art. 6(1)(b))"
+          ],
+          [
+            "Antwort auf Anfragen über das Kontaktformular",
+            "Berechtigtes Interesse (Art. 6(1)(f))"
+          ],
+          [
+            "Erfüllung gesetzlicher Pflichten (Steuerunterlagen)",
+            "Rechtliche Verpflichtung (Art. 6(1)(c))"
+          ],
+          [
+            "Verbesserung und Analyse der Website",
+            "Berechtigtes Interesse (Art. 6(1)(f))"
+          ]
+        ]
+      },
+      "sharing": {
+        "title": "4. Mit wem wir Ihre Daten teilen",
+        "intro": "Wir verkaufen Ihre personenbezogenen Daten nicht und geben sie nicht zu kommerziellen Zwecken an Dritte weiter. Daten werden nur mit vertrauenswürdigen Dienstleistern geteilt, die für den Betrieb des Buchungssystems erforderlich sind:",
+        "providers": [
+          {
+            "name": "Supabase",
+            "desc": "Datenbank, in der Buchungen gespeichert werden (EU-Infrastruktur).",
+            "policy": "Supabase-Datenschutzrichtlinie →"
+          },
+          {
+            "name": "Resend",
+            "desc": "Dienst für transaktionale E-Mails (Buchungsbestätigung).",
+            "policy": "Resend-Datenschutzrichtlinie →"
+          }
+        ]
+      },
+      "retention": {
+        "title": "5. Speicherdauer der Daten",
+        "booking": "Buchungsdaten speichern wir 5 Jahre ab dem Abreisedatum gemäß den steuer- und buchhalterischen Vorschriften der Republik Kroatien.",
+        "contact": "Daten aus dem Kontaktformular, die nicht zu einer Buchung führen, werden innerhalb von 12 Monaten nach Eingang der Anfrage gelöscht."
+      },
+      "rights": {
+        "title": "6. Ihre Rechte",
+        "intro": "Gemäß DSGVO haben Sie folgende Rechte:",
+        "items": [
+          {
+            "title": "Recht auf Auskunft",
+            "desc": "Sie können eine Kopie der personenbezogenen Daten anfordern, die wir über Sie verarbeiten."
+          },
+          {
+            "title": "Recht auf Berichtigung",
+            "desc": "Sie können die Berichtigung unrichtiger Daten verlangen."
+          },
+          {
+            "title": "Recht auf Löschung",
+            "desc": "Sie können die Löschung der Daten verlangen, sofern keine gesetzliche Aufbewahrungspflicht besteht."
+          },
+          {
+            "title": "Recht auf Einschränkung der Verarbeitung",
+            "desc": "Sie können die Verarbeitung Ihrer Daten vorübergehend einschränken."
+          },
+          {
+            "title": "Recht auf Datenübertragbarkeit",
+            "desc": "Sie können Ihre Daten in einem maschinenlesbaren Format erhalten."
+          },
+          {
+            "title": "Widerspruchsrecht",
+            "desc": "Sie können der Verarbeitung auf Grundlage berechtigter Interessen widersprechen."
+          }
+        ],
+        "exercise": "Zur Ausübung dieser Rechte schreiben Sie an villajurina@gmail.com. Wir antworten innerhalb von 30 Tagen.",
+        "azop": "Wenn Sie der Ansicht sind, dass Ihre Rechte nicht geschützt sind, können Sie eine Beschwerde bei der kroatischen Datenschutzbehörde (AZOP) einreichen:"
+      },
+      "cookies": {
+        "title": "7. Cookies",
+        "intro": "Wir verwenden Cookies, um die Nutzung der Website zu verbessern. Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden.",
+        "essential": {
+          "title": "Notwendige Cookies",
+          "body": "Erforderlich für die grundlegende Funktionalität der Website (Ihre Datenschutzeinstellungen). Immer aktiv und nicht deaktivierbar."
+        },
+        "analytics": {
+          "title": "Analyse-Cookies",
+          "body": "Helfen uns zu verstehen, wie Besucher die Website nutzen. Werden nur mit Ihrer Zustimmung aktiviert."
+        },
+        "settings": "Sie können die Cookie-Einstellungen jederzeit ändern, indem Sie villa-jurina-cookies aus dem lokalen Speicher Ihres Browsers entfernen oder uns kontaktieren."
+      },
+      "security": {
+        "title": "8. Datensicherheit",
+        "body": "Wir wenden technische und organisatorische Maßnahmen an, um Ihre personenbezogenen Daten vor unbefugtem Zugriff, Verlust oder Zerstörung zu schützen. Die Kommunikation mit unserer Website ist durch SSL-Verschlüsselung (HTTPS) geschützt. Der Zugriff auf Buchungsdaten ist ausschließlich auf den Eigentümer beschränkt."
+      },
+      "updates": {
+        "title": "9. Änderungen dieser Richtlinie",
+        "body": "Wir behalten uns das Recht vor, diese Datenschutzrichtlinie zu ändern. Wesentliche Änderungen werden auf dieser Seite mit aktualisiertem Datum veröffentlicht. Wir empfehlen eine regelmäßige Überprüfung."
+      }
+    }
+  },
+  "homePage": {
+    "hero": {
+      "imageAlt": "Meerblick vom Balkon der Villa Jurina",
+      "eyebrow": "Drašnice · Makarska Riviera",
+      "description": "50 Meter vom Kiesstrand entfernt. Apartments mit Meerblick, mit Liebe gebaut.",
+      "scroll": "SCROLL",
+      "actions": {
+        "book": "Unterkunft buchen",
+        "viewApartments": "Apartments ansehen"
+      }
+    },
+    "faqJsonLd": {
+      "checkIn": {
+        "q": "Wann sind Check-in und Check-out?",
+        "a": "Check-in ist ab 14:00 Uhr, Check-out bis 11:00 Uhr."
+      },
+      "beachDistance": {
+        "q": "Wie weit ist der Strand entfernt?",
+        "a": "Der Kiesstrand in Drašnice ist 50 Meter von der Villa entfernt."
+      },
+      "parking": {
+        "q": "Ist das Parken kostenlos?",
+        "a": "Ja, kostenlose Parkplätze für alle Gäste stehen direkt bei der Villa zur Verfügung."
+      },
+      "minStay": {
+        "q": "Wie lang ist der Mindestaufenthalt?",
+        "a": "Der Mindestaufenthalt beträgt ganzjährig 2 Nächte."
+      },
+      "pets": {
+        "q": "Sind Haustiere erlaubt?",
+        "a": "Um einen angenehmen Aufenthalt für alle Gäste zu gewährleisten, sind Haustiere in der Unterkunft nicht erlaubt."
+      }
+    },
+    "story": {
+      "eyebrow": "Unsere Geschichte",
+      "title": "Das Haus von Opa Jure",
+      "paragraphs": {
+        "first": "Das Haus von Opa Jure steht direkt am Meer, dort wo Stein und Welle seit jeher miteinander sprechen. Er baute es mit eigenen Händen - langsam, geduldig und mit Liebe - so wie früher gebaut wurde: damit es Bestand hat, atmet und Generationen zusammenbringt.",
+        "second": "Drašnice war immer ein Ort, der keine Aufmerksamkeit sucht - ruhig, bescheiden und ehrlich. Während die umliegenden Orte wuchsen, bewahrte Drašnice das Wertvollste: Authentizität, Entschleunigung und die Nähe zum Meer, das hier keine Kulisse, sondern Alltag ist.",
+        "third": "Hier erwachen die Morgen mit dem Rauschen des Meeres, und die Abende beruhigen unter Sternen und Lavendelduft. Dieses Haus entstand nicht als Investition, sondern als Zuhause. Heute öffnet es seine Türen für alle, die Ruhe, Einfachheit und das Gefühl suchen, am richtigen Ort angekommen zu sein."
+      },
+      "gallery": {
+        "oldVillaAlt": "Villa Jurina früher",
+        "seaViewAlt": "Drašnice, Meerblick",
+        "houseBuildAlt": "Bau des Hauses von Opa Jure",
+        "familyAlt": "Familie Jurina",
+        "caption": "Fotos aus dem Familienalbum - Erinnerungen, die dieses Zuhause geprägt haben."
+      }
+    },
+    "apartments": {
+      "eyebrow": "Unterkunft",
+      "title": "Unsere Apartments",
+      "badges": {
+        "fullyBooked": "Ausgebucht — Saison 2025."
+      },
+      "price": {
+        "from": "ab",
+        "perNight": "Nacht",
+        "unavailable": "Nicht verfügbar"
+      },
+      "actions": {
+        "allApartments": "Alle Apartments"
+      }
+    },
+    "amenities": {
+      "eyebrow": "Alles, was Sie brauchen",
+      "title": "Ausstattung",
+      "items": {
+        "wifi": "Kostenloses WLAN",
+        "airConditioning": "Klimaanlage",
+        "freeParking": "Kostenloses Parken",
+        "kitchen": "Küche",
+        "kettle": "Wasserkocher"
+      }
+    },
+    "galleryPreview": {
+      "eyebrow": "Fotos",
+      "title": "Galerie",
+      "description": "Entdecken Sie unsere Apartments, den Meerblick und die Umgebung von Drašnice.",
+      "images": {
+        "arbaAlt": "Apartment Arba",
+        "harmoniaAlt": "Apartment Harmonia",
+        "lunaAlt": "Apartment Luna",
+        "skyAlt": "Apartment Sky",
+        "beachAlt": "Drašnice — Strand",
+        "biokovoAlt": "Biokovo"
+      },
+      "actions": {
+        "viewAllPhotos": "Alle Fotos ansehen"
+      }
+    },
+    "location": {
+      "eyebrow": "Lage",
+      "title": "Drašnice, Makarska Riviera",
+      "description": "Drašnice ist einer dieser Orte, die man nicht vergisst. Eine kleine dalmatinische Bucht zwischen Makarska und Podgora, im Rücken vom Biokovo geschützt und nach vorne zum offenen Meer hin geöffnet. Der Kiesstrand ist buchstäblich um die Ecke - 50 Meter zu Fuß - und das Meer ist hier außergewöhnlich sauber und klar.",
+      "points": {
+        "beachDistanceStrong": "50 m",
+        "beachDistanceText": "zum Kiesstrand — kristallklares Meer, ruhige Bucht, keine Menschenmassen",
+        "nearbyTownsStrong": "10 Min",
+        "nearbyTownsText": "nach Makarska, 5 Min nach Podgora und Tučepi — alles nah, aber fern vom Trubel",
+        "restaurant": "Restaurant im Objekt — dalmatinische Küche mit Meerblick",
+        "hvarPrefix": "Fähre zur",
+        "hvarStrong": "Insel Hvar",
+        "hvarSuffix": "von Drašnice verfügbar — ein Tagesausflug für ein unvergessliches Erlebnis"
+      },
+      "activities": {
+        "title": "Aktivitäten in der Umgebung",
+        "items": {
+          "diving": "Tauchen",
+          "kayakSup": "Kajak & SUP",
+          "hvarTrip": "Ausflug nach Hvar",
+          "biokovoSkywalk": "Biokovo Skywalk",
+          "hiking": "Wandern",
+          "cycling": "Radfahren",
+          "gradac": "Gradac",
+          "tucepi": "Tučepi"
+        }
+      },
+      "mapTitle": "Standort Villa Jurina"
+    },
+    "surroundings": {
+      "eyebrow": "Umgebung entdecken",
+      "title": "Drašnice - der ideale Ausgangspunkt für Dalmatien",
+      "description": "Biokovo Skywalk, der Strand Zlatni rat auf Brač, die Insel Hvar, Rafting auf der Cetina, Split, Dubrovnik - alles ist in Reichweite. Erfahren Sie mehr darüber, was Sie in der Umgebung erwartet.",
+      "actions": {
+        "whatToSee": "Was man in der Umgebung sehen kann"
+      },
+      "cards": {
+        "biokovo": {
+          "label": "Biokovo Skywalk",
+          "sub": "30 Min Fahrt"
+        },
+        "hvar": {
+          "label": "Insel Hvar",
+          "sub": "in Sichtweite"
+        },
+        "zlatniRat": {
+          "label": "Zlatni rat, Brač",
+          "sub": "Fähre ab Makarska"
+        },
+        "split": {
+          "label": "Split",
+          "sub": "1,5 Std Fahrt"
+        }
+      }
+    },
+    "cta": {
+      "eyebrow": "Drašnice · Makarska Riviera",
+      "title": "Ihr Meer wartet",
+      "description": "Vier Apartments, ein Meer, unzählige Erinnerungen. Buchen Sie noch heute und sichern Sie sich Ihren Platz in Drašnice.",
+      "strip": "Mindestaufenthalt 2 Nächte · Check-in ab 14:00 · Check-out bis 11:00",
+      "actions": {
+        "checkDates": "Verfügbare Termine prüfen",
+        "contact": "Kontaktieren Sie uns"
+      }
+    }
+  },
+  "drasnicePage": {
+    "metadata": {
+      "title": "Was man in Drašnice und Umgebung sehen kann",
+      "description": "Entdecken Sie Drašnice und die Makarska Riviera: Biokovo Skywalk, Strand Zlatni rat, Insel Hvar, Cetina-Rafting, Split und Dubrovnik."
+    },
+    "hero": {
+      "eyebrow": "Drašnice · Makarska Riviera",
+      "title": "Was man in Drašnice und Umgebung sehen kann",
+      "description": "Strände, Berge, Inseln und geschichtsträchtige Städte - alles in Reichweite von Ihrer Basis an der Makarska Riviera.",
+      "action": "Unterkunft in Drašnice buchen"
+    },
+    "intro": {
+      "text": "Drašnice ist ein ruhiger dalmatinischer Ort an der Makarska Riviera - ein idealer Ausgangspunkt, um eine der vielseitigsten Tourismusregionen Kroatiens zu entdecken. Von türkisfarbenen Kiesstränden und dem Biokovo mit seinem berühmten Skywalk bis zu den Adriainseln Hvar und Brač - alles ist schnell erreichbar.",
+      "highlight": "Villa Jurina liegt nur 50 Meter vom Strand entfernt",
+      "tail": "und ist die perfekte Basis für Ihre Abenteuer."
+    },
+    "practical": {
+      "eyebrow": "Gut zu wissen",
+      "title": "Drašnice - Ihre Basis an der Riviera",
+      "cards": {
+        "beach": {
+          "title": "50 m zum Strand",
+          "desc": "Ein Kiesstrand mit kristallklarem Meer liegt buchstäblich um die Ecke."
+        },
+        "makarska": {
+          "title": "10 Min bis Makarska",
+          "desc": "Das Zentrum der Riviera mit Restaurants, Bars und Fähren zu den Inseln."
+        },
+        "biokovo": {
+          "title": "Biokovo direkt vor der Tür",
+          "desc": "Skywalk und Wanderwege sind in weniger als 30 Minuten Fahrt erreichbar."
+        },
+        "hvar": {
+          "title": "Hvar in Sichtweite",
+          "desc": "Die sonnigste Insel ist direkt vom Strand aus sichtbar - Fähre ab Makarska."
+        }
+      }
+    },
+    "cta": {
+      "eyebrow": "Drašnice · Villa Jurina",
+      "title": "All das erwartet Sie in Reichweite",
+      "description": "Übernachten Sie in der Villa Jurina - 50 Meter vom Meer entfernt, mit atemberaubendem Ausblick - und erkunden Sie die Makarska Riviera, Biokovo und die Adriatischen Inseln in Ihrem eigenen Tempo.",
+      "strip": "Mindestaufenthalt 2 Nächte · Check-in ab 14:00 · Check-out bis 11:00",
+      "actions": {
+        "checkDates": "Verfügbare Termine prüfen",
+        "viewApartments": "Apartments ansehen"
+      }
+    },
+    "attractions": {
+      "sections": {
+        "drasnice": {
+          "eyebrow": "Lokaler Charme",
+          "title": "Drašnice - authentische dalmatinische Bucht",
+          "imageAlt": "Kiesstrand in Drašnice",
+          "intro": "Ein kleines dalmatinisches Dorf mit Ruhe, Authentizität und sauberem Meer - ohne Lärm und Menschenmassen.",
+          "items": [
+            {
+              "name": "Kiesstrände und versteckte Buchten",
+              "desc": "Kristallklares Meer und ruhige Buchten - ideal zum Schwimmen, Schnorcheln und Entspannen."
+            },
+            {
+              "name": "Altes Dorf Drašnice",
+              "desc": "Steingassen, traditionelle Häuser und Lavendelduft vermitteln echtes dalmatinisches Flair."
+            },
+            {
+              "name": "Kirche des hl. Georg",
+              "desc": "Eine kleine Kirche am Meer mit ruhiger Atmosphäre und schönem Ausblick."
+            },
+            {
+              "name": "Promenade am Meer",
+              "desc": "Ein leichter Abendspaziergang entlang der Küste mit Blick auf Hvar und schöne Sonnenuntergänge."
+            }
+          ]
+        },
+        "biokovo": {
+          "eyebrow": "Naturpark",
+          "title": "Naturpark Biokovo - Gebirge über dem Meer",
+          "imageAlt": "Blick vom Biokovo auf das Meer",
+          "intro": "Über Drašnice erhebt sich das Biokovo - einer der eindrucksvollsten Naturparks Kroatiens.",
+          "items": [
+            {
+              "name": "Skywalk Biokovo",
+              "desc": "Eine Glasplattform über der Klippe mit spektakulärem Meerblick aus fast 1.000 Metern Höhe."
+            },
+            {
+              "name": "Wanderwege und Aussichtspunkte",
+              "desc": "Markierte Wege unterschiedlicher Schwierigkeit mit Panoramablicken auf Riviera und Inseln."
+            },
+            {
+              "name": "Botanischer Garten und Flora",
+              "desc": "Endemische Pflanzenarten und ein besonderer botanischer Garten für Naturfreunde."
+            }
+          ]
+        },
+        "okolna-mjesta": {
+          "eyebrow": "Makarska Riviera",
+          "title": "Orte in der Umgebung - Riviera in Reichweite",
+          "imageAlt": "Küstenblick auf die Makarska Riviera",
+          "intro": "Drašnice liegt im Herzen der Makarska Riviera, umgeben von vielseitigen Küstenorten in kurzer Distanz.",
+          "items": [
+            {
+              "name": "Tucepi - Eleganz der Riviera",
+              "desc": "Beliebter Ort mit langem Kiesstrand, Restaurants und schöner Uferpromenade."
+            },
+            {
+              "name": "Podgora - ruhig und authentisch",
+              "desc": "Charmanter Fischerort mit guter lokaler Küche und entspannter Atmosphäre."
+            },
+            {
+              "name": "Makarska - Zentrum der Riviera",
+              "desc": "Lebendige Stadt mit Promenade, Kloster, Nachtleben und Fährverbindungen."
+            },
+            {
+              "name": "Igrane - verstecktes Juwel",
+              "desc": "Ruhiger Küstenort mit schönen Stränden und echtem lokalen Charakter."
+            }
+          ]
+        },
+        "otoci": {
+          "eyebrow": "Bootsausflüge",
+          "title": "Inseln - Tagesausflüge mit dem Boot",
+          "imageAlt": "Zlatni Rat, Brač - Adriainseln",
+          "intro": "Die dalmatinischen Inseln sind schnell erreichbar - jede mit eigenem Charakter, Stränden und Geschichte.",
+          "items": [
+            {
+              "name": "Hvar - Königin der Adria-Inseln",
+              "desc": "Die sonnigste Insel Kroatiens mit Buchten, Weinbergen und lebendiger Altstadt."
+            },
+            {
+              "name": "Brač - Zlatni Rat",
+              "desc": "Heimat des ikonischen Zlatni-Rat-Strandes, einer der bekanntesten Strände des Mittelmeers."
+            },
+            {
+              "name": "Korčula - Insel von Wein und Wäldern",
+              "desc": "Etwas weiter entfernt, aber lohnend wegen Altstadt, Weinkultur und Geschichte."
+            }
+          ]
+        },
+        "aktivni": {
+          "eyebrow": "Adrenalin und Natur",
+          "title": "Aktivurlaub - für Gäste, die mehr wollen",
+          "imageAlt": "Kajak am Meer - aktiver Urlaub an der Adria",
+          "intro": "Die Makarska Riviera bietet weit mehr als Strand - ideal für aktive und naturverbundene Gäste.",
+          "items": [
+            {
+              "name": "Kajak und SUP",
+              "desc": "Küste vom Meer aus erkunden - mit Verleih und geführten Touren in der Nähe."
+            },
+            {
+              "name": "Tauchen und Schnorcheln",
+              "desc": "Lebendige Unterwasserwelt und lokale Tauchzentren für alle Erfahrungsstufen."
+            },
+            {
+              "name": "Wandern und Bergtouren",
+              "desc": "Von Drašnice führen Wege ins Biokovo - von leicht bis anspruchsvoll."
+            },
+            {
+              "name": "Radfahren",
+              "desc": "Küstenstraßen und Anstiege Richtung Biokovo bieten Routen für verschiedene Niveaus."
+            }
+          ]
+        },
+        "izleti": {
+          "eyebrow": "Tagesausflüge",
+          "title": "Etwas weiter - ganztägige Ausflüge",
+          "imageAlt": "Altstadt Split - Diokletianpalast",
+          "intro": "Drašnice ist ein hervorragender Ausgangspunkt für Ausflüge zu den bekanntesten Zielen der Region.",
+          "items": [
+            {
+              "name": "Omis - Adrenalin an der Cetina",
+              "desc": "Rafting, Zipline, Festung und die besondere Kombination aus Fluss, Meer und Bergen."
+            },
+            {
+              "name": "Split - Diokletianpalast",
+              "desc": "Historische Küstenstadt mit römischem Erbe, lebendiger Altstadt und exzellenter Gastronomie."
+            },
+            {
+              "name": "Mostar - die berühmte Brücke",
+              "desc": "UNESCO-Welterbe, bosnische Kultur und eine eindrucksvolle Altstadt an der Neretva."
+            },
+            {
+              "name": "Dubrovnik - weltberühmte Altstadt",
+              "desc": "Ein längerer, aber lohnender Ausflug zu einem der schönsten Ziele an der Adria."
+            }
+          ]
+        }
+      }
+    }
+  },
+  "bookingConfirmationPage": {
+    "title": "Buchungsbestätigung",
+    "loading": "Buchungsbestätigung wird geladen...",
+    "description": "Die Buchung gilt, sobald die Anzahlung innerhalb von 24 Stunden verbucht ist.",
+    "errors": {
+      "missingLink": "Zugriffslink für die Buchungsbestätigung fehlt.",
+      "cannotOpen": "Buchungsbestätigung kann nicht geöffnet werden."
+    },
+    "sections": {
+      "details": "Buchungsdetails",
+      "payment": "Zahlungsdaten",
+      "qr": "QR-Codes für schnelle Zahlung"
+    },
+    "labels": {
+      "confirmationNumber": "Bestätigungsnummer",
+      "guest": "Gast",
+      "apartment": "Apartment",
+      "nights": "Nächte",
+      "pricePerNight": "Preis / Nacht",
+      "total": "Gesamt",
+      "deposit": "Anzahlung (30%)",
+      "recipient": "Empfänger",
+      "bank": "Bank",
+      "bankAddress": "Bankadresse",
+      "paymentDescription": "Verwendungszweck",
+      "referenceNumber": "Referenznummer"
+    },
+    "qr": {
+      "generating": "QR-Codes werden generiert...",
+      "hub3Title": "Kroatische Bank (HUB3)",
+      "hub3Alt": "HUB3 PDF417 Zahlungsbarcode",
+      "epcTitle": "EU / internationale Banken (EPC)",
+      "epcAlt": "EPC SEPA Zahlungs-QR-Code"
+    },
+    "actions": {
+      "newBooking": "Neue Buchung"
+    }
+  },
+  "galleryClient": {
+    "categories": {
+      "all": "Alle",
+      "surroundings": "Umgebung & Villa"
+    },
+    "lightbox": {
+      "close": "Schließen",
+      "previous": "Vorherige",
+      "next": "Nächste"
+    }
+  },
+  "siteMetadata": {
+    "title": "Villa Jurina | Drašnice, Makarska Riviera",
+    "description": "Apartments mit Meerblick in Drašnice. 50 m vom Kiesstrand an der Makarska Riviera. Online buchen.",
+    "openGraphAlt": "Villa Jurina — Meerblick, Drašnice"
+  },
+  "bookingWidget": {
+    "errors": {
+      "capacity": "Apartment {apartment} nimmt maximal {capacity} Gäste auf.",
+      "send": "Fehler beim Senden",
+      "booking": "Fehler beim Senden der Buchung"
+    },
+    "success": {
+      "title": "Buchungsanfrage erhalten!",
+      "prefix": "Danke,",
+      "middle": "! Wir haben eine Bestätigung mit Details gesendet an"
+    },
+    "labels": {
+      "apartment": "Apartment",
+      "checkIn": "Check-in",
+      "checkOut": "Check-out",
+      "nights": "Nächte",
+      "pricePerNight": "Preis / Nacht",
+      "total": "Gesamt",
+      "deposit": "Anzahlung (30%)",
+      "recipient": "Empfänger",
+      "bank": "Bank",
+      "bankAddress": "Bankadresse",
+      "paymentDescription": "Verwendungszweck",
+      "reference": "Referenznummer",
+      "seaView": "Meerblick",
+      "balcony": "Balkon",
+      "nightsSuffix": "Nächte"
+    },
+    "deposit": {
+      "note": "Bitte zahlen Sie die Anzahlung innerhalb von 24 Stunden. Wenn die Zahlung in diesem Zeitraum nicht erfasst wird, gilt die Buchung als ungültig."
+    },
+    "qr": {
+      "title": "Schnellzahlung per QR-Code:",
+      "generating": "QR-Codes werden erstellt...",
+      "croatianBank": "Kroatische Bank",
+      "internationalBanks": "EU / internationale Banken"
+    },
+    "actions": {
+      "newBooking": "Neue Buchung",
+      "sending": "Wird gesendet...",
+      "submitRequest": "Buchungsanfrage senden"
+    },
+    "steps": {
+      "apartment": "1. Apartment wählen",
+      "dates": "2. Daten wählen",
+      "guestData": "3. Ihre Daten"
+    },
+    "summary": {
+      "title": "Kostenübersicht"
+    },
+    "form": {
+      "fullName": "Vor- und Nachname",
+      "phone": "Telefon / WhatsApp",
+      "adults": "Erwachsene",
+      "children": "Kinder",
+      "maxGuests": "Max. {capacity} Gäste insgesamt",
+      "noteOptional": "Hinweis (optional)",
+      "notePlaceholder": "Besondere Wünsche, Fragen...",
+      "fullNamePlaceholder": "Anna Schmidt",
+      "emailPlaceholder": "anna@email.com",
+      "phonePlaceholder": "+385 91 234 5678"
+    },
+    "rules": {
+      "checkInLabel": "Check-in:",
+      "checkOutLabel": "Check-out:",
+      "petsLabel": "Haustiere:",
+      "petsValue": "nicht erlaubt",
+      "smokingLabel": "Rauchen:",
+      "smokingValue": "nicht erlaubt",
+      "depositLabel": "Anzahlung:",
+      "depositValue": "30% des Gesamtpreises ({amount}€) — Zahlung innerhalb von 24h bestätigt die Buchung",
+      "accept": "Ich stimme den Hausregeln und Buchungsbedingungen der Villa Jurina zu."
+    }
+  },
+  "testimonials": {
+    "eyebrow": "Was Gäste sagen",
+    "title": "Bewertungen",
+    "rating": "5.0 — alle Gäste empfehlen uns",
+    "items": {
+      "r1": {
+        "name": "Markus & Julia B.",
+        "origin": "Wien, Österreich",
+        "text": "Ein perfekter Rückzugsort für zwei. Der Blick von der Terrasse auf das offene Meer war unglaublich — Morgenkaffee mit Wellenrauschen und Hvar in der Ferne. Das Apartment war sauber, modern und bestens ausgestattet. Der Strand ist buchstäblich 50 Meter entfernt — wir brauchten die ganze Woche kein Auto."
+      },
+      "r2": {
+        "name": "Familie Kovač",
+        "origin": "Zagreb, Kroatien",
+        "text": "Harmonia war perfekt für uns fünf. Zwei Balkone, Meerblick von beiden, genug Platz für die Kinder und Ruhe für uns. Die Gastgeber waren sehr freundlich und immer erreichbar. Wir kommen sicher wieder — unser neuer Lieblingsurlaub."
+      },
+      "r3": {
+        "name": "Pieter & Anke V.",
+        "origin": "Amsterdam, Niederlande",
+        "text": "Wir haben ein echtes verstecktes Juwel gefunden! Drašnice ist ruhig und authentisch — ohne Touristenmassen. Die Kinder liebten Strand und Spielplatz, und wir konnten wirklich entspannen. Der Ausflug zum Biokovo Skywalk war unvergesslich. Apartment Arba — sehr empfehlenswert!"
+      },
+      "r4": {
+        "name": "Valentina R.",
+        "origin": "Mailand, Italien",
+        "text": "Luna ist ein romantisches Apartment, das unsere Erwartungen übertroffen hat. Balkon mit Meerblick, geschmackvolle Einrichtung, ruhige Lage — ideal für Paare. Das Meer ist kristallklar. Makarska ist nur 10 Minuten entfernt, aber ehrlich gesagt wollten wir Drašnice gar nicht verlassen."
+      },
+      "r5": {
+        "name": "Familie Gruber",
+        "origin": "München, Deutschland",
+        "text": "Wir waren bereits zweimal hier — und kommen wieder. Die Lage ist perfekt: ruhig, direkt am Meer, toller Blick auf Hvar. Harmonia ist sehr geräumig und stilvoll eingerichtet. Die Gastgeber sind immer hilfsbereit. Biokovo Skywalk ist ein Muss!"
+      },
+      "r6": {
+        "name": "Maja und Tomaž P.",
+        "origin": "Ljubljana, Slowenien",
+        "text": "Tolle Lage, ruhiges Apartment mit wunderschönem Ausblick. Besonders hervorheben möchten wir die ausgesprochen freundlichen Gastgeberinnen — immer hilfsbereit. Der Strand ist nur wenige Schritte entfernt, Makarska 10 Minuten, Biokovo direkt hinter dem Haus. Eine wunderbare Woche, an die wir uns lange erinnern werden."
+      }
+    }
+  }
+}

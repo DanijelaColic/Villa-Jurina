@@ -1,11 +1,30 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-
-const WA_URL = 'https://wa.me/385916391305?text=Pozdrav%2C%20zanima%20me%20rezervacija%20apartmana%20u%20Villa%20Jurina.';
+import { useLocale } from 'next-intl';
 
 export default function WhatsAppButton() {
+  const locale = useLocale();
   const [visible, setVisible] = useState(false);
+  const waText =
+    locale === 'en'
+      ? 'Hello, I am interested in booking an apartment at Villa Jurina.'
+      : locale === 'de'
+        ? 'Hallo, ich interessiere mich für eine Apartment-Reservierung in der Villa Jurina.'
+        : 'Pozdrav, zanima me rezervacija apartmana u Villa Jurina.';
+  const WA_URL = `https://wa.me/385916391305?text=${encodeURIComponent(waText)}`;
+  const ariaLabel =
+    locale === 'en'
+      ? 'Contact us on WhatsApp'
+      : locale === 'de'
+        ? 'Kontaktieren Sie uns auf WhatsApp'
+        : 'Kontaktiraj nas na WhatsAppu';
+  const hoverLabel =
+    locale === 'en'
+      ? 'Write to us on WhatsApp'
+      : locale === 'de'
+        ? 'Schreiben Sie uns auf WhatsApp'
+        : 'Piši nam na WhatsApp';
 
   // Prikaži gumb tek nakon kratkog scroll-a da ne smeta na first load
   useEffect(() => {
@@ -21,7 +40,7 @@ export default function WhatsAppButton() {
       href={WA_URL}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Kontaktiraj nas na WhatsAppu"
+      aria-label={ariaLabel}
       className={`fixed bottom-6 right-6 z-40 flex items-center gap-2.5 bg-[#25D366] hover:bg-[#1ebe5d] text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group ${
         visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
       }`}
@@ -40,7 +59,7 @@ export default function WhatsAppButton() {
 
       {/* Label — pojavljuje se na hover */}
       <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap pr-0 group-hover:pr-4 text-sm font-medium">
-        Piši nam na WhatsApp
+        {hoverLabel}
       </span>
     </a>
   );

@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import { Check, Loader2, AlertCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 export default function KontaktForm() {
+  const t = useTranslations('contactForm');
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -26,10 +28,10 @@ export default function KontaktForm() {
         body: JSON.stringify(form),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? 'Greška pri slanju');
+      if (!res.ok) throw new Error(data.error ?? t('errors.submit'));
       setSuccess(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Greška pri slanju poruke');
+      setError(err instanceof Error ? err.message : t('errors.message'));
     } finally {
       setSubmitting(false);
     }
@@ -42,14 +44,14 @@ export default function KontaktForm() {
           <Check size={28} className="text-green-600" />
         </div>
         <div>
-          <p className="font-serif text-xl font-semibold text-text mb-1">Poruka je poslana!</p>
-          <p className="text-muted text-sm">Odgovoriti ćemo vam u kratkom roku.</p>
+          <p className="font-serif text-xl font-semibold text-text mb-1">{t('success.title')}</p>
+          <p className="text-muted text-sm">{t('success.description')}</p>
         </div>
         <button
           onClick={() => { setSuccess(false); setForm({ name: '', email: '', message: '' }); }}
           className="text-sm text-primary underline underline-offset-2"
         >
-          Pošalji novu poruku
+          {t('success.newMessage')}
         </button>
       </div>
     );
@@ -58,7 +60,7 @@ export default function KontaktForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-text mb-1.5">Ime i prezime</label>
+        <label className="block text-sm font-medium text-text mb-1.5">{t('fields.name')}</label>
         <input
           name="name"
           type="text"
@@ -66,11 +68,11 @@ export default function KontaktForm() {
           onChange={handleChange}
           required
           className="w-full border border-sand rounded-xl px-4 py-3 text-sm text-text placeholder-muted focus:outline-none focus:border-primary transition-colors"
-          placeholder="Vaše ime"
+          placeholder={t('placeholders.name')}
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-text mb-1.5">Email</label>
+        <label className="block text-sm font-medium text-text mb-1.5">{t('fields.email')}</label>
         <input
           name="email"
           type="email"
@@ -78,11 +80,11 @@ export default function KontaktForm() {
           onChange={handleChange}
           required
           className="w-full border border-sand rounded-xl px-4 py-3 text-sm text-text placeholder-muted focus:outline-none focus:border-primary transition-colors"
-          placeholder="vaš@email.com"
+          placeholder={t('placeholders.email')}
         />
       </div>
       <div>
-        <label className="block text-sm font-medium text-text mb-1.5">Poruka</label>
+        <label className="block text-sm font-medium text-text mb-1.5">{t('fields.message')}</label>
         <textarea
           name="message"
           value={form.message}
@@ -90,7 +92,7 @@ export default function KontaktForm() {
           required
           rows={5}
           className="w-full border border-sand rounded-xl px-4 py-3 text-sm text-text placeholder-muted focus:outline-none focus:border-primary transition-colors resize-none"
-          placeholder="Vaša poruka..."
+          placeholder={t('placeholders.message')}
         />
       </div>
 
@@ -107,7 +109,7 @@ export default function KontaktForm() {
         className="w-full bg-secondary hover:bg-secondary-light disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-3 rounded-full transition-colors text-sm flex items-center justify-center gap-2"
       >
         {submitting && <Loader2 size={16} className="animate-spin" />}
-        {submitting ? 'Slanje...' : 'Pošalji poruku'}
+        {submitting ? t('submit.sending') : t('submit.send')}
       </button>
     </form>
   );
