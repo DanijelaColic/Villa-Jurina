@@ -49,16 +49,16 @@ export function formatDate(date: Date): string {
   return `${y}-${m}-${d}`;
 }
 
-export function formatDisplayDate(date: Date): string {
-  return date.toLocaleDateString('hr-HR', {
+export function formatDisplayDate(date: Date, locale = 'hr'): string {
+  return date.toLocaleDateString(locale, {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
   });
 }
 
-export function formatShortDate(date: Date): string {
-  return date.toLocaleDateString('hr-HR', { day: 'numeric', month: 'short' });
+export function formatShortDate(date: Date, locale = 'hr'): string {
+  return date.toLocaleDateString(locale, { day: 'numeric', month: 'short' });
 }
 
 // Dan je zauzet ako check_in <= dan < check_out

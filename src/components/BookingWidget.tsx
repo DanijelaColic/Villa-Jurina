@@ -184,11 +184,11 @@ export default function BookingWidget({ initialSlug }: Props) {
             </p>
             <p className="text-muted mb-1">
               <strong className="text-text">{t('labels.checkIn')}:</strong>{' '}
-              {checkIn ? formatDisplayDate(checkIn) : ''}
+              {checkIn ? formatDisplayDate(checkIn, locale) : ''}
             </p>
             <p className="text-muted mb-1">
               <strong className="text-text">{t('labels.checkOut')}:</strong>{' '}
-              {checkOut ? formatDisplayDate(checkOut) : ''}
+              {checkOut ? formatDisplayDate(checkOut, locale) : ''}
             </p>
             <p className="text-muted mb-1">
               <strong className="text-text">{t('labels.nights')}:</strong>{' '}
@@ -343,7 +343,7 @@ export default function BookingWidget({ initialSlug }: Props) {
           </h2>
           {checkIn && checkOut && (
             <span className="text-sm text-secondary font-medium">
-              {formatShortDate(checkIn)} → {formatShortDate(checkOut)}
+              {formatShortDate(checkIn, locale)} → {formatShortDate(checkOut, locale)}
               {' '}· {priceData?.nights} {t('labels.nightsSuffix')}
             </span>
           )}
@@ -372,7 +372,7 @@ export default function BookingWidget({ initialSlug }: Props) {
             <div className="bg-sand-light rounded-xl p-5">
               <div className="flex justify-between items-center mb-3">
                 <span className="text-sm text-muted">
-                  {formatDisplayDate(checkIn)} → {formatDisplayDate(checkOut)}
+                  {formatDisplayDate(checkIn, locale)} → {formatDisplayDate(checkOut, locale)}
                 </span>
                 <span className="text-sm text-muted">{priceData.nights} {t('labels.nightsSuffix')}</span>
               </div>
@@ -395,9 +395,6 @@ export default function BookingWidget({ initialSlug }: Props) {
                 <span className="text-muted">{t('labels.deposit')}</span>
                 <span className="font-medium text-secondary">{priceData.deposit}€</span>
               </div>
-              <p className="text-xs text-muted mt-1 font-mono">
-                IBAN: HR6523900013223724831
-              </p>
             </div>
           </section>
 
