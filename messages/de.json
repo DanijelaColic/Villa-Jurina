@@ -177,6 +177,10 @@
     "eyebrow": "Unterkunft",
     "title": "Apartments",
     "description": "Vier sorgfältig eingerichtete Apartments mit Meerblick, jedes mit eigenem Charakter und eigener Atmosphäre. 2025 renoviert.",
+    "itemLabel": "Apartment",
+    "badges": {
+      "fullyBooked": "Ausgebucht — Saison 2025."
+    },
     "stats": {
       "duplex": "Zweistöckig",
       "seaView": "Meerblick",
@@ -195,6 +199,14 @@
   },
   "apartmentDetailPage": {
     "eyebrow": "Apartment",
+    "breadcrumb": {
+      "home": "Startseite",
+      "apartments": "Apartments"
+    },
+    "metadata": {
+      "titlePrefix": "Apartment",
+      "descriptionSuffix": "Drašnice."
+    },
     "stats": {
       "duplex": "Zweistöckig",
       "seaView": "Meerblick",
@@ -219,6 +231,7 @@
       "smokingLabel": "Rauchen:",
       "smokingValue": "Nicht erlaubt",
       "minStayLabel": "Mindestaufenthalt:",
+      "minStayValue": "2 Nächte",
       "minStay": "Mindestaufenthalt: 2 Nächte",
       "depositLabel": "Anzahlung:",
       "depositValue": "des Gesamtbetrags"
@@ -799,6 +812,33 @@
     "title": "Villa Jurina | Drašnice, Makarska Riviera",
     "description": "Apartments mit Meerblick in Drašnice. 50 m vom Kiesstrand an der Makarska Riviera. Online buchen.",
     "openGraphAlt": "Villa Jurina — Meerblick, Drašnice"
+  },
+  "bookingCalendar": {
+    "legend": {
+      "available": "Frei",
+      "booked": "Belegt",
+      "selected": "Ausgewählt"
+    },
+    "instructions": {
+      "selectCheckIn": "Anreisedatum wählen",
+      "selectCheckOut": "Abreisedatum wählen (mind. 2 Nächte)"
+    },
+    "actions": {
+      "reset": "Auswahl aufheben"
+    },
+    "loading": "Kalender wird geladen...",
+    "errors": {
+      "noApartment": "Kein Apartment ausgewählt.",
+      "loadFailed": "Fehler beim Laden der Verfügbarkeit"
+    },
+    "tooltips": {
+      "booked": "Belegt",
+      "minStay": "Mindestaufenthalt 2 Nächte"
+    },
+    "aria": {
+      "prevMonth": "Vorheriger Monat",
+      "nextMonth": "Nächster Monat"
+    }
   },
   "bookingWidget": {
     "errors": {

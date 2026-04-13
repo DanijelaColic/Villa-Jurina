@@ -1,1 +1,1 @@
-export { default, metadata } from '../../../(public)/rezervacija/page';
+export { default, generateMetadata } from '../../../(public)/rezervacija/page';

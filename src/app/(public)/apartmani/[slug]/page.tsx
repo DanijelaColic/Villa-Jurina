@@ -5,6 +5,7 @@ import { apartments, getApartment } from '@/lib/apartments';
 import ImageGallery from '@/components/ImageGallery';
 import { ApartmentJsonLd, BreadcrumbJsonLd } from '@/components/JsonLd';
 import { Link } from '@/i18n/navigation';
+import { getSiteUrl } from '@/lib/siteUrl';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -16,21 +17,27 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
-  const apt = getApartment(slug);
+  const locale = await getLocale();
+  const t = await getTranslations({ locale, namespace: 'apartmentDetailPage' });
+  const apt = getApartment(slug, locale as 'hr' | 'en' | 'de');
   if (!apt) return {};
-  const shortDesc = apt.tagline + ` Apartman za ${apt.capacityNote}, ${apt.size} m², Drašnice.`;
+  const prefix = t('metadata.titlePrefix');
+  const suffix = t('metadata.descriptionSuffix');
+  const title = `${prefix} ${apt.name}`;
+  const shortDesc = `${apt.tagline} ${prefix} ${apt.capacityNote}, ${apt.size} m², ${suffix}`;
+  const BASE_URL = getSiteUrl();
   return {
-    title: `Apartman ${apt.name}`,
+    title,
     description: shortDesc,
     openGraph: {
-      title: `Apartman ${apt.name} | Villa Jurina`,
+      title: `${title} | Villa Jurina`,
       description: shortDesc,
-      url: `https://villajurina.com/apartmani/${slug}`,
+      url: `${BASE_URL}/apartmani/${slug}`,
       images: apt.images[0]
-        ? [{ url: apt.images[0], width: 1200, height: 630, alt: `Apartman ${apt.name}` }]
+        ? [{ url: apt.images[0], width: 1200, height: 630, alt: title }]
         : [],
     },
-    alternates: { canonical: `https://villajurina.com/apartmani/${slug}` },
+    alternates: { canonical: `${BASE_URL}/apartmani/${slug}` },
   };
 }
 
@@ -42,13 +49,15 @@ export default async function ApartmanPage({ params }: Props) {
 
   if (!apt) notFound();
 
+  const BASE_URL = getSiteUrl();
+
   return (
     <div className="pt-20">
       <BreadcrumbJsonLd
         items={[
-          { name: 'Početna', url: 'https://villajurina.com' },
-          { name: 'Apartmani', url: 'https://villajurina.com/apartmani' },
-          { name: `Apartman ${apt.name}`, url: `https://villajurina.com/apartmani/${apt.slug}` },
+          { name: t('breadcrumb.home'), url: BASE_URL },
+          { name: t('breadcrumb.apartments'), url: `${BASE_URL}/apartmani` },
+          { name: `${t('eyebrow')} ${apt.name}`, url: `${BASE_URL}/apartmani/${apt.slug}` },
         ]}
       />
       <ApartmentJsonLd
@@ -70,7 +79,7 @@ export default async function ApartmanPage({ params }: Props) {
         )}
         {apt.fullyBooked && (
           <div className="mt-3 inline-block bg-text/80 text-white text-sm font-medium px-4 py-1.5 rounded-full">
-            Zauzeto — sezona 2025.
+            {t('unavailable.title')}
           </div>
         )}
       </div>
@@ -79,7 +88,7 @@ export default async function ApartmanPage({ params }: Props) {
         {/* Breadcrumb */}
         <nav className="text-xs text-muted mb-6 flex items-center gap-2">
           <Link href="/apartmani" className="hover:text-primary transition-colors">
-            Apartmani
+            {t('breadcrumb.apartments')}
           </Link>
           <span>/</span>
           <span className="text-text">{apt.name}</span>
@@ -155,7 +164,7 @@ export default async function ApartmanPage({ params }: Props) {
                 <strong className="text-text">{t('rules.smokingLabel')}</strong> {t('rules.smokingValue')}
               </p>
               <p>
-                <strong className="text-text">{t('rules.minStayLabel')}</strong> 2 noći
+                <strong className="text-text">{t('rules.minStayLabel')}</strong> {t('rules.minStayValue')}
               </p>
               <p>
                 <strong className="text-text">{t('rules.depositLabel')}</strong> 30% {t('rules.depositValue')}

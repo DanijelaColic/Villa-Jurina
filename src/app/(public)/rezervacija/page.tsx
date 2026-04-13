@@ -1,18 +1,26 @@
+import type { Metadata } from 'next';
 import BookingWidget from '@/components/BookingWidget';
 import FAQ from '@/components/FAQ';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
+import { getSiteUrl } from '@/lib/siteUrl';
 
-export const metadata = {
-  title: 'Rezervacija',
-  description:
-    'Rezervirajte apartman u Villa Jurina online. Provjerite slobodne termine i odaberite datume boravka.',
-  openGraph: {
-    title: 'Rezervacija | Villa Jurina',
-    description: 'Rezervirajte apartman uz more u Drašnicama. Provjerite slobodne termine.',
-    url: 'https://villajurina.com/rezervacija',
-  },
-  alternates: { canonical: 'https://villajurina.com/rezervacija' },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const t = await getTranslations({ locale, namespace: 'bookingPage' });
+  const BASE_URL = getSiteUrl();
+  const title = t('title');
+  const description = t('description');
+  return {
+    title,
+    description,
+    openGraph: {
+      title: `${title} | Villa Jurina`,
+      description,
+      url: `${BASE_URL}/rezervacija`,
+    },
+    alternates: { canonical: `${BASE_URL}/rezervacija` },
+  };
+}
 
 type Props = {
   searchParams: Promise<{ apartman?: string }>;

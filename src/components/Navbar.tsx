@@ -1,25 +1,49 @@
 'use client';
 
 import Image from 'next/image';
-import { usePathname as useRawPathname, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import clsx from 'clsx';
-import { useLocale, useTranslations } from 'next-intl';
-import { Link, usePathname } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 
 const links = ['/apartmani', '/galerija', '/drasnice', '/rezervacija', '/kontakt'] as const;
 const locales = ['hr', 'en', 'de'] as const;
+type Locale = (typeof locales)[number];
+
+/**
+ * Reads locale directly from the browser URL — always accurate.
+ *
+ * useLocale() / usePathname() from next-intl both read from
+ * NextIntlClientProvider context. That context lives in the root layout,
+ * which Next.js preserves (does NOT re-render) during soft navigation between
+ * the (public)/ and [locale]/(public)/ route trees. This causes stale locale
+ * values: usePathname() keeps the old locale prefix after switching languages,
+ * so router.replace() builds a double-prefixed URL like /de/de → 404.
+ */
+function getLocaleFromPath(rawPath: string): Locale {
+  if (rawPath === '/en' || rawPath.startsWith('/en/')) return 'en';
+  if (rawPath === '/de' || rawPath.startsWith('/de/')) return 'de';
+  return 'hr';
+}
+
+/** Returns the pathname without the locale prefix, e.g. /de/galerija → /galerija */
+function stripLocalePrefix(rawPath: string): string {
+  return rawPath.replace(/^\/(en|de)(\/|$)/, '/') || '/';
+}
 
 export default function Navbar() {
   const t = useTranslations('navbar');
-  const locale = useLocale();
-  const pathname = usePathname();
-  const rawPathname = useRawPathname();
+  // usePathname from next/navigation is always in sync with the real URL
+  const rawPathname = usePathname();
   const searchParams = useSearchParams();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const isHome = pathname === '/' || pathname === '';
+
+  const activeLocale = getLocaleFromPath(rawPathname);
+  const localePath = stripLocalePrefix(rawPathname);
+  const isHome = localePath === '/' || localePath === '';
 
   const labels: Record<(typeof links)[number], string> = {
     '/apartmani': t('apartments'),
@@ -36,8 +60,30 @@ export default function Navbar() {
   }, []);
 
   const isTransparent = isHome && !scrolled;
-  const query = searchParams.toString();
-  const localeHref = query ? `${rawPathname || '/'}?${query}` : rawPathname || '/';
+
+  const switchLocale = (loc: Locale) => {
+    if (loc === activeLocale) return;
+    // Update NEXT_LOCALE cookie BEFORE navigation.
+    //
+    // With localePrefix:'as-needed', the default locale (hr) has no URL prefix.
+    // The next-intl middleware falls back to the NEXT_LOCALE cookie to resolve
+    // the locale for prefix-less URLs like '/'. Without updating the cookie first,
+    // navigating to '/' while holding a NEXT_LOCALE=de cookie would redirect
+    // back to '/de' — making it impossible to switch back to Croatian.
+    //
+    // Hard navigation (window.location.href) is also required so that the server
+    // re-renders the page: this refreshes the NextIntlClientProvider context so
+    // all client-component translations (Navbar, FAQ, BookingWidget…) update.
+    document.cookie = `NEXT_LOCALE=${loc}; path=/; max-age=31536000; samesite=lax`;
+
+    const query = searchParams.toString();
+    const basePath =
+      loc === 'hr'
+        ? localePath
+        : `/${loc}${localePath === '/' ? '' : localePath}`;
+    const target = query ? `${basePath}?${query}` : basePath;
+    window.location.href = target;
+  };
 
   return (
     <header
@@ -72,7 +118,11 @@ export default function Navbar() {
                 href={href}
                 className={clsx(
                   'text-sm font-medium tracking-wide transition-colors hover:text-secondary',
-                  pathname === href ? 'text-secondary' : isTransparent ? 'text-white' : 'text-text',
+                  localePath === href
+                    ? 'text-secondary'
+                    : isTransparent
+                      ? 'text-white'
+                      : 'text-text',
                 )}
               >
                 {labels[href]}
@@ -88,20 +138,23 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <div className="flex items-center gap-2">
-              <span className="sr-only">{t('languageLabel')}</span>
+            <div className="flex items-center gap-2" role="group" aria-label={t('languageLabel')}>
               {locales.map((loc) => (
-                <Link
+                <button
                   key={loc}
-                  href={localeHref}
-                  locale={loc}
+                  onClick={() => switchLocale(loc)}
+                  aria-current={activeLocale === loc ? 'true' : undefined}
                   className={clsx(
-                    'text-xs uppercase font-semibold tracking-wider transition-colors',
-                    locale === loc ? 'text-secondary' : isTransparent ? 'text-white/80' : 'text-muted',
+                    'text-xs uppercase font-semibold tracking-wider transition-colors cursor-pointer',
+                    activeLocale === loc
+                      ? 'text-secondary'
+                      : isTransparent
+                        ? 'text-white/80'
+                        : 'text-muted',
                   )}
                 >
                   {loc}
-                </Link>
+                </button>
               ))}
             </div>
           </li>
@@ -130,7 +183,7 @@ export default function Navbar() {
               onClick={() => setMenuOpen(false)}
               className={clsx(
                 'text-sm font-medium py-2 transition-colors',
-                pathname === href ? 'text-secondary' : 'text-text',
+                localePath === href ? 'text-secondary' : 'text-text',
               )}
             >
               {labels[href]}
@@ -143,19 +196,26 @@ export default function Navbar() {
           >
             {t('bookNow')}
           </Link>
-          <div className="flex items-center justify-center gap-4 pt-2">
+          <div
+            className="flex items-center justify-center gap-4 pt-2"
+            role="group"
+            aria-label={t('languageLabel')}
+          >
             {locales.map((loc) => (
-              <Link
+              <button
                 key={loc}
-                href={localeHref}
-                locale={loc}
+                onClick={() => {
+                  switchLocale(loc);
+                  setMenuOpen(false);
+                }}
+                aria-current={activeLocale === loc ? 'true' : undefined}
                 className={clsx(
-                  'text-xs uppercase font-semibold tracking-wider transition-colors',
-                  locale === loc ? 'text-secondary' : 'text-muted',
+                  'text-xs uppercase font-semibold tracking-wider transition-colors cursor-pointer',
+                  activeLocale === loc ? 'text-secondary' : 'text-muted',
                 )}
               >
                 {loc}
-              </Link>
+              </button>
             ))}
           </div>
         </div>

@@ -177,6 +177,10 @@
     "eyebrow": "Accommodation",
     "title": "Apartments",
     "description": "Four carefully designed sea-view apartments, each with its own character and atmosphere. Renovated in 2025.",
+    "itemLabel": "Apartment",
+    "badges": {
+      "fullyBooked": "Booked — 2025 season."
+    },
     "stats": {
       "duplex": "Duplex",
       "seaView": "Sea view",
@@ -195,6 +199,14 @@
   },
   "apartmentDetailPage": {
     "eyebrow": "Apartment",
+    "breadcrumb": {
+      "home": "Home",
+      "apartments": "Apartments"
+    },
+    "metadata": {
+      "titlePrefix": "Apartment",
+      "descriptionSuffix": "Drašnice."
+    },
     "stats": {
       "duplex": "Duplex",
       "seaView": "Sea view",
@@ -219,6 +231,7 @@
       "smokingLabel": "Smoking:",
       "smokingValue": "Not allowed",
       "minStayLabel": "Minimum stay:",
+      "minStayValue": "2 nights",
       "minStay": "Minimum stay: 2 nights",
       "depositLabel": "Deposit:",
       "depositValue": "of total amount"
@@ -799,6 +812,33 @@
     "title": "Villa Jurina | Drasnice, Makarska Riviera",
     "description": "Sea-view apartments in Drasnice. 50 m from a pebble beach on the Makarska Riviera. Book online.",
     "openGraphAlt": "Villa Jurina — sea view, Drasnice"
+  },
+  "bookingCalendar": {
+    "legend": {
+      "available": "Available",
+      "booked": "Booked",
+      "selected": "Selected"
+    },
+    "instructions": {
+      "selectCheckIn": "Select arrival date",
+      "selectCheckOut": "Select departure date (min. 2 nights)"
+    },
+    "actions": {
+      "reset": "Clear selection"
+    },
+    "loading": "Loading calendar...",
+    "errors": {
+      "noApartment": "No apartment selected.",
+      "loadFailed": "Error loading availability"
+    },
+    "tooltips": {
+      "booked": "Booked",
+      "minStay": "Minimum stay is 2 nights"
+    },
+    "aria": {
+      "prevMonth": "Previous month",
+      "nextMonth": "Next month"
+    }
   },
   "bookingWidget": {
     "errors": {

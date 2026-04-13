@@ -231,7 +231,7 @@ export default function BookingWidget({ initialSlug }: Props) {
               <p className="text-xs text-muted">
                 <strong className="text-text">{t('labels.reference')}:</strong>{' '}
                 <span className="font-semibold text-text">
-                  {bookingReference ?? `${form.name} — Apartman ${selectedApartment?.name}`}
+                  {bookingReference ?? `${form.name} — ${t('labels.apartment')} ${selectedApartment?.name}`}
                 </span>
               </p>
             </div>

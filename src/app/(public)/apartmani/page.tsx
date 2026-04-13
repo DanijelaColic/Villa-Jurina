@@ -1,22 +1,29 @@
 import Image from 'next/image';
+import type { Metadata } from 'next';
 import { Users, Maximize2 } from 'lucide-react';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { getApartments } from '@/lib/apartments';
 import { Link } from '@/i18n/navigation';
+import { getSiteUrl } from '@/lib/siteUrl';
 
-export const metadata = {
-  title: 'Apartmani',
-  description:
-    'Četiri apartmana s pogledom na more u Drašnicama — Sky, Luna, Arba i Harmonia. Idealni za parove i obitelji.',
-  openGraph: {
-    title: 'Apartmani | Villa Jurina',
-    description:
-      'Četiri apartmana s pogledom na more u Drašnicama — Sky, Luna, Arba i Harmonia.',
-    url: 'https://villajurina.com/apartmani',
-    images: [{ url: '/images/apartments/arba/Arba1.jpeg', width: 1200, height: 630 }],
-  },
-  alternates: { canonical: 'https://villajurina.com/apartmani' },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const t = await getTranslations({ locale, namespace: 'apartmentsPage' });
+  const BASE_URL = getSiteUrl();
+  const title = t('title');
+  const description = t('description');
+  return {
+    title,
+    description,
+    openGraph: {
+      title: `${title} | Villa Jurina`,
+      description,
+      url: `${BASE_URL}/apartmani`,
+      images: [{ url: '/images/apartments/arba/Arba1.jpeg', width: 1200, height: 630 }],
+    },
+    alternates: { canonical: `${BASE_URL}/apartmani` },
+  };
+}
 
 export default async function ApartmaniPage() {
   const locale = await getLocale();
@@ -68,7 +75,7 @@ export default async function ApartmaniPage() {
                 )}
                 {apt.fullyBooked && (
                   <div className="absolute top-4 left-4 bg-text/80 text-white text-xs font-medium px-3 py-1.5 rounded-full z-10">
-                    Zauzeto — sezona 2025.
+                    {t('badges.fullyBooked')}
                   </div>
                 )}
               </Link>
@@ -76,7 +83,7 @@ export default async function ApartmaniPage() {
               {/* Content */}
               <div className={index % 2 !== 0 ? 'lg:order-1' : ''}>
                 <p className="text-secondary font-medium tracking-widest text-xs uppercase mb-2">
-                  Apartman
+                  {t('itemLabel')}
                 </p>
                 <h2 className="font-serif text-3xl font-semibold text-text mb-2">{apt.name}</h2>
                 <p className="text-muted text-base mb-6 leading-relaxed">{apt.description}</p>

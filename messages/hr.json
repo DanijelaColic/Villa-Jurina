@@ -177,6 +177,10 @@
     "eyebrow": "Smještaj",
     "title": "Apartmani",
     "description": "Četiri pažljivo uređena apartmana s pogledom na more, svaki s vlastitim karakterom i atmosferom. Renovirani 2025. godine.",
+    "itemLabel": "Apartman",
+    "badges": {
+      "fullyBooked": "Zauzeto — sezona 2025."
+    },
     "stats": {
       "duplex": "Dvoetažni",
       "seaView": "Pogled na more",
@@ -195,6 +199,14 @@
   },
   "apartmentDetailPage": {
     "eyebrow": "Apartman",
+    "breadcrumb": {
+      "home": "Početna",
+      "apartments": "Apartmani"
+    },
+    "metadata": {
+      "titlePrefix": "Apartman",
+      "descriptionSuffix": "Drašnice."
+    },
     "stats": {
       "duplex": "Dvoetažni",
       "seaView": "Pogled na more",
@@ -219,6 +231,7 @@
       "smokingLabel": "Pušenje:",
       "smokingValue": "Nije dozvoljeno",
       "minStayLabel": "Minimalni boravak:",
+      "minStayValue": "2 noći",
       "minStay": "Minimalni boravak: 2 noći",
       "depositLabel": "Depozit:",
       "depositValue": "od ukupnog iznosa"
@@ -799,6 +812,33 @@
     "title": "Villa Jurina | Drašnice, Makarska rivijera",
     "description": "Apartmani s pogledom na more u Drašnicama. 50 m od šljunčane plaže na Makarskoj rivijeri. Rezervirajte online.",
     "openGraphAlt": "Villa Jurina — pogled na more, Drašnice"
+  },
+  "bookingCalendar": {
+    "legend": {
+      "available": "Slobodno",
+      "booked": "Zauzeto",
+      "selected": "Odabrano"
+    },
+    "instructions": {
+      "selectCheckIn": "Odaberite datum dolaska",
+      "selectCheckOut": "Odaberite datum odlaska (min. 2 noći)"
+    },
+    "actions": {
+      "reset": "Poništi odabir"
+    },
+    "loading": "Učitavanje kalendara...",
+    "errors": {
+      "noApartment": "Nije odabran apartman.",
+      "loadFailed": "Greška pri učitavanju slobodnih termina"
+    },
+    "tooltips": {
+      "booked": "Zauzeto",
+      "minStay": "Minimalni boravak je 2 noći"
+    },
+    "aria": {
+      "prevMonth": "Prethodni mjesec",
+      "nextMonth": "Sljedeći mjesec"
+    }
   },
   "bookingWidget": {
     "errors": {
