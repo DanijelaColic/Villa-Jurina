@@ -4,7 +4,7 @@ import { getApartment } from '@/lib/apartments';
 import { parseLocalDate, isRangeAvailable, diffDays } from '@/lib/dates';
 import { sendNewBookingEmails } from '@/lib/email';
 import { createBookingViewToken, getBookingConfirmationUrl } from '@/lib/bookingConfirmation';
-import { getRequestLocale } from '@/lib/requestLocale';
+import { getRequestLocale, AppLocale } from '@/lib/requestLocale';
 
 // GET /api/bookings?apartment=slug
 // Vraća zauzete datume za odabrani apartman
