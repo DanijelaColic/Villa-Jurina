@@ -136,6 +136,7 @@ export default function BookingWidget({ initialSlug }: Props) {
           adults: parseInt(form.adults),
           children: parseInt(form.children),
           notes: form.notes,
+          locale,
         }),
       });
 

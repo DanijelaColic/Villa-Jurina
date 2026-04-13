@@ -73,46 +73,6 @@ export async function GET(request: NextRequest) {
 // POST /api/bookings
 // Kreira novu rezervaciju
 export async function POST(request: NextRequest) {
-  const locale = getRequestLocale(request);
-  const msg = {
-    missingFields:
-      locale === 'en'
-        ? 'Missing required fields'
-        : locale === 'de'
-          ? 'Erforderliche Felder fehlen'
-          : 'Nedostaju obavezna polja',
-    apartmentNotFound:
-      locale === 'en'
-        ? 'Apartment not found'
-        : locale === 'de'
-          ? 'Apartment nicht gefunden'
-          : 'Apartman nije pronađen',
-    apartmentUnavailable:
-      locale === 'en'
-        ? 'This apartment is not available for booking'
-        : locale === 'de'
-          ? 'Dieses Apartment ist nicht buchbar'
-          : 'Ovaj apartman nije dostupan za rezervaciju',
-    minStay:
-      locale === 'en'
-        ? 'Minimum stay is 2 nights'
-        : locale === 'de'
-          ? 'Mindestaufenthalt sind 2 Nächte'
-          : 'Minimalni boravak su 2 noći',
-    datesTaken:
-      locale === 'en'
-        ? 'Selected dates are already booked. Please choose different dates.'
-        : locale === 'de'
-          ? 'Die ausgewählten Termine sind bereits belegt. Bitte wählen Sie andere Daten.'
-          : 'Odabrani termini su već zauzeti. Molimo odaberite druge datume.',
-    createError:
-      locale === 'en'
-        ? 'Error creating booking. Please try again or contact us.'
-        : locale === 'de'
-          ? 'Fehler beim Erstellen der Buchung. Bitte versuchen Sie es erneut oder kontaktieren Sie uns.'
-          : 'Greška pri kreiranju rezervacije. Pokušajte ponovo ili nas kontaktirajte.',
-  };
-
   try {
     const body = await request.json();
     const {
@@ -125,7 +85,54 @@ export async function POST(request: NextRequest) {
       adults,
       children,
       notes,
+      locale: bodyLocale,
     } = body;
+
+    // Body locale is the most reliable source — the widget sends it explicitly.
+    // Fall back to URL/header detection only if it's missing (e.g. direct API calls).
+    const locale: AppLocale =
+      bodyLocale === 'en' || bodyLocale === 'de' || bodyLocale === 'hr'
+        ? bodyLocale
+        : getRequestLocale(request);
+
+    const msg = {
+      missingFields:
+        locale === 'en'
+          ? 'Missing required fields'
+          : locale === 'de'
+            ? 'Erforderliche Felder fehlen'
+            : 'Nedostaju obavezna polja',
+      apartmentNotFound:
+        locale === 'en'
+          ? 'Apartment not found'
+          : locale === 'de'
+            ? 'Apartment nicht gefunden'
+            : 'Apartman nije pronađen',
+      apartmentUnavailable:
+        locale === 'en'
+          ? 'This apartment is not available for booking'
+          : locale === 'de'
+            ? 'Dieses Apartment ist nicht buchbar'
+            : 'Ovaj apartman nije dostupan za rezervaciju',
+      minStay:
+        locale === 'en'
+          ? 'Minimum stay is 2 nights'
+          : locale === 'de'
+            ? 'Mindestaufenthalt sind 2 Nächte'
+            : 'Minimalni boravak su 2 noći',
+      datesTaken:
+        locale === 'en'
+          ? 'Selected dates are already booked. Please choose different dates.'
+          : locale === 'de'
+            ? 'Die ausgewählten Termine sind bereits belegt. Bitte wählen Sie andere Daten.'
+            : 'Odabrani termini su već zauzeti. Molimo odaberite druge datume.',
+      createError:
+        locale === 'en'
+          ? 'Error creating booking. Please try again or contact us.'
+          : locale === 'de'
+            ? 'Fehler beim Erstellen der Buchung. Bitte versuchen Sie es erneut oder kontaktieren Sie uns.'
+            : 'Greška pri kreiranju rezervacije. Pokušajte ponovo ili nas kontaktirajte.',
+    };
 
     // Validacija obaveznih polja
     if (!apartment_slug || !check_in || !check_out || !guest_name || !guest_email) {
@@ -246,7 +253,7 @@ export async function POST(request: NextRequest) {
   } catch (err) {
     console.error('Booking error:', err);
     return NextResponse.json(
-      { error: msg.createError },
+      { error: 'Error creating booking. Please try again or contact us.' },
       { status: 500 },
     );
   }

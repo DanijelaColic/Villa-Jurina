@@ -72,10 +72,10 @@ export async function sendNewBookingEmails(data: BookingEmailData) {
       to: data.guestEmail,
       subject:
         locale === 'en'
-          ? `Booking received – Apartment ${data.apartmentName} | Villa Jurina`
+          ? `Booking request – Apartment ${data.apartmentName} | Villa Jurina`
           : locale === 'de'
-            ? `Buchung eingegangen – Apartment ${data.apartmentName} | Villa Jurina`
-            : `Potvrda rezervacije – Apartman ${data.apartmentName} | Villa Jurina`,
+            ? `Buchungsanfrage – Apartment ${data.apartmentName} | Villa Jurina`
+            : `Upit za rezervaciju – Apartman ${data.apartmentName} | Villa Jurina`,
       html: guestReceivedHtml(fullData, locale),
       ...(attachments.length > 0 && { attachments }),
     }),
