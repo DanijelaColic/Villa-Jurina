@@ -1061,7 +1061,9 @@ function AddBookingModal({ onClose, onSuccess }: ModalProps) {
   }, [onClose]);
 
   const [form, setForm] = useState({
-    apartment_slug: apartments.find((a) => !a.fullyBooked)?.slug ?? '',
+    apartment_slug: apartments.find((a) => !a.fullyBooked && !a.hidden)?.slug
+      ?? apartments.find((a) => !a.fullyBooked)?.slug
+      ?? '',
     check_in: '', check_out: '',
     guest_name: '', guest_email: '', guest_phone: '',
     adults: '2', children: '0',

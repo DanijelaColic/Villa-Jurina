@@ -62,7 +62,7 @@ export function LodgingBusinessJsonLd() {
     name: 'Villa Jurina',
     url: BASE_URL,
     logo: `${BASE_URL}/images/Logo_Villa_Jurina.png`,
-    image: `${BASE_URL}/images/apartments/arba/Arba1.jpeg`,
+    image: `${BASE_URL}/images/apartments/arba/arba7.jpeg`,
     description:
       'Apartmani s pogledom na more u Drašnicama na Makarskoj rivijeri. 50 metara od šljunčane plaže.',
     address: {

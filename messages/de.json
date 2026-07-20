@@ -73,7 +73,7 @@
       },
       "groupBooking": {
         "q": "Kann ich mehrere Apartments für eine Gruppe buchen?",
-        "a": "Natürlich - die Villa hat 4 Apartments und ist ideal für größere Familien oder Freundesgruppen. Kontaktieren Sie uns direkt für eine Gruppenbuchung und ein spezielles Angebot."
+        "a": "Natürlich - die Villa hat 3 Apartments und ist ideal für größere Familien oder Freundesgruppen. Kontaktieren Sie uns direkt für eine Gruppenbuchung und ein spezielles Angebot."
       },
       "nearby": {
         "q": "Was befindet sich in der Nähe der Villa?",
@@ -117,7 +117,7 @@
         },
         "capacity": {
           "q": "Kann ich ein Apartment für eine bestimmte Personenzahl anfragen?",
-          "a": "Ja. Sky bietet Platz für bis zu 2, Luna und Arba bis zu 4 und Harmonia bis zu 6 Personen. Für größere Gruppen können mehrere Apartments gebucht werden - kontaktieren Sie uns für ein Angebot."
+          "a": "Ja. Luna bietet Platz für bis zu 3, Arba bis zu 4 und Harmonia bis zu 6 Personen. Für größere Gruppen können mehrere Apartments gebucht werden - kontaktieren Sie uns für ein Angebot."
         }
       }
     }
@@ -176,7 +176,7 @@
   "apartmentsPage": {
     "eyebrow": "Unterkunft",
     "title": "Apartments",
-    "description": "Vier sorgfältig eingerichtete Apartments mit Meerblick, jedes mit eigenem Charakter und eigener Atmosphäre. 2025 renoviert.",
+    "description": "Drei sorgfältig eingerichtete Apartments mit Meerblick, jedes mit eigenem Charakter und eigener Atmosphäre. 2025 renoviert.",
     "itemLabel": "Apartment",
     "badges": {
       "fullyBooked": "Ausgebucht — Saison 2025."
@@ -251,7 +251,7 @@
     "description": "Entdecken Sie Fotos unserer Apartments, des Meerblicks und der Umgebung von Drašnice und der Makarska Riviera.",
     "metadata": {
       "title": "Galerie",
-      "description": "Fotos der Apartments Arba, Harmonia, Luna und Sky sowie der Umgebung von Drašnice und der Makarska Riviera.",
+      "description": "Fotos der Apartments Arba, Harmonia und Luna sowie der Umgebung von Drašnice und der Makarska Riviera.",
       "openGraphTitle": "Galerie | Villa Jurina",
       "openGraphDescription": "Fotos der Apartments und der Umgebung von Drašnice an der Makarska Riviera."
     }
@@ -485,7 +485,8 @@
         "airConditioning": "Klimaanlage",
         "freeParking": "Kostenloses Parken",
         "kitchen": "Küche",
-        "kettle": "Wasserkocher"
+        "kettle": "Wasserkocher",
+        "babyCot": "Babybett"
       }
     },
     "galleryPreview": {
@@ -498,7 +499,8 @@
         "lunaAlt": "Apartment Luna",
         "skyAlt": "Apartment Sky",
         "beachAlt": "Drašnice — Strand",
-        "biokovoAlt": "Biokovo"
+        "biokovoAlt": "Biokovo",
+        "villaAlt": "Villa Jurina"
       },
       "actions": {
         "viewAllPhotos": "Alle Fotos ansehen"
@@ -562,7 +564,7 @@
     "cta": {
       "eyebrow": "Drašnice · Makarska Riviera",
       "title": "Ihr Meer wartet",
-      "description": "Vier Apartments, ein Meer, unzählige Erinnerungen. Buchen Sie noch heute und sichern Sie sich Ihren Platz in Drašnice.",
+      "description": "Drei Apartments, ein Meer, unzählige Erinnerungen. Buchen Sie noch heute und sichern Sie sich Ihren Platz in Drašnice.",
       "strip": "Mindestaufenthalt 2 Nächte · Check-in ab 14:00 · Check-out bis 11:00",
       "actions": {
         "checkDates": "Verfügbare Termine prüfen",

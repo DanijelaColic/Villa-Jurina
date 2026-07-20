@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import { Users, Maximize2, Check } from 'lucide-react';
 import { getLocale, getTranslations } from 'next-intl/server';
-import { apartments, getApartment } from '@/lib/apartments';
+import { getApartment, getPublicApartments } from '@/lib/apartments';
 import ImageGallery from '@/components/ImageGallery';
 import { ApartmentJsonLd, BreadcrumbJsonLd } from '@/components/JsonLd';
 import { Link } from '@/i18n/navigation';
@@ -12,7 +12,8 @@ type Props = {
 };
 
 export async function generateStaticParams() {
-  return apartments.map((apt) => ({ slug: apt.slug }));
+  // Samo javni apartmani — Sky (hidden) nije u buildu
+  return getPublicApartments().map((apt) => ({ slug: apt.slug }));
 }
 
 export async function generateMetadata({ params }: Props) {
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: Props) {
   const locale = await getLocale();
   const t = await getTranslations({ locale, namespace: 'apartmentDetailPage' });
   const apt = getApartment(slug, locale as 'hr' | 'en' | 'de');
-  if (!apt) return {};
+  if (!apt || apt.hidden) return {};
   const prefix = t('metadata.titlePrefix');
   const suffix = t('metadata.descriptionSuffix');
   const title = `${prefix} ${apt.name}`;
@@ -47,7 +48,7 @@ export default async function ApartmanPage({ params }: Props) {
   const { slug } = await params;
   const apt = getApartment(slug, locale as 'hr' | 'en' | 'de');
 
-  if (!apt) notFound();
+  if (!apt || apt.hidden) notFound();
 
   const BASE_URL = getSiteUrl();
 

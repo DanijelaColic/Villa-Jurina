@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
   }
 
   const apt = getApartment(slug);
-  if (!apt) {
+  if (!apt || apt.hidden) {
     return NextResponse.json({ error: msg.apartmentNotFound }, { status: 404 });
   }
 
@@ -140,7 +140,7 @@ export async function POST(request: NextRequest) {
     }
 
     const apt = getApartment(apartment_slug);
-    if (!apt) {
+    if (!apt || apt.hidden) {
       return NextResponse.json({ error: msg.apartmentNotFound }, { status: 404 });
     }
 

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-type Category = 'sve' | 'arba' | 'harmonia' | 'luna' | 'sky' | 'okolica';
+type Category = 'sve' | 'arba' | 'harmonia' | 'luna' | 'okolica';
 
 interface GalleryImage {
   src: string;
@@ -14,36 +14,50 @@ interface GalleryImage {
 }
 
 const images: GalleryImage[] = [
-  // Arba
-  { src: '/images/apartments/arba/Arba1.jpeg', alt: 'Apartman Arba', category: 'arba' },
-  { src: '/images/apartments/arba/Arba2.jpeg', alt: 'Apartman Arba', category: 'arba' },
-  { src: '/images/apartments/arba/Arba3.jpeg', alt: 'Apartman Arba', category: 'arba' },
-  { src: '/images/apartments/arba/Arba4.jpeg', alt: 'Apartman Arba', category: 'arba' },
-  { src: '/images/apartments/arba/Arba5.jpeg', alt: 'Apartman Arba', category: 'arba' },
-  { src: '/images/apartments/arba/Arba6.jpeg', alt: 'Apartman Arba', category: 'arba' },
-  { src: '/images/apartments/arba/Arba7.jpeg', alt: 'Apartman Arba', category: 'arba' },
-  { src: '/images/apartments/arba/Arba8.jpeg', alt: 'Apartman Arba', category: 'arba' },
+  // Arba — cover first; krevetić last; no Drašnice
+  { src: '/images/apartments/arba/arba7.jpeg', alt: 'Apartman Arba — balkon s pogledom', category: 'arba' },
+  { src: '/images/apartments/arba/arba1.jpeg', alt: 'Apartman Arba', category: 'arba' },
+  { src: '/images/apartments/arba/arba2.jpeg', alt: 'Apartman Arba', category: 'arba' },
+  { src: '/images/apartments/arba/arba3.jpeg', alt: 'Apartman Arba', category: 'arba' },
+  { src: '/images/apartments/arba/arba4.jpeg', alt: 'Apartman Arba', category: 'arba' },
+  { src: '/images/apartments/arba/arba5.jpeg', alt: 'Apartman Arba', category: 'arba' },
+  { src: '/images/apartments/arba/arba6.jpeg', alt: 'Apartman Arba', category: 'arba' },
+  { src: '/images/apartments/arba/arba8.jpeg', alt: 'Apartman Arba', category: 'arba' },
+  { src: '/images/apartments/arba/arba9.jpeg', alt: 'Apartman Arba', category: 'arba' },
+  { src: '/images/apartments/arba/arba10.jpeg', alt: 'Apartman Arba', category: 'arba' },
+  { src: '/images/apartments/arba/krevetic.jpeg', alt: 'Krevetić za bebe — dostupan na upit', category: 'arba' },
   // Harmonia
-  { src: '/images/apartments/harmonia/Harmonia1.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
-  { src: '/images/apartments/harmonia/Harmonia2.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
-  { src: '/images/apartments/harmonia/Harmonia3.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
-  { src: '/images/apartments/harmonia/Harmonia4.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
-  { src: '/images/apartments/harmonia/Harmonia5.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
-  { src: '/images/apartments/harmonia/Harmonia6.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
-  { src: '/images/apartments/harmonia/Harmonia7.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/harmonia2.jpeg', alt: 'Apartman Harmonia — balkon s morem', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/harmonia1.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/harmonia7.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/harmonia3.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/harmonia4.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/harmonia5.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/harmonia6.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/harmonia8.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/harmonia9.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/harmonia10.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/harmonia11.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/harmonia12.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/harmonia13.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/harmonia14.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/harmonia15.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/harmonia16.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/harmonia17.jpeg', alt: 'Apartman Harmonia', category: 'harmonia' },
+  { src: '/images/apartments/harmonia/krevetic.jpeg', alt: 'Krevetić za bebe — dostupan na upit', category: 'harmonia' },
   // Luna
-  { src: '/images/apartments/luna/Luna1.jpeg', alt: 'Apartman Luna', category: 'luna' },
-  { src: '/images/apartments/luna/Luna2.jpeg', alt: 'Apartman Luna', category: 'luna' },
-  { src: '/images/apartments/luna/Luna3.jpeg', alt: 'Apartman Luna', category: 'luna' },
-  { src: '/images/apartments/luna/Luna4.jpeg', alt: 'Apartman Luna', category: 'luna' },
-  { src: '/images/apartments/luna/Luna5.jpeg', alt: 'Apartman Luna', category: 'luna' },
-  { src: '/images/apartments/luna/Luna6.jpeg', alt: 'Apartman Luna', category: 'luna' },
-  // Sky
-  { src: '/images/apartments/sky/Sky1.jpeg', alt: 'Apartman Sky', category: 'sky' },
-  { src: '/images/apartments/sky/Sky2.jpeg', alt: 'Apartman Sky', category: 'sky' },
-  { src: '/images/apartments/sky/Sky3.jpeg', alt: 'Apartman Sky', category: 'sky' },
-  { src: '/images/apartments/sky/Sky4.jpeg', alt: 'Apartman Sky', category: 'sky' },
-  // Okolica & Vila
+  { src: '/images/apartments/luna/luna1.jpeg', alt: 'Apartman Luna — pogled na more', category: 'luna' },
+  { src: '/images/apartments/luna/luna6.jpeg', alt: 'Apartman Luna', category: 'luna' },
+  { src: '/images/apartments/luna/luna2.jpeg', alt: 'Apartman Luna', category: 'luna' },
+  { src: '/images/apartments/luna/luna3.jpeg', alt: 'Apartman Luna', category: 'luna' },
+  { src: '/images/apartments/luna/luna4.jpeg', alt: 'Apartman Luna', category: 'luna' },
+  { src: '/images/apartments/luna/luna5.jpeg', alt: 'Apartman Luna', category: 'luna' },
+  { src: '/images/apartments/luna/luna7.jpeg', alt: 'Apartman Luna', category: 'luna' },
+  { src: '/images/apartments/luna/luna8.jpeg', alt: 'Apartman Luna', category: 'luna' },
+  { src: '/images/apartments/luna/luna9.jpeg', alt: 'Apartman Luna', category: 'luna' },
+  { src: '/images/apartments/luna/luna10.jpeg', alt: 'Apartman Luna', category: 'luna' },
+  { src: '/images/apartments/luna/krevetic.jpeg', alt: 'Krevetić za bebe — dostupan na upit', category: 'luna' },
+  // Okolica & Vila (Drašnice samo ovdje, ne kao cover apartmana)
   { src: '/images/apartments/arba/Drašnice 1.jpeg', alt: 'Drašnice — pogled na more', category: 'okolica' },
   { src: '/images/apartments/arba/Drašnice 2.jpeg', alt: 'Drašnice — plaža', category: 'okolica' },
   { src: '/images/Okolica/Drašnice 1.jpeg', alt: 'Drašnice — uvala', category: 'okolica' },
@@ -62,7 +76,6 @@ const categories: { id: Category; label: string }[] = [
   { id: 'arba', label: 'Arba' },
   { id: 'harmonia', label: 'Harmonia' },
   { id: 'luna', label: 'Luna' },
-  { id: 'sky', label: 'Sky' },
   { id: 'okolica', label: 'Okolica & Vila' },
 ];
 

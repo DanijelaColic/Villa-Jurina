@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: t('openGraphTitle'),
       description: t('openGraphDescription'),
       url,
-      images: [{ url: '/images/apartments/harmonia/Harmonia1.jpeg', width: 1200, height: 630 }],
+      images: [{ url: '/images/apartments/harmonia/harmonia2.jpeg', width: 1200, height: 630 }],
     },
     alternates: { canonical: 'https://villajurina.com/galerija' },
   };

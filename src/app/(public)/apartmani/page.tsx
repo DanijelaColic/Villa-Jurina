@@ -2,7 +2,7 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 import { Users, Maximize2 } from 'lucide-react';
 import { getLocale, getTranslations } from 'next-intl/server';
-import { getApartments } from '@/lib/apartments';
+import { getPublicApartments } from '@/lib/apartments';
 import { Link } from '@/i18n/navigation';
 import { getSiteUrl } from '@/lib/siteUrl';
 
@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: `${title} | Villa Jurina`,
       description,
       url: `${BASE_URL}/apartmani`,
-      images: [{ url: '/images/apartments/arba/Arba1.jpeg', width: 1200, height: 630 }],
+      images: [{ url: '/images/apartments/arba/arba7.jpeg', width: 1200, height: 630 }],
     },
     alternates: { canonical: `${BASE_URL}/apartmani` },
   };
@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function ApartmaniPage() {
   const locale = await getLocale();
   const t = await getTranslations('apartmentsPage');
-  const apartments = getApartments(locale as 'hr' | 'en' | 'de');
+  const apartments = getPublicApartments(locale as 'hr' | 'en' | 'de');
 
   return (
     <div className="pt-20">

@@ -26,12 +26,15 @@ export default function BookingWidget({ initialSlug }: Props) {
   const locale = useLocale() as 'hr' | 'en' | 'de';
   const t = useTranslations('bookingWidget');
   const apartments = getApartments(locale);
-  const AVAILABLE_APARTMENTS = apartments.filter((a) => !a.fullyBooked);
+  // Skriveni (npr. Sky) i fullyBooked nisu u izboru za goste
+  const AVAILABLE_APARTMENTS = apartments.filter((a) => !a.fullyBooked && !a.hidden);
   const nightUnit = locale === 'de' ? 'Nacht' : locale === 'en' ? 'night' : 'noć';
 
-  const defaultSlug = initialSlug && !apartments.find(a => a.slug === initialSlug)?.fullyBooked
-    ? initialSlug
-    : AVAILABLE_APARTMENTS[0]?.slug ?? '';
+  const initialApt = initialSlug ? apartments.find((a) => a.slug === initialSlug) : undefined;
+  const defaultSlug =
+    initialApt && !initialApt.fullyBooked && !initialApt.hidden
+      ? initialSlug!
+      : AVAILABLE_APARTMENTS[0]?.slug ?? '';
 
   const [selectedSlug, setSelectedSlug] = useState(defaultSlug);
   const [checkIn, setCheckIn] = useState<Date | null>(null);

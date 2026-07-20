@@ -73,7 +73,7 @@
       },
       "groupBooking": {
         "q": "Mogu li rezervirati više apartmana za grupu?",
-        "a": "Naravno — vila ima 4 apartmana i idealna je za veće obitelji ili grupe prijatelja. Kontaktirajte nas direktno za grupnu rezervaciju i posebnu ponudu."
+        "a": "Naravno — vila ima 3 apartmana i idealna je za veće obitelji ili grupe prijatelja. Kontaktirajte nas direktno za grupnu rezervaciju i posebnu ponudu."
       },
       "nearby": {
         "q": "Što je u blizini vile?",
@@ -117,7 +117,7 @@
         },
         "capacity": {
           "q": "Mogu li tražiti apartman za određeni broj osoba?",
-          "a": "Da. Sky prima do 2, Luna i Arba do 4, a Harmonia do 6 osoba. Za veće grupe moguće je rezervirati više apartmana — kontaktirajte nas za ponudu."
+          "a": "Da. Luna prima do 3, Arba do 4, a Harmonia do 6 osoba. Za veće grupe moguće je rezervirati više apartmana — kontaktirajte nas za ponudu."
         }
       }
     }
@@ -176,7 +176,7 @@
   "apartmentsPage": {
     "eyebrow": "Smještaj",
     "title": "Apartmani",
-    "description": "Četiri pažljivo uređena apartmana s pogledom na more, svaki s vlastitim karakterom i atmosferom. Renovirani 2025. godine.",
+    "description": "Tri pažljivo uređena apartmana s pogledom na more, svaki s vlastitim karakterom i atmosferom. Renovirani 2025. godine.",
     "itemLabel": "Apartman",
     "badges": {
       "fullyBooked": "Zauzeto — sezona 2025."
@@ -251,7 +251,7 @@
     "description": "Pregledajte fotografije naših apartmana, pogleda na more i okolice Drašnica i Makarske rivijere.",
     "metadata": {
       "title": "Galerija",
-      "description": "Fotografije apartmana Arba, Harmonia, Luna i Sky te okolice Drašnica i Makarske rivijere.",
+      "description": "Fotografije apartmana Arba, Harmonia i Luna te okolice Drašnica i Makarske rivijere.",
       "openGraphTitle": "Galerija | Villa Jurina",
       "openGraphDescription": "Fotografije apartmana i okolice Drašnica na Makarskoj rivijeri."
     }
@@ -485,7 +485,8 @@
         "airConditioning": "Klima uređaj",
         "freeParking": "Besplatni parking",
         "kitchen": "Kuhinja",
-        "kettle": "Kuhalo za vodu"
+        "kettle": "Kuhalo za vodu",
+        "babyCot": "Krevetić za bebe"
       }
     },
     "galleryPreview": {
@@ -498,7 +499,8 @@
         "lunaAlt": "Apartman Luna",
         "skyAlt": "Apartman Sky",
         "beachAlt": "Drašnice — plaža",
-        "biokovoAlt": "Biokovo"
+        "biokovoAlt": "Biokovo",
+        "villaAlt": "Villa Jurina"
       },
       "actions": {
         "viewAllPhotos": "Pogledaj sve fotografije"
@@ -562,7 +564,7 @@
     "cta": {
       "eyebrow": "Drašnice · Makarska rivijera",
       "title": "Vaše more čeka",
-      "description": "Četiri apartmana, jedno more, nebrojene uspomene. Rezervirajte danas i osigurajte svoje mjesto u Drašnicama.",
+      "description": "Tri apartmana, jedno more, nebrojene uspomene. Rezervirajte danas i osigurajte svoje mjesto u Drašnicama.",
       "strip": "Minimalni boravak 2 noći · Check-in od 14:00 · Check-out do 11:00",
       "actions": {
         "checkDates": "Provjeri slobodne termine",

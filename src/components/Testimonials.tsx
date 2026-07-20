@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 
 const reviewIds = ['r1', 'r2', 'r3', 'r4', 'r5', 'r6'] as const;
 const reviewMeta = {
-  r1: { apartment: 'Sky', initials: 'MJ', color: 'bg-blue-100 text-blue-700', rating: 5 },
+  r1: { apartment: 'Luna', initials: 'MJ', color: 'bg-blue-100 text-blue-700', rating: 5 },
   r2: { apartment: 'Harmonia', initials: 'OK', color: 'bg-amber-100 text-amber-700', rating: 5 },
   r3: { apartment: 'Arba', initials: 'PA', color: 'bg-green-100 text-green-700', rating: 5 },
   r4: { apartment: 'Luna', initials: 'VR', color: 'bg-rose-100 text-rose-700', rating: 5 },

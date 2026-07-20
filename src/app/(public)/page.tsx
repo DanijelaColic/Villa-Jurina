@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import { MapPin, UtensilsCrossed, Car, Wifi, Wind, Tv, Coffee, Waves } from 'lucide-react';
+import { MapPin, UtensilsCrossed, Car, Wifi, Wind, Tv, Coffee, Waves, Baby } from 'lucide-react';
 import { getLocale, getTranslations } from 'next-intl/server';
-import { getApartments } from '@/lib/apartments';
+import { getPublicApartments } from '@/lib/apartments';
 import Testimonials from '@/components/Testimonials';
 import FAQ from '@/components/FAQ';
 import { LodgingBusinessJsonLd, FAQJsonLd } from '@/components/JsonLd';
@@ -10,7 +10,7 @@ import { Link } from '@/i18n/navigation';
 export default async function Home() {
   const locale = await getLocale();
   const t = await getTranslations('homePage');
-  const apartments = getApartments(locale as 'hr' | 'en' | 'de');
+  const apartments = getPublicApartments(locale as 'hr' | 'en' | 'de');
   const amenities = [
     { icon: Wifi, label: t('amenities.items.wifi') },
     { icon: Wind, label: t('amenities.items.airConditioning') },
@@ -18,6 +18,7 @@ export default async function Home() {
     { icon: Tv, label: 'TV' },
     { icon: UtensilsCrossed, label: t('amenities.items.kitchen') },
     { icon: Coffee, label: t('amenities.items.kettle') },
+    { icon: Baby, label: t('amenities.items.babyCot') },
   ];
 
   return (
@@ -228,7 +229,7 @@ export default async function Home() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
             {amenities.map(({ icon: Icon, label }) => (
               <div key={label} className="flex flex-col items-center gap-3 text-center">
                 <div className="w-14 h-14 rounded-full bg-white shadow-sm flex items-center justify-center text-secondary">
@@ -259,15 +260,15 @@ export default async function Home() {
           {/* 6-thumbnail preview grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 mb-8">
             {[
-              { src: '/images/apartments/arba/Arba1.jpeg', alt: t('galleryPreview.images.arbaAlt') },
+              { src: '/images/apartments/arba/arba7.jpeg', alt: t('galleryPreview.images.arbaAlt') },
               {
-                src: '/images/apartments/harmonia/Harmonia1.jpeg',
+                src: '/images/apartments/harmonia/harmonia2.jpeg',
                 alt: t('galleryPreview.images.harmoniaAlt'),
               },
-              { src: '/images/apartments/luna/Luna1.jpeg', alt: t('galleryPreview.images.lunaAlt') },
-              { src: '/images/apartments/sky/Sky1.jpeg', alt: t('galleryPreview.images.skyAlt') },
+              { src: '/images/apartments/luna/luna1.jpeg', alt: t('galleryPreview.images.lunaAlt') },
               { src: '/images/Okolica/Drašnice 1.jpeg', alt: t('galleryPreview.images.beachAlt') },
               { src: '/images/Okolica/biokovo.webp', alt: t('galleryPreview.images.biokovoAlt') },
+              { src: '/images/povijest/Povijest1.jpeg', alt: t('galleryPreview.images.villaAlt') },
             ].map((img) => (
               <div key={img.src} className="aspect-4/3 relative overflow-hidden rounded-xl">
                 <Image
